@@ -1,0 +1,40 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NMS Optimizer</title>
+</head>
+
+<body>
+    <h1>NMS Optimizer</h1>
+    <button id="optimize-button">Optimize Grid</button>
+    <div id="result"></div>
+
+    <script>
+        const optimizeButton = document.getElementById('optimize-button');
+        const resultDiv = document.getElementById('result');
+
+        optimizeButton.addEventListener('click', () => {
+            fetch('http://localhost:5000/optimize', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    tech: 'shield',
+                    grid_size: 5,
+                    initial_temp: 10000,
+                    cooling_rate: 0.9999,
+                    max_iterations: 10000,
+                    patience: 200,
+                    decay_factor: 0.99
+                }),
+            })
+                .then(response => response.json())
+                .then(data => console.log(data))
+        });
+    </script>
+</body>
+
+</html>
