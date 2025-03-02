@@ -50,6 +50,12 @@ class Grid:
             self.cells[y][x]["type"] = type
         else:
             raise IndexError("Cell out of bounds")
+        
+    def set_value(self, x, y, value):
+        if 0 <= x < self.width and 0 <= y < self.height:
+            self.cells[y][x]["value"] = value
+        else:
+            raise IndexError("Cell out of bounds")
 
     def set_total(self, x, y, total):
         if 0 <= x < self.width and 0 <= y < self.height:
@@ -94,8 +100,30 @@ class Grid:
             "width": self.width,
             "height": self.height,
             "cells": self.cells
-        }
+        }     
 
+    @classmethod
+    def from_dict(cls, data: dict) -> "Grid":
+        """Create a Grid instance from a dictionary."""
+        grid = cls(data["width"], data["height"])
+        for y, row in enumerate(data["cells"]):
+            for x, cell_data in enumerate(row):
+                cell = grid.get_cell(x, y)
+                cell.update({
+                    "module": cell_data["module"],
+                    "value": cell_data["value"],
+                    "type": cell_data["type"],
+                    "total": cell_data["total"],
+                    "adjacency_bonus": cell_data["adjacency_bonus"],
+                    "bonus": cell_data["bonus"],
+                    "adjacency": cell_data["adjacency"],
+                    "tech": cell_data["tech"],
+                    "supercharged": cell_data["supercharged"],
+                    "sc_eligible": cell_data["sc_eligible"],
+                    "image": cell_data["image"],
+                })
+        return grid
+        
     def __str__(self):
         """Generate a string representation of the grid."""
         return "\n".join(
@@ -105,6 +133,7 @@ class Grid:
             )
             for row in self.cells
         )
+
 
 def optimize_placement(grid, modules, tech, supercharged_slots):
     optimal_grid = None
@@ -239,7 +268,9 @@ def optimize_placement_greedy(grid, modules, tech, supercharged_slots):
 
     return optimal_grid, highest_bonus
 
-def simulated_annealing_optimization(grid, modules, tech, initial_temp=10000, cooling_rate=0.9999, max_iterations=100000, patience=200, decay_factor=0.999):
+def simulated_annealing_optimization(grid, modules, tech, initial_temp=10000, cooling_rate=0.9999, 
+                                     max_iterations=100000, patience=200, decay_factor=0.999, 
+                                     max_supercharged=4):  # New constraint parameter
     best_grid = Grid(grid.width, grid.height)
     best_bonus = -float('inf')
     
@@ -259,13 +290,17 @@ def simulated_annealing_optimization(grid, modules, tech, initial_temp=10000, co
 
     temperature = initial_temp
     iteration_without_improvement = 0  # Track the number of iterations without improvement
-    for iteration in range(max_iterations):
 
+    for iteration in range(max_iterations):
         # Generate a neighbor solution by randomly changing the placement of modules
         movement_size = "large" if temperature > 5 else "small"
         neighbor_grid = generate_neighbor_grid_with_movement(current_grid, modules, tech, movement_size)
 
-        # Calculate the bonus for the current and neighbor grid
+        # Ensure neighbor grid does not exceed max_supercharged
+        if count_supercharged_slots(neighbor_grid, tech) > max_supercharged:
+            continue  # Skip this iteration if it exceeds the limit
+
+        # Calculate the bonus for the neighbor grid
         populate_adjacency_bonuses(neighbor_grid, tech)
         populate_module_bonuses(neighbor_grid, tech)
         neighbor_bonus = populate_core_bonus(neighbor_grid, tech)
@@ -302,8 +337,8 @@ def simulated_annealing_optimization(grid, modules, tech, initial_temp=10000, co
 
     return best_grid, best_bonus
 
-def generate_neighbor_grid_with_movement(grid, modules, tech, movement_size="small"):
-    """Generate a new grid by modifying the existing grid with new module placements."""
+def generate_neighbor_grid_with_movement(grid, modules, tech, movement_size="small", max_supercharged=1):
+    """Generate a new grid by modifying the existing grid with new module placements while enforcing a supercharged slot limit."""
     neighbor_grid = Grid(grid.width, grid.height)
     for y in range(grid.height):
         for x in range(grid.width):
@@ -317,7 +352,7 @@ def generate_neighbor_grid_with_movement(grid, modules, tech, movement_size="sma
             neighbor_grid.set_adjacency_bonus(x, y, current_cell["adjacency_bonus"])
             neighbor_grid.set_total(x, y, current_cell["total"])
             neighbor_grid.set_image(x, y, current_cell["image"])
-
+    
     tech_modules = [module for module in modules if module["tech"] == tech]
     core_modules = [module for module in tech_modules if module["type"] == "core"]
     bonus_modules = [module for module in tech_modules if module["type"] == "bonus"]
@@ -333,9 +368,9 @@ def generate_neighbor_grid_with_movement(grid, modules, tech, movement_size="sma
             if available_positions:
                 x, y = available_positions.pop()
                 place_module(neighbor_grid, x, y, core_module["name"], core_module["tech"], core_module["type"], core_module["bonus"], core_module["adjacency"], core_module["sc_eligible"], core_module["image"])
-
+        
         for bonus_module in bonus_modules:
-            if available_positions:
+            if available_positions and count_supercharged_slots(neighbor_grid, tech) < max_supercharged:
                 x, y = available_positions.pop()
                 place_module(neighbor_grid, x, y, bonus_module["name"], bonus_module["tech"], bonus_module["type"], bonus_module["bonus"], bonus_module["adjacency"], bonus_module["sc_eligible"], bonus_module["image"])
     else:
@@ -353,9 +388,21 @@ def generate_neighbor_grid_with_movement(grid, modules, tech, movement_size="sma
                 new_x, new_y = random.choice(available_positions)
                 available_positions.remove((new_x, new_y))
 
-                place_module(neighbor_grid, new_x, new_y, old_module, old_cell["tech"], old_cell["type"], old_cell["bonus"], old_cell["adjacency"], old_cell["sc_eligible"], old_cell["image"])
+                # Enforce supercharged slot limit when placing a module
+                is_supercharged = old_cell["supercharged"] and count_supercharged_slots(neighbor_grid) < max_supercharged
+
+                place_module(neighbor_grid, new_x, new_y, old_module, old_cell["tech"], old_cell["type"], old_cell["bonus"], old_cell["adjacency"], is_supercharged, old_cell["image"])
 
     return neighbor_grid
+
+
+def count_supercharged_slots(grid, tech):
+    count = 0
+    for y in range(grid.height):
+        for x in range(grid.width):
+            if grid.get_cell(x, y)["supercharged"] and grid.get_cell(x, y)["tech"] == tech:
+                count += 1
+    return count
 
 def place_module(grid, x, y, module, tech, type, bonus, adjacency, sc_eligible, image):
     grid.set_module(x, y, module)
@@ -471,6 +518,8 @@ def print_grid(grid):
 # Grid and Supercharged Slots
 #grid = Grid(5, 6)
 #grid.set_supercharged(1, 1, True)
+#grid.set_supercharged(1, 2, True)
+#grid.set_supercharged(1, 3, True)
 #grid.set_supercharged(3, 3, True)
 
 # Optimize placement for modules
@@ -481,9 +530,8 @@ def print_grid(grid):
 #grid, max_bonus = simulated_annealing_optimization(grid, modules, "shield", initial_temp=10000, cooling_rate=0.9999, max_iterations=10000, patience=200, decay_factor=0.99)
 #print(type(grid))  # Debugging: Check what type optimized_grid is
 #print_grid(grid)
-#grid, max_bonus = simulated_annealing_optimization(grid, modules, "infra", initial_temp=10000, cooling_rate=0.9999, max_iterations=10000, patience=200, decay_factor=0.99)
+#grid, max_bonus = simulated_annealing_optimization(grid, modules, "infra", initial_temp=5000, cooling_rate=0.9995, max_iterations=20000, patience=500, decay_factor=0.995)
 #print_grid(grid)
 #grid, max_bonus = simulated_annealing_optimization(grid, modules, "photon",  initial_temp=10000, cooling_rate=0.9999, max_iterations=1500, patience=200, decay_factor=0.99)
 
-#print("Optimized layout --")
-#print_grid(grid)
+

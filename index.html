@@ -16,25 +16,49 @@
     <script>
         const optimizeButton = document.getElementById('optimize-button');
         const resultDiv = document.getElementById('result');
-
+    
         optimizeButton.addEventListener('click', () => {
             fetch('http://localhost:5000/optimize', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    tech: 'shield',
-                    grid_size: 5,
-                    initial_temp: 10000,
-                    cooling_rate: 0.9999,
-                    max_iterations: 10000,
-                    patience: 200,
-                    decay_factor: 0.99
+                    tech: 'infra',
+                    grid: {
+                        cells: [
+                            [
+                                {"adjacency": false, "adjacency_bonus": 0.0, "bonus": 0.0, "image": null, "module": null, "sc_eligible": false, "supercharged": false, "tech": null, "total": 0.0, "type": "", "value": 0},
+                                {"adjacency": false, "adjacency_bonus": 0.0, "bonus": 0.0, "image": null, "module": null, "sc_eligible": false, "supercharged": false, "tech": null, "total": 0.0, "type": "", "value": 0},
+                                {"adjacency": false, "adjacency_bonus": 0.0, "bonus": 0.0, "image": null, "module": null, "sc_eligible": false, "supercharged": false, "tech": null, "total": 0.0, "type": "", "value": 0},
+                                {"adjacency": false, "adjacency_bonus": 0.0, "bonus": 0.0, "image": null, "module": null, "sc_eligible": false, "supercharged": false, "tech": null, "total": 0.0, "type": "", "value": 0}
+                            ],
+                            [
+                                {"adjacency": false, "adjacency_bonus": 0.0, "bonus": 0.0, "image": null, "module": null, "sc_eligible": false, "supercharged": false, "tech": null, "total": 0.0, "type": "", "value": 0},
+                                {"adjacency": false, "adjacency_bonus": 0.0, "bonus": 0.0, "image": null, "module": null, "sc_eligible": false, "supercharged": false, "tech": null, "total": 0.0, "type": "", "value": 0},
+                                {"adjacency": false, "adjacency_bonus": 0.0, "bonus": 0.0, "image": null, "module": null, "sc_eligible": false, "supercharged": false, "tech": null, "total": 0.0, "type": "", "value": 0},
+                                {"adjacency": false, "adjacency_bonus": 0.0, "bonus": 0.0, "image": null, "module": null, "sc_eligible": false, "supercharged": false, "tech": null, "total": 0.0, "type": "", "value": 0}
+                            ],
+                            [
+                                {"adjacency": false, "adjacency_bonus": 0.0, "bonus": 0.0, "image": null, "module": null, "sc_eligible": false, "supercharged": false, "tech": null, "total": 0.0, "type": "", "value": 0},
+                                {"adjacency": false, "adjacency_bonus": 0.0, "bonus": 0.0, "image": null, "module": null, "sc_eligible": false, "supercharged": false, "tech": null, "total": 0.0, "type": "", "value": 0},
+                                {"adjacency": false, "adjacency_bonus": 0.0, "bonus": 0.0, "image": null, "module": null, "sc_eligible": false, "supercharged": false, "tech": null, "total": 0.0, "type": "", "value": 0},
+                                {"adjacency": false, "adjacency_bonus": 0.0, "bonus": 0.0, "image": null, "module": null, "sc_eligible": false, "supercharged": false, "tech": null, "total": 0.0, "type": "", "value": 0}
+                            ]
+                        ],
+                        height: 3,
+                        width: 4
+                    },
+                    initial_temp: 5000,
+                    cooling_rate: 0.9995,
+                    max_iterations: 20000,
+                    patience: 500,
+                    decay_factor: 0.995
                 }),
             })
-                .then(response => response.json())
-                .then(data => console.log(data))
+            .then(response => response.json())
+            .then(data => console.log(data));
         });
     </script>
+    
 </body>
 
 </html>
