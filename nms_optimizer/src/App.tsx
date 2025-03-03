@@ -50,7 +50,7 @@ const createGrid = (width: number, height: number): Grid => ({
 const App: React.FC = () => {
   const [result, setResult] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(false);
-  const [grid, setGrid] = useState<Grid>(createGrid(4, 3));
+  const [grid, setGrid] = useState<Grid>(createGrid(6, 3));
 
   /**
    * Handles optimization request
@@ -133,7 +133,7 @@ const App: React.FC = () => {
                 <td
                   key={columnIndex}
                   onClick={() => toggleSupercharged(rowIndex, columnIndex)}
-                  className={`cursor-pointer shadow-md border-2 px-2 py-2 rounded-lg transition-colors ${
+                  className={`cursor-pointer shadow-md border-4 px-2 py-2 rounded-lg transition-colors ${
                     cell.supercharged ? "border-yellow-500" : "border-gray-300"
                   }`}
                   style={{
