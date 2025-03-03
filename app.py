@@ -14,6 +14,12 @@ def optimize_grid():
     data = request.get_json()
     logging.info(data)
 
+    # raw_data = request.data.decode('utf-8')  # Raw request body
+    # print("Raw request body:", raw_data)
+
+    # json_data = request.get_json()
+    # print("Parsed JSON:", json_data)
+
     tech = data.get('tech')
     if tech is None:
         return jsonify({'error': 'No tech specified'}), 400

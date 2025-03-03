@@ -332,12 +332,12 @@ def simulated_annealing_optimization(grid, modules, tech, initial_temp=10000, co
         temperature *= cooling_rate
 
         # Print progress
-        if iteration % 100 == 0:
-            print(f"Iteration {iteration}/{max_iterations}, Temp: {temperature:.2f}, Best Bonus: {best_bonus:.2f}, Cooling Rate: {cooling_rate:.4f}")
+        #if iteration % 100 == 0:
+        #    print(f"Iteration {iteration}/{max_iterations}, Temp: {temperature:.2f}, Best Bonus: {best_bonus:.2f}, Cooling Rate: {cooling_rate:.4f}")
 
     return best_grid, best_bonus
 
-def generate_neighbor_grid_with_movement(grid, modules, tech, movement_size="small", max_supercharged=1):
+def generate_neighbor_grid_with_movement(grid, modules, tech, movement_size="small", max_supercharged=4):
     """Generate a new grid by modifying the existing grid with new module placements while enforcing a supercharged slot limit."""
     neighbor_grid = Grid(grid.width, grid.height)
     for y in range(grid.height):
