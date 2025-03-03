@@ -161,7 +161,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     setResult({ grid, max_bonus: 0 });
-  }, []);
+  }, [grid]);
 
   return (
     <div className="m-8 App">
