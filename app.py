@@ -12,7 +12,7 @@ CORS(app)  # This will allow all domains by default
 @app.route('/optimize', methods=['POST'])
 def optimize_grid():
     data = request.get_json()
-    logging.info(data)
+    #logging.info(data)
 
     # raw_data = request.data.decode('utf-8')  # Raw request body
     # print("Raw request body:", raw_data)
