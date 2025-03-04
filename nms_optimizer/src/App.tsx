@@ -1,24 +1,53 @@
+import { UpdateIcon } from "@radix-ui/react-icons";
+import { IconButton, Strong, Text } from "@radix-ui/themes";
+
 import React from "react";
-import { useGridStore } from "./store/useGridStore";
 import GridTable from "../src/components/GridTable"; // Import the GridTable component
-import { Button, Spinner} from "@radix-ui/themes";
+import { useGridStore } from "./store/useGridStore";
 
 const App: React.FC = () => {
   const { grid, result, loading, handleOptimize, toggleCellState } = useGridStore();
 
   return (
-    <div className="m-8 App">
-      <h1 className="text-4xl font-bold">No Man's Sky Starship Optimizer</h1>
-      <Button onClick={() => handleOptimize("infra")} disabled={loading}>
-        <Spinner loading={loading}>
-        </Spinner>
-        {loading ? "Optimizing..." : "Optimize Infra"}
-      </Button>
-      <button onClick={() => handleOptimize("shield")} disabled={loading}>
-        {loading ? "Optimizing..." : "Optimize Shield"}
-      </button>
-      <GridTable grid={grid} loading={loading} toggleCellState={toggleCellState} result={result} />
+    <div className="flex justify-center min-h-screen">
+    <div className="w-full max-w-6xl p-4 m-8 mx-auto border-2 rounded-lg shadow-lg bg-cyan-900 border-cyan-700">
+      <h1 className="p-2 text-4xl font-bold">No Man's Sky Starship Optimizer</h1>
+      <hr className="p-2 mt-2 border-cyan-500" />
+  
+      <div className="grid grid-cols-4 gap-4">
+        {/* Main Grid Table */}
+        <div className="col-span-3">
+          <GridTable
+            grid={grid}
+            loading={loading}
+            toggleCellState={toggleCellState}
+            result={result}
+          />
+        </div>
+  
+        {/* Sidebar Actions */}
+        <div className="col-span-1 mt-2 space-y-4">
+          {/* Icon Button with Label */}
+          <div className="flex items-center w-full">
+            <IconButton onClick={() => handleOptimize("infra")} loading={loading}>
+              <UpdateIcon width="18" height="18" />
+            </IconButton>
+            <Text className="!ml-2"><Strong>Optimize Infraknife</Strong></Text>
+          </div>
+
+          {/* Icon Button with Label */}
+          <div className="flex items-center w-full">
+            <IconButton onClick={() => handleOptimize("shields")} loading={loading}>
+              <UpdateIcon width="18" height="18" />
+            </IconButton>
+            <Text className="!ml-2"><Strong>Optimize Shields</Strong></Text>
+          </div>
+          
+        </div>
+      </div>
     </div>
+  </div>
+  
   );
 };
 
