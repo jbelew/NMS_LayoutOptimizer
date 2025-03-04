@@ -9,7 +9,7 @@ import App from './App.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Theme appearance="dark" accentColor="cyan">
+    <Theme appearance="dark" accentColor="cyan" className="!bg-transparent">
       <App />
     </Theme>
   </StrictMode>,

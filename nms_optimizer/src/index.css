@@ -16,7 +16,21 @@ h1 {
   font-family: "GeosansLight";
 }
 
-#root {
-  background-color: #ff0000;
-  color: var(--color-cyan-50);
+body {
+  position: relative; /* Ensure the body element can position the overlay */
+  background-image: url('./assets/img/nms_background2.webp');
+  background-size: cover;
+  background-position: center;
+  height: 100vh; /* Ensure the body takes the full height of the viewport */
+}
+
+body::before {
+  content: ''; /* Necessary for pseudo-elements */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .75); /* Tint color (black in this case) with opacity */
+  z-index: -1; /* Make sure the overlay is behind the content */
 }
