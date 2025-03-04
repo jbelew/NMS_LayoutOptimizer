@@ -143,7 +143,7 @@ class Grid:
             for row in self.cells
         )
 
-def optimize_placement(grid, modules, tech, supercharged_slots):
+def optimize_placement(grid, modules, tech):
     optimal_grid = None
     highest_bonus = 0.0
     iteration = 0
@@ -159,10 +159,7 @@ def optimize_placement(grid, modules, tech, supercharged_slots):
         raise ValueError("No bonus or core modules specified")
 
     # Find all valid positions in the grid
-    available_positions = [(x, y) for y in range(grid.height) for x in range(grid.width) if grid.get_cell(x, y)["module"] is None]
-
-    # Create a set of supercharged slots for fast membership testing
-    supercharged_set = set(supercharged_slots)
+    available_positions = [(x, y) for y in range(grid.height) for x in range(grid.width) if grid.get_cell(x, y)["module"] is None and grid.get_cell(x, y)["active"]]
 
     for core_position in available_positions:
         # if core_position in supercharged_set:  # Skip if core is in a supercharged slot
@@ -177,15 +174,17 @@ def optimize_placement(grid, modules, tech, supercharged_slots):
                     temp_grid.set_tech(x, y, cell["tech"])
                     temp_grid.set_type(x, y, cell["type"])
                     temp_grid.set_bonus(x, y, cell["bonus"])
+                    temp_grid.set_active(x, y, cell["active"])
                     temp_grid.set_adjacency(x, y, cell["adjacency"])
-                    temp_grid.set_supercharge(x, y, cell["supercharge"])
+                    temp_grid.set_supercharged(x, y, cell["supercharged"])
                     temp_grid.set_adjacency_bonus(x, y, cell["adjacency_bonus"])
                     temp_grid.set_total(x, y, cell["total"])
+                    temp_grid.set_image(x, y, cell["image"])
 
             # Place the core module
             core_x, core_y = core_position
             core_module = core_modules[0]
-            place_module(temp_grid, core_x, core_y, core_module["name"], core_module["tech"], core_module["type"], core_module["bonus"], core_module["adjacency"], core_module["supercharge"])
+            place_module(temp_grid, core_x, core_y, core_module["name"], core_module["tech"], core_module["type"], core_module["bonus"], core_module["adjacency"], core_module["sc_eligible"], core_module["image"])
 
             # Place the bonus modules
             for index, bonus_position in enumerate(bonus_placement):
@@ -193,86 +192,20 @@ def optimize_placement(grid, modules, tech, supercharged_slots):
                 if temp_grid.get_cell(x, y)["module"] is not None:
                     continue
                 bonus_module = bonus_modules[index]
-                place_module(temp_grid, x, y, bonus_module["name"], bonus_module["tech"], bonus_module["type"], bonus_module["bonus"], bonus_module["adjacency"], bonus_module["supercharge"])
+                place_module(temp_grid, x, y, bonus_module["name"], bonus_module["tech"], bonus_module["type"], bonus_module["bonus"], bonus_module["adjacency"], bonus_module["sc_eligible"], bonus_module["image"])
 
             # Calculate total bonus for the core module
             populate_adjacency_bonuses(temp_grid, tech)
-            populate_module_bonuses(temp_grid, tech, supercharged_slots)
-            core_bonus = populate_core_bonus(temp_grid, tech, supercharged_slots)
-
-            # Update optimal placement if current bonus is higher
-            iteration += 1
-            print('\rIteration {}'.format(iteration), end='')
-
-            if core_bonus > highest_bonus:
-                highest_bonus = core_bonus
-                optimal_grid = temp_grid
-                print()
-                print("Iterating tech: {} - highest bonus: {:.2f}".format(tech, highest_bonus))
-
-    return optimal_grid, highest_bonus
-
-def optimize_placement_greedy(grid, modules, tech, supercharged_slots):
-    optimal_grid = None
-    highest_bonus = 0.0
-
-    # Filter modules based on tech
-    tech_modules = [module for module in modules if module["tech"] == tech]
-
-    # Separate core and bonus modules
-    core_modules = [module for module in tech_modules if module["type"] == "core"]
-    bonus_modules = [module for module in tech_modules if module["type"] == "bonus"]
-
-    if not bonus_modules or not core_modules:
-        raise ValueError("No bonus or core modules specified")
-
-    # Find all valid positions in the grid
-    available_positions = [(x, y) for y in range(grid.height) for x in range(grid.width) if grid.get_cell(x, y)["module"] is None]
-
-    # Create a set of supercharged slots for fast membership testing
-    supercharged_set = set(supercharged_slots)
-
-    for core_position in available_positions:
-        if core_position in supercharged_set:  # Skip if core is in a supercharged slot
-            continue
-
-        for bonus_placement in permutations(available_positions, len(bonus_modules)):
-            temp_grid = Grid(grid.width, grid.height)
-            for y in range(grid.height):
-                for x in range(grid.width):
-                    cell = grid.get_cell(x, y)
-                    temp_grid.set_module(x, y, cell["module"])
-                    temp_grid.set_tech(x, y, cell["tech"])
-                    temp_grid.set_type(x, y, cell["type"])
-                    temp_grid.set_bonus(x, y, cell["bonus"])
-                    temp_grid.set_adjacency(x, y, cell["adjacency"])
-                    temp_grid.set_adjacency_bonus(x, y, cell["adjacency_bonus"])
-                    temp_grid.set_total(x, y, cell["total"])
-
-            # Place the core module
-            core_x, core_y = core_position
-            core_module = core_modules[0]
-            place_module(temp_grid, core_x, core_y, core_module["name"], core_module["tech"], core_module["type"], core_module["bonus"], core_module["adjacency"])
-
-            # Place the bonus modules
-            for index, bonus_position in enumerate(bonus_placement):
-                x, y = bonus_position
-                if temp_grid.get_cell(x, y)["module"] is not None:
-                    continue
-                bonus_module = bonus_modules[index]
-                place_module(temp_grid, x, y, bonus_module["name"], bonus_module["tech"], bonus_module["type"], bonus_module["bonus"], bonus_module["adjacency"])
-
-            # Calculate total bonus for the core module
-            populate_adjacency_bonuses(temp_grid, tech)
-            populate_module_bonuses(temp_grid, tech, supercharged_slots)
+            populate_module_bonuses(temp_grid, tech)
             core_bonus = populate_core_bonus(temp_grid, tech)
 
             # Update optimal placement if current bonus is higher
+            iteration += 1
+
             if core_bonus > highest_bonus:
                 highest_bonus = core_bonus
                 optimal_grid = temp_grid
-                print("Iterating tech: {} - highest bonus: {:.2f}".format(tech, highest_bonus))
-                print_grid(optimal_grid, supercharged_slots)
+                print(f"Iterating tech: {tech} - highest bonus: {highest_bonus:.2f} on round {iteration}")
 
     return optimal_grid, highest_bonus
 

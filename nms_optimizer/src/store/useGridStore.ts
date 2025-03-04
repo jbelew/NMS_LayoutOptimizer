@@ -62,7 +62,7 @@ type GridStore = {
 };
 
 export const useGridStore = create<GridStore>((set, get) => ({
-  grid: createGrid(10, 3),
+  grid: createGrid(10, 6),
   result: null,
   loading: false,
 
