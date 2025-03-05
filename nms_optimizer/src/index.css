@@ -12,7 +12,7 @@
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
 
-h1 {
+h1, h2 {
   font-family: "GeosansLight";
 }
 

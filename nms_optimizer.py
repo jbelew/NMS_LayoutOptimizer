@@ -11,8 +11,27 @@ class Grid:
     def __init__(self, width, height):
         self.width = width
         self.height = height
-        self.cells = [[{"module": None, "value": 0, "type": "", "total": 0.0, "adjacency_bonus": 0.0, "bonus": 0.0, "active": True, "adjacency": False, "tech": None, "supercharged": False, "sc_eligible": False, "image": None} for _ in range(width)] for _ in range(height)]
-
+        self.cells = [
+            [
+                {
+                    "module": None,
+                    "value": 0,
+                    "type": "",
+                    "total": 0.0,
+                    "adjacency_bonus": 0.0,
+                    "bonus": 0.0,
+                    "active": True,
+                    "adjacency": False,
+                    "tech": None,
+                    "supercharged": False,
+                    "sc_eligible": False,
+                    "image": None,
+                }
+                for _ in range(width)
+            ]
+            for _ in range(height)
+        ]
+        
     def get_cell(self, x, y):
         if 0 <= x < self.width and 0 <= y < self.height:
             return self.cells[y][x]
@@ -35,8 +54,7 @@ class Grid:
         if 0 <= x < self.width and 0 <= y < self.height:
             self.cells[y][x]["active"] = value
         else:
-            raise IndexError("Cell out of bounds")
-            
+            raise IndexError("Cell out of bounds")       
         
     def is_supercharged(self, x, y):
         return self.get_cell(x, y)["supercharged"]
@@ -142,7 +160,7 @@ class Grid:
             )
             for row in self.cells
         )
-
+        
 def optimize_placement(grid, modules, tech):
     optimal_grid = None
     highest_bonus = 0.0
@@ -162,24 +180,8 @@ def optimize_placement(grid, modules, tech):
     available_positions = [(x, y) for y in range(grid.height) for x in range(grid.width) if grid.get_cell(x, y)["module"] is None and grid.get_cell(x, y)["active"]]
 
     for core_position in available_positions:
-        # if core_position in supercharged_set:  # Skip if core is in a supercharged slot
-        #     continue
-
         for bonus_placement in permutations(available_positions, len(bonus_modules)):
-            temp_grid = Grid(grid.width, grid.height)
-            for y in range(grid.height):
-                for x in range(grid.width):
-                    cell = grid.get_cell(x, y)
-                    temp_grid.set_module(x, y, cell["module"])
-                    temp_grid.set_tech(x, y, cell["tech"])
-                    temp_grid.set_type(x, y, cell["type"])
-                    temp_grid.set_bonus(x, y, cell["bonus"])
-                    temp_grid.set_active(x, y, cell["active"])
-                    temp_grid.set_adjacency(x, y, cell["adjacency"])
-                    temp_grid.set_supercharged(x, y, cell["supercharged"])
-                    temp_grid.set_adjacency_bonus(x, y, cell["adjacency_bonus"])
-                    temp_grid.set_total(x, y, cell["total"])
-                    temp_grid.set_image(x, y, cell["image"])
+            temp_grid = Grid.from_dict(grid.to_dict()) #changed to from_dict
 
             # Place the core module
             core_x, core_y = core_position
@@ -204,38 +206,23 @@ def optimize_placement(grid, modules, tech):
 
             if core_bonus > highest_bonus:
                 highest_bonus = core_bonus
-                optimal_grid = temp_grid
-                print(f"Iterating tech: {tech} - highest bonus: {highest_bonus:.2f} on round {iteration}")
+                optimal_grid = Grid.from_dict(temp_grid.to_dict()) #changed to from_dict
 
     return optimal_grid, highest_bonus
 
 def simulated_annealing_optimization(grid, modules, tech, initial_temp=8000, cooling_rate=0.9997, 
                                      max_iterations=200000, patience=500, decay_factor=0.995, 
                                      max_supercharged=4):  # New constraint parameter
-    best_grid = Grid(grid.width, grid.height)
+    best_grid = Grid.from_dict(grid.to_dict()) #changed to from_dict
     best_bonus = -float('inf')
     
-    current_grid = Grid(grid.width, grid.height)
-    for y in range(grid.height):
-        for x in range(grid.width):
-            current_cell = grid.get_cell(x, y)
-            current_grid.set_module(x, y, current_cell["module"])
-            current_grid.set_tech(x, y, current_cell["tech"])
-            current_grid.set_type(x, y, current_cell["type"])
-            current_grid.set_bonus(x, y, current_cell["bonus"])
-            current_grid.set_active(x, y, current_cell["active"])
-            current_grid.set_adjacency(x, y, current_cell["adjacency"])
-            current_grid.set_supercharged(x, y, current_cell["supercharged"])
-            current_grid.set_adjacency_bonus(x, y, current_cell["adjacency_bonus"])
-            current_grid.set_total(x, y, current_cell["total"])
-            current_grid.set_image(x, y, current_cell["image"])
+    current_grid = Grid.from_dict(grid.to_dict()) #changed to from_dict
 
     temperature = initial_temp
     iteration_without_improvement = 0  # Track the number of iterations without improvement
 
     for iteration in range(max_iterations):
         # Generate a neighbor solution by randomly changing the placement of modules
-        movement_size = "large" if temperature > 5 else "small"
         neighbor_grid = generate_neighbor_grid_with_movement(current_grid, modules, tech, temperature, initial_temp, max_supercharged)
 
         # Ensure neighbor grid does not exceed max_supercharged
@@ -250,9 +237,7 @@ def simulated_annealing_optimization(grid, modules, tech, initial_temp=8000, coo
         # If the neighbor solution is better, accept it and copy the grid to the best grid
         if neighbor_bonus > best_bonus:            
             best_bonus = neighbor_bonus
-            for y in range(grid.height):
-                for x in range(grid.width):
-                    best_grid.cells[y][x] = neighbor_grid.cells[y][x].copy()
+            best_grid = Grid.from_dict(neighbor_grid.to_dict()) #changed to from_dict
             iteration_without_improvement = 0  # Reset improvement counter
         else:
             iteration_without_improvement += 1
@@ -264,7 +249,7 @@ def simulated_annealing_optimization(grid, modules, tech, initial_temp=8000, coo
         if energy_diff < 0:
             acceptance_probability = math.exp(energy_diff / temperature)
             if random.random() < acceptance_probability:
-                current_grid = neighbor_grid
+                current_grid = Grid.from_dict(neighbor_grid.to_dict()) #changed to from_dict
 
         if iteration_without_improvement >= patience:
             temperature *= decay_factor
@@ -274,38 +259,25 @@ def simulated_annealing_optimization(grid, modules, tech, initial_temp=8000, coo
         temperature *= cooling_rate
 
         # Print progress
-        #if iteration % 100 == 0:
-        #    print(f"Iteration {iteration}/{max_iterations}, Temp: {temperature:.2f}, Best Bonus: {best_bonus:.2f}, Cooling Rate: {cooling_rate:.4f}")
+        # if iteration % 100 == 0:
+        #     print(f"simulated_annealing_optimization - tech: {tech} - Iteration {iteration}/{max_iterations}, Temp: {temperature:.2f}, Best Bonus: {best_bonus:.2f}, Cooling Rate: {cooling_rate:.4f}")
 
     return best_grid, best_bonus
 
 def generate_neighbor_grid_with_movement(grid, modules, tech, temperature, initial_temp, max_supercharged):
     """Generate a new grid by modifying the existing grid with new module placements while enforcing a supercharged slot limit."""
-    neighbor_grid = Grid(grid.width, grid.height)
-    for y in range(grid.height):
-        for x in range(grid.width):
-            current_cell = grid.get_cell(x, y)
-            neighbor_grid.set_module(x, y, current_cell["module"])
-            neighbor_grid.set_tech(x, y, current_cell["tech"])
-            neighbor_grid.set_type(x, y, current_cell["type"])
-            neighbor_grid.set_bonus(x, y, current_cell["bonus"])
-            neighbor_grid.set_active(x, y, current_cell["active"])
-            neighbor_grid.set_adjacency(x, y, current_cell["adjacency"])
-            neighbor_grid.set_supercharged(x, y, current_cell["supercharged"])
-            neighbor_grid.set_adjacency_bonus(x, y, current_cell["adjacency_bonus"])
-            neighbor_grid.set_total(x, y, current_cell["total"])
-            neighbor_grid.set_image(x, y, current_cell["image"])
+    neighbor_grid = Grid.from_dict(grid.to_dict())
     
     tech_modules = [module for module in modules if module["tech"] == tech]
     core_modules = [module for module in tech_modules if module["type"] == "core"]
     bonus_modules = [module for module in tech_modules if module["type"] == "bonus"]
 
-    occupied_positions = [(x, y) for y in range(grid.height) for x in range(grid.width) if grid.get_cell(x, y)["module"] is not None and grid.get_cell(x, y)["tech"] == tech]
+    occupied_positions = [(x, y) for y in range(grid.height) for x in range(grid.width) if neighbor_grid.get_cell(x, y)["module"] is not None and neighbor_grid.get_cell(x, y)["tech"] == tech]
     available_positions = [
         (x, y) 
         for y in range(grid.height) 
         for x in range(grid.width) 
-        if grid.get_cell(x, y)["module"] is None and grid.get_cell(x, y)["active"]
+        if neighbor_grid.get_cell(x, y)["module"] is None and neighbor_grid.get_cell(x, y)["active"]
     ]
 
     move_count = max(1, int(5 * (temperature / initial_temp)))  # More moves when temp is high
@@ -337,7 +309,7 @@ def generate_neighbor_grid_with_movement(grid, modules, tech, temperature, initi
                 available_positions.remove((new_x, new_y))
 
                 # Enforce supercharged slot limit when placing a module
-                is_supercharged = old_cell["supercharged"] and count_supercharged_slots(neighbor_grid) < max_supercharged
+                is_supercharged = old_cell["supercharged"] and count_supercharged_slots(neighbor_grid, tech) < max_supercharged
 
                 place_module(neighbor_grid, new_x, new_y, old_module, old_cell["tech"], old_cell["type"], old_cell["bonus"], old_cell["adjacency"], is_supercharged, old_cell["image"])
 
@@ -437,48 +409,26 @@ def populate_core_bonus(grid, tech):
     return final_bonus
 
 def print_grid(grid):
-    """Display the grid with only 'Val' for the total value of each slot."""
-
+    """Display the grid with module info, total value, and active state (+/-) instead of '.'."""
     # Format and print the grid
     for y, row in enumerate(grid.cells):
         formatted_row = []
 
         for x, cell in enumerate(row):
-            cell_data = grid.get_cell(x, y)
-            total_value = cell_data['value']
-            is_supercharged = cell_data['supercharged'] == True
+            cell_data = copy.deepcopy(grid.get_cell(x, y)) #make a copy of the data to ensure we don't modify it
+            is_supercharged = cell_data['supercharged']
             is_shield = cell_data['tech'] == 'shield'
             is_infra = cell_data['tech'] == 'infra'
+            active_state = " +" if cell_data['active'] else " -"  # what to show if there is no module
 
             formatted_row.append(
-                f"\033[93m{cell_data['module'] if cell_data['module'] else '.'} (T: {cell_data['total']:.2f}) (B: {cell_data['bonus']:.2f}) (A: {cell_data['adjacency_bonus']:.2f})\033[0m"
+                f"\033[93m{active_state if cell_data['module'] is None else cell_data['module']} (T: {cell_data['total']:.2f}) (B: {cell_data['bonus']:.2f}) (A: {cell_data['adjacency_bonus']:.2f})\033[0m"
                 if is_supercharged else
-                f"\033[96m{cell_data['module'] if cell_data['module'] else '.'} (T: {cell_data['total']:.2f}) (B: {cell_data['bonus']:.2f}) (A: {cell_data['adjacency_bonus']:.2f})\033[0m"
+                f"\033[96m{active_state if cell_data['module'] is None else cell_data['module']} (T: {cell_data['total']:.2f}) (B: {cell_data['bonus']:.2f}) (A: {cell_data['adjacency_bonus']:.2f})\033[0m"
                 if is_shield else
-                f"\033[91m{cell_data['module'] if cell_data['module'] else '.'} (T: {cell_data['total']:.2f}) (B: {cell_data['bonus']:.2f}) (A: {cell_data['adjacency_bonus']:.2f})\033[0m"
+                f"\033[91m{active_state if cell_data['module'] is None else cell_data['module']} (T: {cell_data['total']:.2f}) (B: {cell_data['bonus']:.2f}) (A: {cell_data['adjacency_bonus']:.2f})\033[0m"
                 if is_infra else
-                f"{cell_data['module'] if cell_data['module'] else '.'} (T: {cell_data['total']:.2f}) (B: {cell_data['bonus']:.2f}) (A: {cell_data['adjacency_bonus']:.2f})"
-                )
+                f"{active_state if cell_data['module'] is None else cell_data['module']} (T: {cell_data['total']:.2f}) (B: {cell_data['bonus']:.2f}) (A: {cell_data['adjacency_bonus']:.2f})"
+            )
         print(" | ".join(formatted_row))
     print()
-    
-# Grid and Supercharged Slots
-#grid = Grid(5, 6)
-#grid.set_supercharged(1, 1, True)
-#grid.set_supercharged(1, 2, True)
-#grid.set_supercharged(1, 3, True)
-#grid.set_supercharged(3, 3, True)
-
-# Optimize placement for modules
-#grid, max_bonus = optimize_placement(grid, modules, "shield", supercharged_slots)
-#grid, max_bonus = optimize_placement(grid, modules, "infra", supercharged_slots)
-
-#print_grid(grid)
-#grid, max_bonus = simulated_annealing_optimization(grid, modules, "shield", initial_temp=10000, cooling_rate=0.9999, max_iterations=10000, patience=200, decay_factor=0.99)
-#print(type(grid))  # Debugging: Check what type optimized_grid is
-#print_grid(grid)
-#grid, max_bonus = simulated_annealing_optimization(grid, modules, "infra", initial_temp=5000, cooling_rate=0.9995, max_iterations=20000, patience=500, decay_factor=0.995)
-#print_grid(grid)
-#grid, max_bonus = simulated_annealing_optimization(grid, modules, "photon",  initial_temp=10000, cooling_rate=0.9999, max_iterations=1500, patience=200, decay_factor=0.99)
-
-

@@ -114,11 +114,11 @@ export const useGridStore = create<GridStore>((set, get) => ({
         body: JSON.stringify({
           tech,
           grid: updatedGrid,
-          initial_temp: 10000,
+          initial_temp: 80000,
           cooling_rate: 0.9997,
-          max_iterations: 20000,
+          max_iterations: 30000,
           patience: 500,
-          decay_factor: 0.995,
+          decay_factor: 0.9997,
         }),
       });
 

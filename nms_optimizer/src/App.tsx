@@ -27,6 +27,7 @@ const App: React.FC = () => {
   
         {/* Sidebar Actions */}
         <div className="col-span-1 mt-2 space-y-4">
+          <h2 className="text-2xl">WEAPONS</h2>
           {/* Icon Button with Label */}
           <div className="flex items-center w-full">
             <IconButton onClick={() => handleOptimize("infra")} loading={loading}>
@@ -34,14 +35,23 @@ const App: React.FC = () => {
             </IconButton>
             <Text className="!ml-2"><Strong>Optimize Infraknife</Strong></Text>
           </div>
+          <div className="flex items-center w-full">
+            <IconButton onClick={() => handleOptimize("photon")} loading={loading}>
+              <UpdateIcon width="18" height="18" />
+            </IconButton>
+            <Text className="!ml-2"><Strong>Optimize Photon Cannons</Strong></Text>
+          </div>
 
+          <h2 className="text-2xl">MOBILITY</h2>
           {/* Icon Button with Label */}
           <div className="flex items-center w-full">
-            <IconButton onClick={() => handleOptimize("shields")} loading={loading}>
+            <IconButton onClick={() => handleOptimize("shield")} loading={loading}>
               <UpdateIcon width="18" height="18" />
             </IconButton>
             <Text className="!ml-2"><Strong>Optimize Shields</Strong></Text>
           </div>
+
+          <h2 className="text-2xl">ADDITIONAL TECHNOLOGY</h2>
           
         </div>
       </div>
