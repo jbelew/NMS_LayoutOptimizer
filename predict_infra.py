@@ -3,16 +3,12 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 import json
 import os
-import random
+import sklearn
 
-# Import from the other files
-from nms_optimizer import (
-    Grid,
-    optimize_placement,
-    place_module,
-    modules,
-    print_grid,
-)
+# Import necessary functions from other files (assuming these are in the same directory)
+from nms_optimizer import Grid, place_module, modules, print_grid
+from generate_training_data import grid_to_input
+
 
 # --- Load Configuration ---
 config = {
@@ -20,118 +16,71 @@ config = {
     "height": 3,
     "tech": "infra",
     "model_file": "model.json",
+    "encoders_file": "data/encoders_infra.json",
     "debug": True,
-    "xgb_params": {
-        "objective": "multi:softmax",  # changed this line
-        "eval_metric": "merror",  # changed this line
-        "eta": 0.1,
-        "max_depth": 6,
-    },
 }
 
-# --- Helper Functions from generate_training_data.py (modified slightly) ---
-
-def grid_to_input(grid):
-    """Convert Grid to a list of lists of features (suitable for ML)."""
-    grid_data = []
-    for row in grid.cells:
-        for cell in row:
-            bonus = cell.get("bonus", 0.0)
-            supercharged = 1 if cell.get("supercharged", False) else 0
-            active = 1 if cell.get("active", False) else 0
-            sc_eligible = 1 if cell.get("sc_eligible", False) else 0
-
-            module = cell.get("module", "")  # Changed to ""
-            tech = cell.get("tech", "")
-            type = cell.get("type", "")
-            
-            grid_data.append(
-                [
-                    module,
-                    tech,
-                    type,
-                    bonus,
-                    supercharged,
-                    active,
-                    sc_eligible,
-                ]
-            )
-    return grid_data
-
-def load_encoders(filepath, modules, tech):
-    """Load encoders from a JSON file."""
-    # Load the tech specific file
-    tech_filepath = f"{filepath.replace('.json','')}_{tech}.json" #changed to filepath
-    with open(tech_filepath, "r") as f:
-        data = json.load(f)
-    
-    tech_modules = [module for module in modules if module["tech"] == tech]
-    all_modules = sorted(list(set([str(module["name"]) for module in tech_modules])))
-    all_techs = sorted(list(set([str(module["tech"]) for module in tech_modules])))
-    all_types = sorted(list(set([str(module["type"]) for module in tech_modules])))
-
-    # Load encoders from saved data
-    module_encoder = OneHotEncoder(handle_unknown="ignore", sparse_output=False) #removed min_frequency
-    module_encoder.fit(np.array(all_modules).reshape(-1, 1))
-    module_encoder.categories_ = [np.array(cat) for cat in data["module_encoder_categories"]]
-
-    tech_encoder = OneHotEncoder(handle_unknown="ignore", sparse_output=False) #removed min_frequency
-    tech_encoder.fit(np.array(all_techs).reshape(-1, 1))
-    tech_encoder.categories_ = [np.array(cat) for cat in data["tech_encoder_categories"]]
-
-    type_encoder = OneHotEncoder(handle_unknown="ignore", sparse_output=False) #removed min_frequency
-    type_encoder.fit(np.array(all_types).reshape(-1, 1))
-    type_encoder.categories_ = [np.array(cat) for cat in data["type_encoder_categories"]]
-
+def load_encoders(filepath):
+    """Loads and potentially fits encoders from a JSON file."""
+    module_encoder = OneHotEncoder(handle_unknown='ignore', sparse_output=False, min_frequency=0)
+    tech_encoder = OneHotEncoder(handle_unknown='ignore', sparse_output=False, min_frequency=0)
+    type_encoder = OneHotEncoder(handle_unknown='ignore', sparse_output=False, min_frequency=0)
     scaler = StandardScaler()
-    scaler.mean_ = np.array(data["scaler_mean"])
-    scaler.scale_ = np.array(data["scaler_scale"])
-    scaler.var_ = np.array(data["scaler_var"])
+
+    try:
+        with open(filepath, 'r') as f:
+            data = json.load(f)
+
+        # Load the categories directly
+        module_encoder.categories_ = [np.array(data["module_encoder_categories"][0])]
+        tech_encoder.categories_ = [np.array(data["tech_encoder_categories"][0])]
+        type_encoder.categories_ = [np.array(data["type_encoder_categories"][0])]
+
+        scaler.mean_ = np.array(data["scaler_mean"])
+        scaler.scale_ = np.array(data["scaler_scale"])
+        scaler.var_ = np.array(data["scaler_var"])
+
+    except (FileNotFoundError, json.JSONDecodeError, KeyError, IndexError) as e:
+        print(f"Warning: Error loading encoders from {filepath}: {e}. Encoders will be fitted later.")
 
     return module_encoder, tech_encoder, type_encoder, scaler
 
-def preprocess_new_grid(grid, module_encoder, tech_encoder, type_encoder, scaler, modules, tech, debug=True):
-    """Preprocesses a new grid for ML prediction."""
-    tech_modules = [module for module in modules if module["tech"] == tech]
-    # Convert grid to list of lists
-    X = grid_to_input(grid)
+def preprocess_new_grid(grid, module_encoder, tech_encoder, type_encoder, scaler, tech_modules):
+    """Preprocesses a new grid for ML prediction, handling unseen categories."""
+    X = grid_to_input(grid, tech_modules)
     X = np.array(X)
 
     # Separate features
-    modules_data = np.array(X)[:, 0]  # Every nth element starting from 0
-    techs = np.array(X)[:, 1]  # Every nth element starting from 1
-    types = np.array(X)[:, 2]  # Every nth element starting from 2
-    bonuses = np.array(X)[:, 3].astype(np.float64)  # Every nth element starting from 3
-    supercharged = np.array(X)[:, 4].astype(np.int32)  # Every nth element starting from 4
-    active = np.array(X)[:, 5].astype(np.int32)  # Every nth element starting from 5
-    sc_eligible = np.array(X)[:, 6].astype(np.int32)  # Every nth element starting from 6
+    modules_data = X[:, 0]
+    techs = X[:, 1]
+    types = X[:, 2]
+    bonuses = X[:, 3].astype(np.float64)
+    supercharged = X[:, 4].astype(np.int32)
+    active = X[:, 5].astype(np.int32)
+    sc_eligible = X[:, 6].astype(np.int32)
 
-    # One-Hot Encoding
-    # Replace None values with empty strings for one-hot encoding
-    modules_data[modules_data == None] = ""
-    techs[techs == None] = ""
-    types[types == None] = ""
-
-    # ---Handle Unknown---
-    # If the category is not found in training data, it will be filled with all 0s
-    def transform_with_unknown(encoder, data):
-        # Convert data to a 2D array if it's not already
-        if len(data.shape) == 1:
-            data = data.reshape(-1, 1)
-        encoded = encoder.transform(data)
-        if hasattr(encoded, "toarray"):
-            encoded = encoded.toarray()
-        return encoded
-
-    modules_encoded = transform_with_unknown(module_encoder, modules_data.reshape(-1, 1))
-    techs_encoded = transform_with_unknown(tech_encoder, techs.reshape(-1, 1))
-    types_encoded = transform_with_unknown(type_encoder, types.reshape(-1, 1))
-    # ---End Handle Unknown---
+    #Handle potential missing values
+    modules_data = np.where(modules_data == None, "", modules_data)
+    techs = np.where(techs == None, "", techs)
+    types = np.where(types == None, "", types)
     
-    # Scale Numerical Features
+    # Transforming the data
+    modules_encoded = module_encoder.transform(modules_data.reshape(-1, 1))
+    techs_encoded = tech_encoder.transform(techs.reshape(-1, 1))
+    types_encoded = type_encoder.transform(types.reshape(-1, 1))
+
+    #Check if sparse matrix and convert if needed
+    if isinstance(modules_encoded, sklearn.sparse.csr.csr_matrix):
+        modules_encoded = modules_encoded.toarray()
+    if isinstance(techs_encoded, sklearn.sparse.csr.csr_matrix):
+        techs_encoded = techs_encoded.toarray()
+    if isinstance(types_encoded, sklearn.sparse.csr.csr_matrix):
+        types_encoded = types_encoded.toarray()
+
+    #Scale numerical features
     bonuses_scaled = scaler.transform(bonuses.reshape(-1, 1))
 
-    # Combine the data again
+    # Concatenate features
     X_processed = np.concatenate(
         (
             modules_encoded,
@@ -144,109 +93,112 @@ def preprocess_new_grid(grid, module_encoder, tech_encoder, type_encoder, scaler
         ),
         axis=1,
     )
-
-    if debug:
-        print("X shape after preprocessing:", X_processed.shape)
-
     return X_processed
+
+
+# --- Main Prediction Function ---
+def predict_grid(grid, model, module_encoder, tech_encoder, type_encoder, scaler, tech_modules):
+    """Predicts module placement for a given grid."""
+    processed_grid = preprocess_new_grid(grid, module_encoder, tech_encoder, type_encoder, scaler, tech_modules)
+    probabilities = model.predict_proba(processed_grid)
+    predictions = np.argmax(probabilities, axis=1)
+    return predictions
 
 
 # --- Main Execution ---
 if __name__ == "__main__":
-    # Extract parameters from config
-    tech = config["tech"]
-    # --- Load the Trained XGBoost Model ---
-    model_file = config["model_file"]
-    try:
-        model = xgb.Booster()
-        model.load_model(model_file)
-    except xgb.core.XGBoostError:
-        print("Error: Could not load model. Please run generate_training_data.py first.")
-        exit()
+    # Load the model
+    model = xgb.XGBClassifier()
+    model.load_model(config["model_file"])
 
-    # --- Load encoders ---
-    module_encoder, tech_encoder, type_encoder, scaler = load_encoders("data/encoders.json", modules, tech) #added modules here
+    # Load encoders (will fit if necessary)
+    module_encoder, tech_encoder, type_encoder, scaler = load_encoders(config["encoders_file"])
 
-    # --- Create a New Grid ---
-    # We will now load the input grid from a dict
+    #Larger Grid Data (replace with your actual grid loading)
     grid_data = {
         "cells": [
             [
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": True, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": True, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": True, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": True, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True},
             ],
             [
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True},
             ],
             [
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True}
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True}
             ]
         ],
         "height": 3,
         "width": 4
     }
-    new_grid = Grid(config["width"], config["height"])
-    for y, row in enumerate(grid_data["cells"]):
-        for x, cell_data in enumerate(row):
-            cell = new_grid.get_cell(x, y)
-            cell.update({
-                "module": cell_data["module"],
-                "value": cell_data["value"],
-                "type": cell_data["type"],
-                "total": cell_data["total"],
-                "active": cell_data["active"],
-                "adjacency_bonus": cell_data["adjacency_bonus"],
-                "bonus": cell_data["bonus"],
-                "adjacency": cell_data["adjacency"],
-                "tech": cell_data["tech"],
-                "supercharged": cell_data["supercharged"],
-                "sc_eligible": cell_data["sc_eligible"],
-                "image": cell_data["image"],
-            })
 
-    
-    # --- Preprocess the New Grid ---
-    tech_modules = [module for module in modules if module["tech"] == tech]
-    new_grid_processed = preprocess_new_grid(new_grid, module_encoder, tech_encoder, type_encoder, scaler, modules, config["tech"])
+    predefined_grid = Grid.from_dict(grid_data)
+    print_grid(predefined_grid)
 
-    # --- Make a Prediction ---
-    dnew_grid = xgb.DMatrix(new_grid_processed)
-    predictions = model.predict(dnew_grid).astype(int) #added .astype(int)
+    # Get tech modules (assuming 'modules' is defined elsewhere - likely in nms_optimizer.py)
+    tech_modules = [module for module in modules if module["tech"] == config["tech"]]
 
-    # --- Place Modules Based on Predictions ---
+    # Make predictions
+    predictions = predict_grid(predefined_grid, model, module_encoder, tech_encoder, type_encoder, scaler, tech_modules)
+
+    print(f"Predictions: {predictions}")
+
+    # Place modules (example - adapt to your placement logic)
     prediction_index = 0
-    for row in range(new_grid.height):
-        for col in range(new_grid.width):
-            module_index = predictions[prediction_index] #get the prediction for this cell
-            if module_index != -1:
-                current_module = tech_modules[module_index] #Changed to only show modules that match the tech
+    for row in range(predefined_grid.height):
+        for col in range(predefined_grid.width):
+            module_index = predictions[prediction_index]
+            cell = predefined_grid.get_cell(col, row)
+            if module_index == 0: #empty
                 place_module(
-                    new_grid,
+                    predefined_grid,
                     col,
                     row,
-                    current_module["name"],
-                    current_module["tech"],
-                    current_module["type"],
-                    current_module["bonus"],
-                    current_module["adjacency"],
-                    current_module["sc_eligible"],
-                    current_module["image"],
+                    None,
+                    None,
+                    None,
+                    0,
+                    False,
+                    False,
+                    None,
                 )
-            prediction_index +=1
+            elif module_index == 1: # inactive
+                cell["active"] = False
+                place_module(
+                    predefined_grid,
+                    col,
+                    row,
+                    None,
+                    None,
+                    None,
+                    0,
+                    False,
+                    False,
+                    None,
+                )
+            elif module_index > 1:  # Offset for empty and inactive
+                module_to_place = tech_modules[module_index - 2]  # Offset for empty and inactive
+                place_module(
+                    predefined_grid,
+                    col,
+                    row,
+                    module_to_place["name"],
+                    module_to_place["tech"],
+                    module_to_place["type"],
+                    module_to_place["bonus"],
+                    module_to_place["adjacency"],
+                    module_to_place["sc_eligible"],
+                    module_to_place["image"],
+                )
+            prediction_index += 1
 
-    # --- Print the Grid and the Prediction ---
-    print("New Grid:")
-    print_grid(new_grid)
-    print(f"Prediction:")
-    print(json.dumps(predictions.tolist()))
-
-
-
+    print("\nGrid after module placement:")
+    print_grid(predefined_grid)
