@@ -1,0 +1,31 @@
+{
+    "module_encoder_categories": [
+        [
+            "IK",
+            "QR",
+            "Xa",
+            "Xb",
+            "Xc"
+        ]
+    ],
+    "tech_encoder_categories": [
+        [
+            "infra"
+        ]
+    ],
+    "type_encoder_categories": [
+        [
+            "bonus",
+            "core"
+        ]
+    ],
+    "scaler_mean": [
+        0.0
+    ],
+    "scaler_scale": [
+        1.0
+    ],
+    "scaler_var": [
+        0.0
+    ]
+}

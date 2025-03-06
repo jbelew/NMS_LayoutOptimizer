@@ -1,2262 +1,4092 @@
 [
     [
-        [
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
             ]
-        ],
-        1.8700000000000003
+        },
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": "Xa",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.5,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.2,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": "IK",
+                        "value": 0,
+                        "type": "core",
+                        "total": 2.0625,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra.png"
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": "QR",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.30000000000000004,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "q-resonator.png"
+                    },
+                    {
+                        "module": "Xb",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.6125,
+                        "adjacency_bonus": 0.30000000000000004,
+                        "bonus": 0.19,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": "Xc",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.35000000000000003,
+                        "adjacency_bonus": 0.1,
+                        "bonus": 0.18,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    }
+                ]
+            ]
+        },
+        [
+            {
+                "name": "IK",
+                "tech": "infra",
+                "type": "core",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra.png"
+            },
+            {
+                "name": "QR",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "q-resonator.png"
+            },
+            {
+                "name": "Xa",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.2,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xb",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.19,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xc",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.18,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            }
+        ]
     ],
     [
-        [
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                1,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
             ]
-        ],
-        1.9925000000000002
+        },
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": "IK",
+                        "value": 0,
+                        "type": "core",
+                        "total": 1.7700000000000002,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra.png"
+                    },
+                    {
+                        "module": "QR",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.30000000000000004,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "q-resonator.png"
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": "Xa",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.4,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.2,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": "Xb",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.49000000000000005,
+                        "adjacency_bonus": 0.30000000000000004,
+                        "bonus": 0.19,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": "Xc",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.28,
+                        "adjacency_bonus": 0.1,
+                        "bonus": 0.18,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
+            ]
+        },
+        [
+            {
+                "name": "IK",
+                "tech": "infra",
+                "type": "core",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra.png"
+            },
+            {
+                "name": "QR",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "q-resonator.png"
+            },
+            {
+                "name": "Xa",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.2,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xb",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.19,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xc",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.18,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            }
+        ]
     ],
     [
-        [
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
             ]
-        ],
-        1.7700000000000002
+        },
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": "IK",
+                        "value": 0,
+                        "type": "core",
+                        "total": 1.8950000000000002,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra.png"
+                    },
+                    {
+                        "module": "QR",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.30000000000000004,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "q-resonator.png"
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": "Xc",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.38,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.18,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": "Xa",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.625,
+                        "adjacency_bonus": 0.30000000000000004,
+                        "bonus": 0.2,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": "Xb",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.29000000000000004,
+                        "adjacency_bonus": 0.1,
+                        "bonus": 0.19,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
+            ]
+        },
+        [
+            {
+                "name": "IK",
+                "tech": "infra",
+                "type": "core",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra.png"
+            },
+            {
+                "name": "QR",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "q-resonator.png"
+            },
+            {
+                "name": "Xa",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.2,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xb",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.19,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xc",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.18,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            }
+        ]
     ],
     [
-        [
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                1,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
             ]
-        ],
-        1.9425000000000003
+        },
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": "IK",
+                        "value": 0,
+                        "type": "core",
+                        "total": 1.87,
+                        "adjacency_bonus": 0.1,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra.png"
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": "Xb",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.49000000000000005,
+                        "adjacency_bonus": 0.30000000000000004,
+                        "bonus": 0.19,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": "Xc",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.38,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.18,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": "QR",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.30000000000000004,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "q-resonator.png"
+                    },
+                    {
+                        "module": "Xa",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.5,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.2,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    }
+                ]
+            ]
+        },
+        [
+            {
+                "name": "IK",
+                "tech": "infra",
+                "type": "core",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra.png"
+            },
+            {
+                "name": "QR",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "q-resonator.png"
+            },
+            {
+                "name": "Xa",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.2,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xb",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.19,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xc",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.18,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            }
+        ]
     ],
     [
-        [
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
             ]
-        ],
-        1.7700000000000002
+        },
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": "IK",
+                        "value": 0,
+                        "type": "core",
+                        "total": 2.0625,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra.png"
+                    },
+                    {
+                        "module": "Xa",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.5,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.2,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": "QR",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.30000000000000004,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "q-resonator.png"
+                    },
+                    {
+                        "module": "Xb",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.6125,
+                        "adjacency_bonus": 0.30000000000000004,
+                        "bonus": 0.19,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": "Xc",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.35000000000000003,
+                        "adjacency_bonus": 0.1,
+                        "bonus": 0.18,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
+            ]
+        },
+        [
+            {
+                "name": "IK",
+                "tech": "infra",
+                "type": "core",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra.png"
+            },
+            {
+                "name": "QR",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "q-resonator.png"
+            },
+            {
+                "name": "Xa",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.2,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xb",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.19,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xc",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.18,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            }
+        ]
     ],
     [
-        [
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                1,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
             ]
-        ],
-        1.9925000000000002
+        },
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": "IK",
+                        "value": 0,
+                        "type": "core",
+                        "total": 1.9925000000000002,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra.png"
+                    },
+                    {
+                        "module": "QR",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.30000000000000004,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "q-resonator.png"
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": "Xc",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.28,
+                        "adjacency_bonus": 0.1,
+                        "bonus": 0.18,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": "Xa",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.625,
+                        "adjacency_bonus": 0.30000000000000004,
+                        "bonus": 0.2,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": "Xb",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.48750000000000004,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.19,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    }
+                ]
+            ]
+        },
+        [
+            {
+                "name": "IK",
+                "tech": "infra",
+                "type": "core",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra.png"
+            },
+            {
+                "name": "QR",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "q-resonator.png"
+            },
+            {
+                "name": "Xa",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.2,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xb",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.19,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xc",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.18,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            }
+        ]
     ],
     [
-        [
-            [
-                null,
-                null,
-                "",
-                0.0,
-                1,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                1,
-                1,
-                1
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                1,
-                1,
-                1
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
             ]
-        ],
-        2.0375000000000005
+        },
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": "IK",
+                        "value": 0,
+                        "type": "core",
+                        "total": 1.7700000000000002,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra.png"
+                    },
+                    {
+                        "module": "QR",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.4,
+                        "adjacency_bonus": 0.30000000000000004,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "q-resonator.png"
+                    },
+                    {
+                        "module": "Xa",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.30000000000000004,
+                        "adjacency_bonus": 0.1,
+                        "bonus": 0.2,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": "Xb",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.39,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.19,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": "Xc",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.38,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.18,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
+            ]
+        },
+        [
+            {
+                "name": "IK",
+                "tech": "infra",
+                "type": "core",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra.png"
+            },
+            {
+                "name": "QR",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "q-resonator.png"
+            },
+            {
+                "name": "Xa",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.2,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xb",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.19,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xc",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.18,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            }
+        ]
     ],
     [
-        [
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
             ]
-        ],
-        1.7700000000000002
+        },
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": "Xa",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.5,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.2,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": "Xb",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.48750000000000004,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.19,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": "QR",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.4,
+                        "adjacency_bonus": 0.30000000000000004,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "q-resonator.png"
+                    },
+                    {
+                        "module": "IK",
+                        "value": 0,
+                        "type": "core",
+                        "total": 2.0375000000000005,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra.png"
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": "Xc",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.35000000000000003,
+                        "adjacency_bonus": 0.1,
+                        "bonus": 0.18,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
+            ]
+        },
+        [
+            {
+                "name": "IK",
+                "tech": "infra",
+                "type": "core",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra.png"
+            },
+            {
+                "name": "QR",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "q-resonator.png"
+            },
+            {
+                "name": "Xa",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.2,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xb",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.19,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xc",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.18,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            }
+        ]
     ],
     [
-        [
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                1,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
             ]
-        ],
-        1.9925000000000002
+        },
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": "IK",
+                        "value": 0,
+                        "type": "core",
+                        "total": 1.7700000000000002,
+                        "adjacency_bonus": 0.1,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra.png"
+                    },
+                    {
+                        "module": "QR",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.4,
+                        "adjacency_bonus": 0.30000000000000004,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "q-resonator.png"
+                    },
+                    {
+                        "module": "Xa",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.4,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.2,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": "Xc",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.38,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.18,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": "Xb",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.39,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.19,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
+            ]
+        },
+        [
+            {
+                "name": "IK",
+                "tech": "infra",
+                "type": "core",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra.png"
+            },
+            {
+                "name": "QR",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "q-resonator.png"
+            },
+            {
+                "name": "Xa",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.2,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xb",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.19,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xc",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.18,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            }
+        ]
     ],
     [
-        [
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": true,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
             ]
-        ],
-        1.8950000000000002
-    ],
-    [
-        [
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                0,
-                1,
-                1
+        },
+        {
+            "width": 4,
+            "height": 3,
+            "cells": [
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": "IK",
+                        "value": 0,
+                        "type": "core",
+                        "total": 2.0625,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "infra.png"
+                    },
+                    {
+                        "module": "Xa",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.625,
+                        "adjacency_bonus": 0.30000000000000004,
+                        "bonus": 0.2,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": "Xb",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.36250000000000004,
+                        "adjacency_bonus": 0.1,
+                        "bonus": 0.19,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    }
+                ],
+                [
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": true,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    },
+                    {
+                        "module": "Xc",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.475,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.18,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": true,
+                        "sc_eligible": true,
+                        "image": "infra-upgrade.png"
+                    },
+                    {
+                        "module": "QR",
+                        "value": 0,
+                        "type": "bonus",
+                        "total": 0.30000000000000004,
+                        "adjacency_bonus": 0.2,
+                        "bonus": 0.1,
+                        "active": true,
+                        "adjacency": true,
+                        "tech": "infra",
+                        "supercharged": false,
+                        "sc_eligible": true,
+                        "image": "q-resonator.png"
+                    },
+                    {
+                        "module": null,
+                        "value": 0,
+                        "type": "",
+                        "total": 0.0,
+                        "adjacency_bonus": 0.0,
+                        "bonus": 0.0,
+                        "active": false,
+                        "adjacency": false,
+                        "tech": null,
+                        "supercharged": false,
+                        "sc_eligible": false,
+                        "image": null
+                    }
+                ]
             ]
-        ],
-        1.8950000000000002
-    ],
-    [
+        },
         [
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                1,
-                1,
-                1
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                1,
-                1,
-                1
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ]
-        ],
-        2.0625
-    ],
-    [
-        [
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                1,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ]
-        ],
-        1.9425000000000003
-    ],
-    [
-        [
-            [
-                null,
-                null,
-                "",
-                0.0,
-                1,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                1,
-                1,
-                1
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                1,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ]
-        ],
-        2.0875000000000004
-    ],
-    [
-        [
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                1,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ]
-        ],
-        1.9925000000000002
-    ],
-    [
-        [
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                1,
-                1,
-                1
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ]
-        ],
-        1.9925000000000002
-    ],
-    [
-        [
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ],
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                0,
-                1,
-                1
-            ]
-        ],
-        1.8950000000000002
-    ],
-    [
-        [
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                1,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                1,
-                1,
-                0
-            ]
-        ],
-        1.8700000000000003
-    ],
-    [
-        [
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                1,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                1,
-                1,
-                1
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                1,
-                1,
-                0
-            ]
-        ],
-        1.9675000000000002
-    ],
-    [
-        [
-            [
-                null,
-                null,
-                "",
-                0.0,
-                1,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                0,
-                0
-            ],
-            [
-                "IK",
-                "infra",
-                "core",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "QR",
-                "infra",
-                "bonus",
-                0.1,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xa",
-                "infra",
-                "bonus",
-                0.2,
-                1,
-                1,
-                1
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                1,
-                1,
-                0
-            ],
-            [
-                null,
-                null,
-                "",
-                0.0,
-                0,
-                1,
-                0
-            ],
-            [
-                "Xc",
-                "infra",
-                "bonus",
-                0.18,
-                0,
-                1,
-                1
-            ],
-            [
-                "Xb",
-                "infra",
-                "bonus",
-                0.19,
-                1,
-                1,
-                1
-            ]
-        ],
-        1.9925000000000002
+            {
+                "name": "IK",
+                "tech": "infra",
+                "type": "core",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra.png"
+            },
+            {
+                "name": "QR",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.1,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "q-resonator.png"
+            },
+            {
+                "name": "Xa",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.2,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xb",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.19,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            },
+            {
+                "name": "Xc",
+                "tech": "infra",
+                "type": "bonus",
+                "bonus": 0.18,
+                "adjacency": true,
+                "sc_eligible": true,
+                "image": "infra-upgrade.png"
+            }
+        ]
     ]
 ]

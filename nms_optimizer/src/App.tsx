@@ -2,7 +2,7 @@ import { UpdateIcon } from "@radix-ui/react-icons";
 import { IconButton, Strong, Text } from "@radix-ui/themes";
 
 import React from "react";
-import GridTable from "../src/components/GridTable"; // Import the GridTable component
+import GridTable from "../src/components/GridTable";
 import { useGridStore } from "./store/useGridStore";
 
 const App: React.FC = () => {
