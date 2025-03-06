@@ -34,29 +34,17 @@ config = {
 def grid_to_input(grid):
     """Convert Grid to a list of lists of features (suitable for ML)."""
     grid_data = []
-    tech = ""
     for row in grid.cells:
         for cell in row:
             bonus = cell.get("bonus", 0.0)
             supercharged = 1 if cell.get("supercharged", False) else 0
             active = 1 if cell.get("active", False) else 0
             sc_eligible = 1 if cell.get("sc_eligible", False) else 0
-            
-            #check to see if the tech matches
-            if cell.get("tech") != tech and cell.get("tech") is not None:
-                module = ""
-                tech = ""
-                type = ""
-                active = 0
-                bonus = 0
-                supercharged = 0
-                sc_eligible = 0
-            else:
-                module = cell.get("module", "") #changed to ""
-                tech = cell.get("tech", "") #changed to ""
-                type = cell.get("type", "") #changed to ""
-                
 
+            module = cell.get("module", "")  # Changed to ""
+            tech = cell.get("tech", "")
+            type = cell.get("type", "")
+            
             grid_data.append(
                 [
                     module,
@@ -140,9 +128,6 @@ def preprocess_new_grid(grid, module_encoder, tech_encoder, type_encoder, scaler
     types_encoded = transform_with_unknown(type_encoder, types.reshape(-1, 1))
     # ---End Handle Unknown---
     
-    #only take in the data that matches tech modules
-    modules_encoded = modules_encoded[:,:len(tech_modules)] # Added this to get the right amount of data
-
     # Scale Numerical Features
     bonuses_scaled = scaler.transform(bonuses.reshape(-1, 1))
 
@@ -165,6 +150,7 @@ def preprocess_new_grid(grid, module_encoder, tech_encoder, type_encoder, scaler
 
     return X_processed
 
+
 # --- Main Execution ---
 if __name__ == "__main__":
     # Extract parameters from config
@@ -186,22 +172,22 @@ if __name__ == "__main__":
     grid_data = {
         "cells": [
             [
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": True, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": True, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": True, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": True, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
             ],
             [
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
             ],
             [
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True}
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True}
             ]
         ],
         "height": 3,
@@ -231,132 +217,29 @@ if __name__ == "__main__":
     tech_modules = [module for module in modules if module["tech"] == tech]
     new_grid_processed = preprocess_new_grid(new_grid, module_encoder, tech_encoder, type_encoder, scaler, modules, config["tech"])
 
-        # --- Make a Prediction ---
+    # --- Make a Prediction ---
     dnew_grid = xgb.DMatrix(new_grid_processed)
-    predictions = model.predict(dnew_grid)
-
-    # Reshape the predictions to match the grid layout. Each cell has a list of probabilities for each module.
-    num_cells = new_grid.width * new_grid.height
-    predictions = predictions.reshape(num_cells, -1)
+    predictions = model.predict(dnew_grid).astype(int) #added .astype(int)
 
     # --- Place Modules Based on Predictions ---
     prediction_index = 0
     for row in range(new_grid.height):
         for col in range(new_grid.width):
-            module_prediction = predictions[prediction_index, :] #get the prediction for this cell
-            module_index = np.argmax(module_prediction)
-            current_module = tech_modules[module_index] #Changed to only show modules that match the tech
-            place_module(
-                new_grid,
-                col,
-                row,
-                current_module["name"],
-                current_module["tech"],
-                current_module["type"],
-                current_module["bonus"],
-                current_module["adjacency"],
-                current_module["sc_eligible"],
-                current_module["image"],
-            )
-            prediction_index +=1
-
-    # --- Print the Grid and the Prediction ---
-    print("New Grid:")
-    print_grid(new_grid)
-    print(f"Prediction:")
-    print(json.dumps(predictions.tolist()))# --- Main Execution ---
-if __name__ == "__main__":
-    # Extract parameters from config
-    tech = config["tech"]
-    # --- Load the Trained XGBoost Model ---
-    model_file = config["model_file"]
-    try:
-        model = xgb.Booster()
-        model.load_model(model_file)
-    except xgb.core.XGBoostError:
-        print("Error: Could not load model. Please run generate_training_data.py first.")
-        exit()
-
-    # --- Load encoders ---
-    module_encoder, tech_encoder, type_encoder, scaler = load_encoders("data/encoders.json", modules, tech) #added modules here
-
-    # --- Create a New Grid ---
-    # We will now load the input grid from a dict
-    grid_data = {
-        "cells": [
-            [
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": True, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": True, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-            ],
-            [
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-            ],
-            [
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": "", "sc_eligible": False, "supercharged": False, "tech": "infra", "total": 0.0, "type": "", "value": 0, "active": True}
-            ]
-        ],
-        "height": 3,
-        "width": 4
-    }
-    new_grid = Grid(config["width"], config["height"])
-    for y, row in enumerate(grid_data["cells"]):
-        for x, cell_data in enumerate(row):
-            cell = new_grid.get_cell(x, y)
-            cell.update({
-                "module": cell_data["module"],
-                "value": cell_data["value"],
-                "type": cell_data["type"],
-                "total": cell_data["total"],
-                "active": cell_data["active"],
-                "adjacency_bonus": cell_data["adjacency_bonus"],
-                "bonus": cell_data["bonus"],
-                "adjacency": cell_data["adjacency"],
-                "tech": cell_data["tech"],
-                "supercharged": cell_data["supercharged"],
-                "sc_eligible": cell_data["sc_eligible"],
-                "image": cell_data["image"],
-            })
-
-    
-    # --- Preprocess the New Grid ---
-    tech_modules = [module for module in modules if module["tech"] == tech]
-    new_grid_processed = preprocess_new_grid(new_grid, module_encoder, tech_encoder, type_encoder, scaler, modules, config["tech"])
-
-        # --- Make a Prediction ---
-    dnew_grid = xgb.DMatrix(new_grid_processed)
-    predictions = model.predict(dnew_grid)
-
-    # Reshape the predictions to match the grid layout. Each cell has a list of probabilities for each module.
-    num_cells = new_grid.width * new_grid.height
-    predictions = predictions.reshape(num_cells, -1)
-
-    # --- Place Modules Based on Predictions ---
-    prediction_index = 0
-    for row in range(new_grid.height):
-        for col in range(new_grid.width):
-            module_prediction = predictions[prediction_index, :] #get the prediction for this cell
-            module_index = np.argmax(module_prediction)
-            current_module = tech_modules[module_index] #Changed to only show modules that match the tech
-            place_module(
-                new_grid,
-                col,
-                row,
-                current_module["name"],
-                current_module["tech"],
-                current_module["type"],
-                current_module["bonus"],
-                current_module["adjacency"],
-                current_module["sc_eligible"],
-                current_module["image"],
-            )
+            module_index = predictions[prediction_index] #get the prediction for this cell
+            if module_index != -1:
+                current_module = tech_modules[module_index] #Changed to only show modules that match the tech
+                place_module(
+                    new_grid,
+                    col,
+                    row,
+                    current_module["name"],
+                    current_module["tech"],
+                    current_module["type"],
+                    current_module["bonus"],
+                    current_module["adjacency"],
+                    current_module["sc_eligible"],
+                    current_module["image"],
+                )
             prediction_index +=1
 
     # --- Print the Grid and the Prediction ---
@@ -364,3 +247,6 @@ if __name__ == "__main__":
     print_grid(new_grid)
     print(f"Prediction:")
     print(json.dumps(predictions.tolist()))
+
+
+

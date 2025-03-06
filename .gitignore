@@ -1,2 +1,3 @@
 /__pycache__
 old_model_generation.py
+data/training_data.json

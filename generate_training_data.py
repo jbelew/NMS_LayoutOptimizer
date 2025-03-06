@@ -298,29 +298,17 @@ def train_model(X_train, y_train, xgb_params, tech_modules):
 def grid_to_input(grid):
     """Convert Grid to a list of lists of features (suitable for ML)."""
     grid_data = []
-    tech = ""
     for row in grid.cells:
         for cell in row:
             bonus = cell.get("bonus", 0.0)
             supercharged = 1 if cell.get("supercharged", False) else 0
             active = 1 if cell.get("active", False) else 0
             sc_eligible = 1 if cell.get("sc_eligible", False) else 0
-            
-            #check to see if the tech matches
-            if cell.get("tech") != tech and cell.get("tech") is not None:
-                module = ""
-                tech = ""
-                type = ""
-                active = 0
-                bonus = 0
-                supercharged = 0
-                sc_eligible = 0
-            else:
-                module = cell.get("module", "") #changed to ""
-                tech = cell.get("tech", "") #changed to ""
-                type = cell.get("type", "") #changed to ""
-                
 
+            module = cell.get("module", "")  # Changed to ""
+            tech = cell.get("tech", "")
+            type = cell.get("type", "")
+            
             grid_data.append(
                 [
                     module,
