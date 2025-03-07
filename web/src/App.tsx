@@ -1,5 +1,5 @@
 import { UpdateIcon } from "@radix-ui/react-icons";
-import { IconButton, Flex } from "@radix-ui/themes";
+import { IconButton, Flex, ScrollArea, Separator, Box, Text } from "@radix-ui/themes";
 
 import React from "react";
 import GridTable from "./components/GridTable"; // Corrected import path
@@ -14,13 +14,13 @@ const App: React.FC = () => {
         <h1 className="text-4xl font-bold">No Man's Sky Starship Optimizer</h1>
         <hr className="p-2 mt-2 border-cyan-500" />
 
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-4">
           {/* Main Grid Table */}
           <div className="col-span-3">
-            <GridTable 
-              grid={grid} 
-              loading={loading} 
-              toggleCellState={toggleCellState} 
+            <GridTable
+              grid={grid}
+              loading={loading}
+              toggleCellState={toggleCellState}
               result={result}
               activateRow={activateRow}
               deActivateRow={deActivateRow}
@@ -29,28 +29,37 @@ const App: React.FC = () => {
           </div>
 
           {/* Sidebar Actions */}
-          <aside className="col-span-1 mt-2 space-y-4">
-            <h2 className="text-2xl">WEAPONS</h2>
-            <OptimizationButton label="Optimize Infraknife" onClick={() => handleOptimize("infra")} loading={loading} />
-            <OptimizationButton label="Optimize Photon Cannons" onClick={() => handleOptimize("photon")} loading={loading} />
 
-            <h2 className="text-2xl">MOBILITY</h2>
-            <OptimizationButton label="Optimize Shields" onClick={() => handleOptimize("shield")} loading={loading} />
+          <div className="col-span-1">
+            <h2 className="pb-2 text-2xl">TECHNOLOGY SELECTION</h2>
+            <ScrollArea type="always" scrollbars="vertical" className="max-h-full rounded-md bg-cyan-950">
+              <Box p="4">
+                <h2 className="text-2xl">WEAPONS</h2>
+                <Separator orientation="horizontal" size="4" className="mb-4" />
+                <OptimizationButton label="Infraknife Accelerator" onClick={() => handleOptimize("infra")} loading={loading} />
+                <OptimizationButton label="Photon Cannons" onClick={() => handleOptimize("photon")} loading={loading} />
+                <OptimizationButton label="Missile Launchers" onClick={() => handleOptimize("missile")} loading={loading} />
+                <h2 className="mt-4 text-2xl">MOBILITY</h2>
+                <Separator orientation="horizontal" size="4" className="mb-4"/>
+                <OptimizationButton label="Optimize Shields" onClick={() => handleOptimize("shield")} loading={loading} />
 
-            <h2 className="text-2xl">ADDITIONAL TECHNOLOGY</h2>
-          </aside>
+                <h2 className="mt-4 text-2xl">ADDITIONAL TECHNOLOGY</h2>
+              </Box>
+            </ScrollArea>
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
 // OptimizationButton component for reusability
 const OptimizationButton: React.FC<{ label: string; onClick: () => void; loading: boolean }> = ({ label, onClick, loading }) => (
-  <Flex gap="2" align="center">
-    <IconButton onClick={onClick} disabled={loading}>
+  <Flex gap="2" align="center" className="mt-2 mb-2">
+    <IconButton onClick={onClick} disabled={loading} variant="soft">
       <UpdateIcon />
     </IconButton>
-    {label}
+    <Text>{label}</Text>
   </Flex>
 );
 export default App;

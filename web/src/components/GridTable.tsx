@@ -13,25 +13,11 @@ interface GridTableProps {
   deActivateRow: (rowIndex: number) => void;
 }
 
-
-
 const Wrapper: React.FC<{ shaking: boolean; children: React.ReactNode }> = ({ shaking, children }) => {
-  return shaking ? (
-    <div className="relative shake">{children}</div>
-  ) : (
-    <div className="relative">{children}</div>
-  );
-
+  return shaking ? <div className="relative shake">{children}</div> : <div className="relative">{children}</div>;
 };
-const GridTable: React.FC<GridTableProps> = ({
-  grid,
-  loading,
-  toggleCellState,
-  activateRow,
-  deActivateRow,
-  result,
-  resetGrid,
-}) => {
+
+const GridTable: React.FC<GridTableProps> = ({ grid, loading, toggleCellState, activateRow, deActivateRow, result, resetGrid }) => {
   const [shaking, setShaking] = React.useState(false);
 
   const handleCellClick = (rowIndex: number, columnIndex: number, event: React.MouseEvent) => {
@@ -47,6 +33,8 @@ const GridTable: React.FC<GridTableProps> = ({
     }
     toggleCellState(rowIndex, columnIndex, event);
   };
+
+  const hasModulesInGrid = grid.cells.flat().some((cell) => cell.module !== null);
 
   return (
     <Wrapper shaking={shaking}>
@@ -75,11 +63,12 @@ const GridTable: React.FC<GridTableProps> = ({
                   }}
                 />
               ))}
+
               {/* First IconButton - shows on first inactive row */}
               {row.every((cell) => !cell.active) && rowIndex === grid.cells.findIndex((r) => r.every((cell) => !cell.active)) && (
                 <td className="align-middle">
                   <Tooltip content="Activate Row">
-                    <IconButton variant="soft" className="mx-auto" onClick={() => activateRow(rowIndex)}>
+                    <IconButton variant="soft" className="mx-auto" onClick={() => activateRow(rowIndex)} disabled={hasModulesInGrid}>
                       <PlusIcon />
                     </IconButton>
                   </Tooltip>
@@ -92,7 +81,7 @@ const GridTable: React.FC<GridTableProps> = ({
                 rowIndex === grid.cells.map((r) => r.some((cell) => cell.active)).lastIndexOf(true) && (
                   <td className="align-middle">
                     <Tooltip content="Deactivate Row">
-                      <IconButton variant="soft" className="mx-auto" onClick={() => deActivateRow(rowIndex)}>
+                      <IconButton variant="soft" className="mx-auto" onClick={() => deActivateRow(rowIndex)} disabled={hasModulesInGrid}>
                         <MinusIcon />
                       </IconButton>
                     </Tooltip>
@@ -116,7 +105,7 @@ const GridTable: React.FC<GridTableProps> = ({
             </td>
             <td colSpan={2} className="align-top">
               <div className="flex justify-end mt-2">
-                <Button onClick={() => resetGrid()}>
+                <Button onClick={() => resetGrid()}  variant="soft">
                   <ResetIcon />
                   Reset Grid
                 </Button>

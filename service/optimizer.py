@@ -3,10 +3,7 @@ import math
 import copy
 
 from itertools import permutations
-from flask import Flask, request, jsonify
-
-from service.models.modules import modules
-
+from models.modules import modules
 
 class Grid:
     def __init__(self, width, height):
