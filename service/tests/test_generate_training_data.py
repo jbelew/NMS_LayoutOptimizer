@@ -4,8 +4,8 @@ import sys
 sys.path.insert(0, '../')  # add parent directory to sys.path
 
 # Import your code here
-from generate_training_data import set_grid_state, preprocess_data, grid_to_input, modules
-from nms_optimizer import Grid
+from service.training.generate_training_data import set_grid_state, preprocess_data, grid_to_input, modules
+from service.optimizer import Grid
 
 class TestSetGridState(unittest.TestCase):
     def test_set_grid_state_supercharged_count(self):

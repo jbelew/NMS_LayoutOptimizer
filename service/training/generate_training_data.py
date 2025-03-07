@@ -3,17 +3,15 @@ import json
 import os
 from sklearn.model_selection import train_test_split, KFold
 import xgboost as xgb
-#from sklearn.metrics import mean_squared_error, accuracy_score
 import numpy as np
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
-#from sklearn.model_selection import GridSearchCV
-#from sklearn.pipeline import Pipeline
+
 
 # Add k-fold cross validation
 kfold = KFold(n_splits=5, shuffle=True)
 
 # Import from the other files
-from nms_optimizer import (
+from service.optimizer import (
     Grid,
     optimize_placement,
     place_module,
@@ -26,7 +24,7 @@ config = {
     "width": 4,
     "height": 3,
     "tech": "infra",
-    "num_grids": 50,
+    "num_grids": 10,
     "test_size": 0.2,
     "random_state": 42,
     "data_file": "data/training_data.json",
@@ -283,6 +281,7 @@ def preprocess_data(data, modules, tech, debug=True):
     all_modules = sorted(
         list(set([str(module["name"]) for module in tech_modules]))
     )  # only get modules of the correct tech
+    all_modules.append("") # Add "" as an accepted module.
     module_encoder = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
     module_encoder.fit(np.array(all_modules).reshape(-1, 1))
 

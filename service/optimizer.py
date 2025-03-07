@@ -5,7 +5,7 @@ import copy
 from itertools import permutations
 from flask import Flask, request, jsonify
 
-from modules import modules
+from service.models.modules import modules
 
 
 class Grid:

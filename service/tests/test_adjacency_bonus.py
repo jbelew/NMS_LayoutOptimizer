@@ -2,7 +2,7 @@ import unittest
 import sys
 
 sys.path.insert(0, '../')  # add parent directory to sys.path
-from nms_optimizer import Grid, calculate_adjacency_bonus
+from service.optimizer import Grid, calculate_adjacency_bonus
 
 class TestCalculateAdjacencyBonus(unittest.TestCase):
     def test_adjacent_one_module(self):

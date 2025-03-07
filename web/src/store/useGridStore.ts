@@ -28,8 +28,8 @@ export type ApiResponse = {
 };
 
 // Utility functions
-const createEmptyCell = (supercharged = false): Cell => ({
-  active: true, 
+const createEmptyCell = (supercharged = false, active = true): Cell => ({
+  active,
   adjacency: false,
   adjacency_bonus: 0.0,
   bonus: 0.0,
@@ -44,7 +44,7 @@ const createEmptyCell = (supercharged = false): Cell => ({
 });
 
 const createGrid = (width: number, height: number): Grid => ({
-  cells: Array.from({ length: height }, () => Array.from({ length: width }, createEmptyCell)),
+  cells: Array.from({ length: height }, (_, rowIndex) => Array.from({ length: width }, () => createEmptyCell(false, rowIndex >= height - 3 ? false : true))),
   width,
   height,
 });
@@ -55,10 +55,13 @@ type GridStore = {
   result: ApiResponse | null;
   loading: boolean;
   setGrid: (grid: Grid) => void;
+  resetGrid: () => void;
   setResult: (result: ApiResponse | null) => void;
   setLoading: (loading: boolean) => void;
   toggleCellState: (rowIndex: number, columnIndex: number, event: React.MouseEvent) => void;
   handleOptimize: (tech: string) => Promise<void>;
+  activateRow: (rowIndex: number) => void;
+  deActivateRow: (rowIndex: number) => void;
 };
 
 export const useGridStore = create<GridStore>((set, get) => ({
@@ -70,30 +73,55 @@ export const useGridStore = create<GridStore>((set, get) => ({
   setResult: (result) => set({ result }),
   setLoading: (loading) => set({ loading }),
 
+  resetGrid: () => {
+    set((state) => ({
+      grid: createGrid(state.grid.width, state.grid.height),
+      result: null,
+    }));
+  },
+
   /**
    * Toggles the active or supercharged state based on Ctrl+Click.
    */
   toggleCellState: (rowIndex, columnIndex, event) => {
-	set((state) => ({
-	  grid: {
-		...state.grid,
-		cells: state.grid.cells.map((row, rIdx) =>
-		  row.map((cell, cIdx) => {
-			if (rIdx === rowIndex && cIdx === columnIndex) {
-			  if (event.ctrlKey) {
-				// Toggle active, and force supercharged to false if becoming inactive
-				const newActiveState = !cell.active;
-				return { ...cell, active: newActiveState, supercharged: newActiveState ? cell.supercharged : false };
-			  } else if (cell.active) {
-				// Toggle supercharged only if active
-				return { ...cell, supercharged: !cell.supercharged };
-			  }
-			}
-			return cell;
-		  })
-		),
-	  },
-	}));
+    set((state) => ({
+      grid: {
+        ...state.grid,
+        cells: state.grid.cells.map((row, rIdx) =>
+          row.map((cell, cIdx) => {
+            if (rIdx === rowIndex && cIdx === columnIndex) {
+              if (event.ctrlKey) {
+                // Toggle active, and force supercharged to false if becoming inactive
+                const newActiveState = !cell.active;
+                return { ...cell, active: newActiveState, supercharged: newActiveState ? cell.supercharged : false };
+              } else if (cell.active) {
+                // Toggle supercharged only if active
+                return { ...cell, supercharged: !cell.supercharged };
+              }
+            }
+            return cell;
+          })
+        ),
+      },
+    }));
+  },
+
+  activateRow: (rowIndex: number) => {
+    set((state) => ({
+      grid: {
+        ...state.grid,
+        cells: state.grid.cells.map((row, rIdx) => (rIdx === rowIndex ? row.map((cell) => ({ ...cell, active: true })) : row)),
+      },
+    }));
+  },
+
+  deActivateRow: (rowIndex: number) => {
+    set((state) => ({
+      grid: {
+        ...state.grid,
+        cells: state.grid.cells.map((row, rIdx) => (rIdx === rowIndex ? row.map((cell) => ({ ...cell, active: false })) : row)),
+      },
+    }));
   },
 
   handleOptimize: async (tech) => {

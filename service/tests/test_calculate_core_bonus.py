@@ -2,7 +2,7 @@ import unittest
 import sys
 
 sys.path.insert(0, '../')  # add parent directory to sys.path
-from nms_optimizer import Grid, calculate_core_bonus, populate_module_bonuses,print_grid# type: ignore
+from service.optimizer import Grid, calculate_core_bonus, populate_module_bonuses,print_grid# type: ignore
 
 class TestCalculateCoreBonus(unittest.TestCase):
 

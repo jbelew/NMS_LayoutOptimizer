@@ -1,7 +1,7 @@
 # app.py
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from nms_optimizer import simulated_annealing_optimization, Grid, modules
+from service.optimizer import simulated_annealing_optimization, Grid, modules
 
 import logging
 logging.basicConfig(level=logging.INFO)

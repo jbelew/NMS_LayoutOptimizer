@@ -1,0 +1,43 @@
+@font-face {
+  font-family: "GeosansLight";
+  src: url("/src/assets/fonts/GeosansLight.woff") format("woff"); /* Consider woff2 for better compression */
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Improve perceived performance */
+}
+
+/* Import Radix styles first */
+@import "@radix-ui/themes/styles.css";
+
+/* Use @tailwind to import Tailwind layers */
+@import "tailwindcss/theme.css" layer(theme);
+/* THEN import Tailwind's preflight */
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+
+/* Apply custom font styles using Tailwind's @layer directive */
+@layer base {
+  h1, h2 {
+    font-family: "GeosansLight", sans-serif;
+  }
+}
+
+/* Background styles */
+body {
+  /* Combine background properties */
+  background: url("/src/assets/img/nms_background2.webp") center/cover fixed;
+  height: 100vh; /* Consider min-height: 100vh for content exceeding viewport height */
+}
+
+/* Background overlay */
+body::before {
+  content: "";
+  position: fixed; /* Covers the entire screen */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: -1;
+}

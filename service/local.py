@@ -1,4 +1,4 @@
-from nms_optimizer import simulated_annealing_optimization, optimize_placement, print_grid, Grid, modules
+from service.optimizer import simulated_annealing_optimization, optimize_placement, print_grid, Grid, modules
 
 grid = Grid.from_dict(
     {
