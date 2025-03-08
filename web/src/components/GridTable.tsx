@@ -54,7 +54,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, loading, toggleCellState, a
    */
   const handleCellClick = (rowIndex: number, columnIndex: number, event: React.MouseEvent) => {
     if (!event.ctrlKey) {
-      const totalSupercharged = grid.cells.flat().filter(cell => cell.supercharged).length;
+      const totalSupercharged = grid.cells.flat().filter((cell) => cell.supercharged).length;
       const currentCellSupercharged = grid.cells[rowIndex][columnIndex]?.supercharged;
 
       if (totalSupercharged >= 4 && !currentCellSupercharged) {
@@ -79,22 +79,41 @@ const GridTable: React.FC<GridTableProps> = ({ grid, loading, toggleCellState, a
         <tbody>
           {grid.cells.map((row, rowIndex) => (
             <tr key={rowIndex}>
-              {row.map((cell, columnIndex) => (
-                <td
-                  key={columnIndex}
-                  onClick={(event) => handleCellClick(rowIndex, columnIndex, event)}
-                  className={`cursor-pointer shadow-md border-2 p-2 rounded-lg transition-all hover:bg-opacity-50 hover:bg-cyan-700
+              {row.map((cell, columnIndex) =>
+                cell.label ? (
+                  <Tooltip content={cell.label}>
+                    <td
+                      key={columnIndex}
+                      onClick={(event) => handleCellClick(rowIndex, columnIndex, event)}
+                      className={`cursor-pointer shadow-md border-2 p-2 rounded-lg transition-all hover:bg-opacity-50 hover:bg-cyan-700
                       ${cell.supercharged ? "border-yellow-500" : "border-cyan-500"}
                       ${cell.active ? "border-cyan-500" : "border-cyan-700"}`}
-                  style={{
-                    backgroundImage: cell.image ? `url(${cell.image})` : "none",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    width: "72px",
-                    height: "72px",
-                  }}
-                />
-              ))}
+                      style={{
+                        backgroundImage: cell.image ? `url(${cell.image})` : "none",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        width: "72px",
+                        height: "72px",
+                      }}
+                    ></td>
+                  </Tooltip>
+                ) : (
+                  <td
+                    key={columnIndex}
+                    onClick={(event) => handleCellClick(rowIndex, columnIndex, event)}
+                    className={`cursor-pointer shadow-md border-2 p-2 rounded-lg transition-all hover:bg-opacity-50 hover:bg-cyan-700
+                      ${cell.supercharged ? "border-yellow-500" : "border-cyan-500"}
+                      ${cell.active ? "border-cyan-500" : "border-cyan-700"}`}
+                    style={{
+                      backgroundImage: cell.image ? `url(${cell.image})` : "none",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      width: "72px",
+                      height: "72px",
+                    }}
+                  ></td>
+                )
+              )}
 
               {/* First IconButton - shows on first inactive row */}
               {row.every((cell) => !cell.active) && rowIndex === grid.cells.findIndex((r) => r.every((cell) => !cell.active)) && (

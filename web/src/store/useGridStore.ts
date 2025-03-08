@@ -8,6 +8,7 @@ export type Cell = {
   bonus: number;
   image: string | null;
   module: string | null;
+  label: string;
   sc_eligible: boolean;
   supercharged: boolean;
   tech: string | null;
@@ -35,6 +36,7 @@ const createEmptyCell = (supercharged = false, active = true): Cell => ({
   bonus: 0.0,
   image: null,
   module: null,
+  label: "",
   sc_eligible: false,
   supercharged: supercharged,
   tech: null,
@@ -140,6 +142,7 @@ export const useGridStore = create<GridStore>((set, get) => ({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          ship: "Exotic",
           tech,
           grid: updatedGrid,
           initial_temp: 80000,
@@ -155,6 +158,7 @@ export const useGridStore = create<GridStore>((set, get) => ({
       const data: ApiResponse = await response.json();
       setResult(data);
       setGrid(data.grid);
+      console.log("Response from API:", data.grid);
     } catch (error) {
       console.error("Error during optimization:", error);
       setResult(null);

@@ -1,23 +1,28 @@
 import random
 import json
 import os
+import sys
+
+# Correctly add the project root to sys.path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
 from sklearn.model_selection import train_test_split, KFold
 import xgboost as xgb
 import numpy as np
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 
-
 # Add k-fold cross validation
 kfold = KFold(n_splits=5, shuffle=True)
 
 # Import from the other files
-from service.optimizer import (
+from optimizer import (
     Grid,
     optimize_placement,
     place_module,
-    modules,
     print_grid,
 )
+
+from modules import modules
 
 # --- Configuration ---
 config = {

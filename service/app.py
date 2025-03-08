@@ -2,9 +2,11 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from optimizer import simulated_annealing_optimization, Grid, modules
+from optimizer import simulated_annealing_optimization, get_tech_tree_json, Grid
+from modules_refactored import modules
 
 import logging
+import json
 logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
@@ -21,6 +23,7 @@ def optimize_grid():
     # json_data = request.get_json()
     # print("Parsed JSON:", json_data)
 
+    ship = data.get("ship")
     tech = data.get('tech')
     if tech is None:
         return jsonify({'error': 'No tech specified'}), 400
@@ -38,10 +41,20 @@ def optimize_grid():
     grid = Grid.from_dict(grid_data)
     
     try:
-        grid, max_bonus = simulated_annealing_optimization(grid, modules, tech, initial_temp, cooling_rate, max_iterations, patience, decay_factor)
+        grid, max_bonus = simulated_annealing_optimization(grid, ship, modules, tech, initial_temp, cooling_rate, max_iterations, patience, decay_factor)
         return jsonify({'grid': grid.to_dict(), 'max_bonus': max_bonus})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/tech_tree/<ship_name>')
+def get_technology_tree(ship_name):
+    """Endpoint to get the technology tree for a given ship."""
+    try:
+        tree_data = get_tech_tree_json(ship_name)  # Get JSON data
+        return tree_data  # Directly return the JSON response from get_tech_tree_json
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

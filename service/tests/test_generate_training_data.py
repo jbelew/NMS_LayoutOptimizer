@@ -4,7 +4,7 @@ import sys
 sys.path.insert(0, '../')  # add parent directory to sys.path
 
 # Import your code here
-from service.training.generate_training_data import set_grid_state, preprocess_data, grid_to_input, modules
+from service.generate_training_data import set_grid_state, preprocess_data, grid_to_input, modules
 from service.optimizer import Grid
 
 class TestSetGridState(unittest.TestCase):

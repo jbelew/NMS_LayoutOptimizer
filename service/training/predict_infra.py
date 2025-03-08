@@ -8,7 +8,7 @@ import pdb  # Import the debugger
 
 # Import necessary functions from other files
 from service.optimizer import Grid, place_module, modules, print_grid
-from service.training.generate_training_data import grid_to_input
+from service.generate_training_data import grid_to_input
 
 # --- Load Configuration ---
 config = {

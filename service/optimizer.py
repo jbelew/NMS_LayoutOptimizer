@@ -1,9 +1,10 @@
 import random
 import math
 import copy
+import json
 
 from itertools import permutations
-from models.modules import modules
+from modules_refactored import modules
 
 class Grid:
     def __init__(self, width, height):
@@ -13,6 +14,7 @@ class Grid:
             [
                 {
                     "module": None,
+                    "label": None,
                     "value": 0,
                     "type": "",
                     "total": 0.0,
@@ -39,6 +41,12 @@ class Grid:
     def set_cell(self, x, y, value):
         if 0 <= x < self.width and 0 <= y < self.height:
             self.cells[y][x]["value"] = value
+        else:
+            raise IndexError("Cell out of bounds")
+        
+    def set_label(self, x, y, label):
+        if 0 <= x < self.width and 0 <= y < self.height:
+            self.cells[y][x]["label"] = label
         else:
             raise IndexError("Cell out of bounds")
 
@@ -132,6 +140,7 @@ class Grid:
                 cell.update(
                     {
                         "module": cell_data["module"],
+                        "label": cell_data["label"],
                         "value": cell_data["value"],
                         "type": cell_data["type"],
                         "total": cell_data["total"],
@@ -150,20 +159,87 @@ class Grid:
     def __str__(self):
         """Generate a string representation of the grid."""
         return "\n".join(
-            " ".join("." if cell["value"] == 0 else str(cell["value"]) for cell in row)
+            " ".join(
+                "."
+                if cell["value"] == 0
+                else str(cell["total"])
+                for cell in row
+            )
             for row in self.cells
         )
 
+def get_tech_modules(modules, ship, tech_key):
+    """Retrieves modules for a specified ship and technology key, ignoring technology type."""
+    ship_data = modules.get(ship)
+    if ship_data is None:
+        print(f"Error: Ship '{ship}' not found in modules data.")
+        return None
 
-def optimize_placement(grid, modules, tech):
+    types_data = ship_data.get("types")
+    if types_data is None:
+        print(f"Error: 'types' key not found for ship '{ship}'.")
+        return None
+
+    for tech_type in types_data:
+        tech_category = types_data.get(tech_type)
+        if tech_category is None:
+            print(f"Error: Technology type '{tech_type}' not found for ship '{ship}'.")
+            continue #skip this type and check the next
+        
+        for technology in tech_category:
+            if technology.get("key") == tech_key:
+                modules_list = technology.get("modules")
+                if modules_list is None:
+                    print(f"Error: 'modules' key not found for technology '{tech_key}' within type '{tech_type}' on ship '{ship}'.")
+                    return None
+                return modules_list
+
+    print(f"Error: Technology '{tech_key}' not found for ship '{ship}'.")
+    return None
+
+def get_tech_tree_json(ship):
+    """Generates a technology tree for a given ship and returns it as JSON."""
+    try:
+        tech_tree = get_tech_tree(ship)  # Call your existing function
+        if "error" in tech_tree:
+            return json.dumps({"error": tech_tree["error"]})  # Return error as JSON
+        else:
+            return json.dumps(tech_tree, indent=2)  # Return tree as JSON with indentation for readability
+    except Exception as e:
+        return json.dumps({"error": str(e)})  # Catch any errors during tree generation
+
+
+def get_tech_tree(ship):
+    """Generates a technology tree for a given ship."""
+    ship_data = modules.get(ship)
+    if ship_data is None:
+        return {"error": f"Ship '{ship}' not found."}
+
+    types_data = ship_data.get("types")
+    if types_data is None:
+        return {"error": f"'types' key not found for ship '{ship}'."}
+
+    tech_tree = {}
+    for tech_type, tech_list in types_data.items():
+        tech_tree[tech_type] = []
+        for tech in tech_list:
+            tech_tree[tech_type].append(
+                {
+                    "label": tech["label"],
+                    "key": tech["key"],
+                    # Add other relevant fields if needed
+                }
+            )
+
+    return tech_tree
+
+def optimize_placement(grid, ship, modules, tech):
     optimal_grid = None
     highest_bonus = 0.0
     iteration = 0
 
-    # Filter modules based on tech
-    tech_modules = [module for module in modules if module["tech"] == tech]
-
-    # Separate core and bonus modules
+    tech_modules = get_tech_modules(modules, ship, tech)
+    
     core_modules = [module for module in tech_modules if module["type"] == "core"]
     bonus_modules = [module for module in tech_modules if module["type"] == "bonus"]
 
@@ -189,8 +265,9 @@ def optimize_placement(grid, modules, tech):
                 temp_grid,
                 core_x,
                 core_y,
-                core_module["name"],
-                core_module["tech"],
+                core_module["id"],
+                core_module["label"],
+                tech,
                 core_module["type"],
                 core_module["bonus"],
                 core_module["adjacency"],
@@ -208,8 +285,9 @@ def optimize_placement(grid, modules, tech):
                     temp_grid,
                     x,
                     y,
-                    bonus_module["name"],
-                    bonus_module["tech"],
+                    bonus_module["id"],
+                    bonus_module["label"],
+                    tech,
                     bonus_module["type"],
                     bonus_module["bonus"],
                     bonus_module["adjacency"],
@@ -236,6 +314,7 @@ def optimize_placement(grid, modules, tech):
 
 def simulated_annealing_optimization(
     grid,
+    ship,
     modules,
     tech,
     initial_temp=8000,
@@ -244,7 +323,8 @@ def simulated_annealing_optimization(
     patience=500,
     decay_factor=0.995,
     max_supercharged=4,
-):  # New constraint parameter
+):  
+    
     best_grid = Grid.from_dict(grid.to_dict())  # changed to from_dict
     best_bonus = -float("inf")
 
@@ -258,7 +338,7 @@ def simulated_annealing_optimization(
     for iteration in range(max_iterations):
         # Generate a neighbor solution by randomly changing the placement of modules
         neighbor_grid = generate_neighbor_grid_with_movement(
-            current_grid, modules, tech, temperature, initial_temp, max_supercharged
+            current_grid, modules, ship, tech, temperature, initial_temp, max_supercharged
         )
 
         # Ensure neighbor grid does not exceed max_supercharged
@@ -287,7 +367,7 @@ def simulated_annealing_optimization(
             if random.random() < acceptance_probability:
                 current_grid = Grid.from_dict(
                     neighbor_grid.to_dict()
-                )  # changed to from_dict
+                ) 
 
         if iteration_without_improvement >= patience:
             temperature *= decay_factor
@@ -302,14 +382,14 @@ def simulated_annealing_optimization(
 
     return best_grid, best_bonus
 
-
 def generate_neighbor_grid_with_movement(
-    grid, modules, tech, temperature, initial_temp, max_supercharged
+    grid, modules, ship, tech, temperature, initial_temp, max_supercharged
 ):
     """Generate a new grid by modifying the existing grid with new module placements while enforcing a supercharged slot limit."""
     neighbor_grid = Grid.from_dict(grid.to_dict())
 
-    tech_modules = [module for module in modules if module["tech"] == tech]
+    tech_modules = get_tech_modules(modules, ship, tech)
+    
     core_modules = [module for module in tech_modules if module["type"] == "core"]
     bonus_modules = [module for module in tech_modules if module["type"] == "bonus"]
 
@@ -341,8 +421,9 @@ def generate_neighbor_grid_with_movement(
                     neighbor_grid,
                     x,
                     y,
-                    core_module["name"],
-                    core_module["tech"],
+                    core_module["id"],
+                    core_module["label"],
+                    tech,
                     core_module["type"],
                     core_module["bonus"],
                     core_module["adjacency"],
@@ -360,8 +441,9 @@ def generate_neighbor_grid_with_movement(
                     neighbor_grid,
                     x,
                     y,
-                    bonus_module["name"],
-                    bonus_module["tech"],
+                    bonus_module["id"],
+                    bonus_module["label"],
+                    tech,
                     bonus_module["type"],
                     bonus_module["bonus"],
                     bonus_module["adjacency"],
@@ -419,8 +501,9 @@ def count_supercharged_slots(grid, tech):
     return count
 
 
-def place_module(grid, x, y, module, tech, type, bonus, adjacency, sc_eligible, image):
+def place_module(grid, x, y, module, label, tech, type, bonus, adjacency, sc_eligible, image):
     grid.set_module(x, y, module)
+    grid.set_label(x, y, label)
     grid.set_tech(x, y, tech)
     grid.set_type(x, y, type)
     grid.set_bonus(x, y, bonus)

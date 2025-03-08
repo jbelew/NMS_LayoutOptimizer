@@ -3,3 +3,5 @@ old_model_generation.py
 data/training_data.json
 service/__pycache__/optimizer.cpython-312.pyc
 service/models/__pycache__/modules.cpython-312.pyc
+service/__pycache__/modules_refactored.cpython-312.pyc
+service/__pycache__/modules.cpython-312.pyc
