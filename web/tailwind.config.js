@@ -4,7 +4,11 @@ module.exports = {
     // include your paths to JSX or TSX files if you're using React
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        "SourceSans": ["SourceSans", "sans-serif"] // Replace 'Inter' with your font
+      },
+    },
   },
   plugins: [],
 };

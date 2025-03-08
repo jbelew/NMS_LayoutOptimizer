@@ -40,7 +40,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, loading, toggleCellState, a
     <Wrapper shaking={shaking}>
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-opacity-50 rounded-lg">
-          <div className="w-10 h-10 border-4 rounded-full border-t-cyan-500 border-slate-500 animate-spin"></div>
+          <div className="w-16 h-16 border-8 rounded-full border-t-cyan-500 border-slate-500 animate-spin"></div>
         </div>
       )}
       <table className={`border-separate border-spacing-2 rounded-lg ${loading ? "opacity-50" : ""}`}>
@@ -91,7 +91,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, loading, toggleCellState, a
           ))}
           <tr>
             <td colSpan={8}>
-              <ul className="mt-2 list-disc list-inside text-cyan-500">
+              <ul className="mt-2 list-disc list-inside">
                 <li>
                   <strong>Click</strong> a cell to toggle its <em>Supercharged</em> state. No more than 4.
                 </li>
@@ -105,7 +105,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, loading, toggleCellState, a
             </td>
             <td colSpan={2} className="align-top">
               <div className="flex justify-end mt-2">
-                <Button onClick={() => resetGrid()}  variant="soft">
+                <Button variant="solid" onClick={() => resetGrid()}>
                   <ResetIcon />
                   Reset Grid
                 </Button>

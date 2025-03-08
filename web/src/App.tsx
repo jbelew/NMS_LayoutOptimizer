@@ -5,16 +5,19 @@ import React from "react";
 import GridTable from "./components/GridTable"; // Corrected import path
 import { useGridStore } from "./store/useGridStore";
 
+import NMSLogo from "./assets/svg/nms_logo.svg";
+
 const App: React.FC = () => {
   const { grid, result, loading, handleOptimize, toggleCellState, activateRow, deActivateRow, resetGrid } = useGridStore();
 
   return (
     <div className="flex justify-center min-h-screen">
       <div className="w-full max-w-6xl p-4 m-8 mx-auto border-2 rounded-lg shadow-lg bg-cyan-900 border-cyan-700">
-        <h1 className="text-4xl font-bold">No Man's Sky Starship Optimizer</h1>
-        <hr className="p-2 mt-2 border-cyan-500" />
+        <img src={NMSLogo} alt="No Man's Sky Logo" className="max-w-6xl mb-3 invert brightness-0 saturate-100" />
+        <h1 className="text-3xl">STARSHIP OPTIMIZER</h1>
+        <hr className="p-2 mt-2 border-cyan-700" />
 
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-4 height-full">
           {/* Main Grid Table */}
           <div className="col-span-3">
             <GridTable
@@ -30,9 +33,9 @@ const App: React.FC = () => {
 
           {/* Sidebar Actions */}
 
-          <div className="col-span-1">
+          <div className="max-h-full col-span-1">
             <h2 className="pb-2 text-2xl">TECHNOLOGY SELECTION</h2>
-            <ScrollArea type="always" scrollbars="vertical" className="max-h-full rounded-md bg-cyan-950">
+            <ScrollArea type="always" scrollbars="vertical" className="rounded-md bg-cyan-950">
               <Box p="4">
                 <h2 className="text-2xl">WEAPONS</h2>
                 <Separator orientation="horizontal" size="4" className="mb-4" />
@@ -40,8 +43,8 @@ const App: React.FC = () => {
                 <OptimizationButton label="Photon Cannons" onClick={() => handleOptimize("photon")} loading={loading} />
                 <OptimizationButton label="Missile Launchers" onClick={() => handleOptimize("missile")} loading={loading} />
                 <h2 className="mt-4 text-2xl">MOBILITY</h2>
-                <Separator orientation="horizontal" size="4" className="mb-4"/>
-                <OptimizationButton label="Optimize Shields" onClick={() => handleOptimize("shield")} loading={loading} />
+                <Separator orientation="horizontal" size="4" className="mb-4" />
+                <OptimizationButton label="Starships Shields" onClick={() => handleOptimize("shield")} loading={loading} />
 
                 <h2 className="mt-4 text-2xl">ADDITIONAL TECHNOLOGY</h2>
               </Box>

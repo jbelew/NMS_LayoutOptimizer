@@ -6,6 +6,14 @@
   font-display: swap; /* Improve perceived performance */
 }
 
+@font-face {
+  font-family: "SourceSans";
+  src: url("/assets/fonts/SourceSans3-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Import Radix styles first */
 @import "@radix-ui/themes/styles.css";
 
@@ -21,6 +29,10 @@
   h2 {
     font-family: "GeosansLight", sans-serif;
   }
+} 
+
+.radix-themes {
+	--default-font-family: "SourceSans", sans-serif;
 }
 
 /* Background styles */
@@ -38,7 +50,7 @@ body::before {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: -1;
 }
 
