@@ -13,19 +13,51 @@ interface GridTableProps {
   deActivateRow: (rowIndex: number) => void;
 }
 
+/**
+ * A simple wrapper component that adds a CSS class to shake the children when
+ * the "shaking" prop is true.
+ *
+ * @param {boolean} shaking - Whether to shake the children
+ * @param {React.ReactNode} children - The children to shake
+ * @returns {React.ReactElement} A div with the children
+ */
 const Wrapper: React.FC<{ shaking: boolean; children: React.ReactNode }> = ({ shaking, children }) => {
   return shaking ? <div className="relative shake">{children}</div> : <div className="relative">{children}</div>;
 };
 
+/**
+ * A table component that displays a grid of cells, where each cell can be in
+ * one of three states: normal, active, or supercharged. The component also
+ * renders a set of buttons to activate or deactivate entire rows at once.
+ *
+ * @param {Grid} grid - The grid to display
+ * @param {boolean} loading - Whether the component is currently loading
+ * @param {function} toggleCellState - A function to toggle the state of a cell
+ * @param {function} activateRow - A function to activate an entire row
+ * @param {function} deActivateRow - A function to deactivate an entire row
+ * @param {ApiResponse | null} result - The result of an optimization calculation,
+ *   or null if no calculation has been done.
+ * @param {function} resetGrid - A function to reset the grid
+ */
 const GridTable: React.FC<GridTableProps> = ({ grid, loading, toggleCellState, activateRow, deActivateRow, result, resetGrid }) => {
   const [shaking, setShaking] = React.useState(false);
 
+  /**
+   * Handles the click event for a cell in the grid. Toggles the state of the cell
+   * between active and supercharged based on user interaction. If the cell is to
+   * be supercharged and the maximum allowed supercharged cells are already
+   * active, triggers a shaking animation to indicate the action is not allowed.
+   *
+   * @param {number} rowIndex - The index of the row containing the cell.
+   * @param {number} columnIndex - The index of the column containing the cell.
+   * @param {React.MouseEvent} event - The click event object.
+   */
   const handleCellClick = (rowIndex: number, columnIndex: number, event: React.MouseEvent) => {
     if (!event.ctrlKey) {
-      const superchargedCount = grid.cells.flat().filter((cell) => cell.supercharged).length;
-      const isCurrentlySupercharged = grid.cells[rowIndex][columnIndex].supercharged;
+      const totalSupercharged = grid.cells.flat().filter(cell => cell.supercharged).length;
+      const currentCellSupercharged = grid.cells[rowIndex][columnIndex]?.supercharged;
 
-      if (superchargedCount >= 4 && !isCurrentlySupercharged) {
+      if (totalSupercharged >= 4 && !currentCellSupercharged) {
         setShaking(true);
         setTimeout(() => setShaking(false), 500);
         return;

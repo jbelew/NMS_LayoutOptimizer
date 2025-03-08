@@ -7,14 +7,16 @@ import { useGridStore } from "./store/useGridStore";
 
 import NMSLogo from "./assets/svg/nms_logo.svg";
 
+
 const App: React.FC = () => {
   const { grid, result, loading, handleOptimize, toggleCellState, activateRow, deActivateRow, resetGrid } = useGridStore();
 
   return (
     <div className="flex justify-center min-h-screen">
       <div className="w-full max-w-6xl p-4 m-8 mx-auto border-2 rounded-lg shadow-lg bg-cyan-900 border-cyan-700">
-        <img src={NMSLogo} alt="No Man's Sky Logo" className="max-w-6xl mb-3 invert brightness-0 saturate-100" />
-        <h1 className="text-3xl">STARSHIP OPTIMIZER</h1>
+        <img src={NMSLogo} alt="No Man's Sky Logo" className="max-w-6xl mt-2 mb-3 invert brightness-0 saturate-100 " />
+
+        <h1 className="text-3xl">STARSHIP OPTIMIZER v0.1</h1>
         <hr className="p-2 mt-2 border-cyan-700" />
 
         <div className="grid grid-cols-4 height-full">
