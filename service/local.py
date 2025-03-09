@@ -33,8 +33,8 @@ grid = Grid.from_dict(
     }
 )
 
-#grid, max_bonus = simulated_annealing_optimization(grid, "Exotic", modules, "infra", initial_temp=5000, cooling_rate=0.9995, max_iterations=20000, patience=500, decay_factor=0.995)
-grid, max_bonus = optimize_placement(grid, "Exotic", modules, "infra")
+grid, max_bonus = simulated_annealing_optimization(grid, "Exotic", modules, "infra", initial_temp=5000, cooling_rate=0.9995, max_iterations=20000, patience=500, decay_factor=0.995)
+#grid, max_bonus = optimize_placement(grid, "Exotic", modules, "infra")
 
 print("Optimized layout --")
 print_grid(grid)

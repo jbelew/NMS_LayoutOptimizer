@@ -8,7 +8,6 @@ import { useState, useEffect } from "react";
 
 import NMSLogo from "./assets/svg/nms_logo.svg";
 
-
 const App: React.FC = () => {
   const { grid, result, loading, handleOptimize, toggleCellState, activateRow, deActivateRow, resetGrid } = useGridStore();
   const [techTree, setTechTree] = useState<{ [key: string]: { label: string; key: string }[] } | null>(null);

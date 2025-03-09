@@ -86,14 +86,14 @@ const GridTable: React.FC<GridTableProps> = ({ grid, loading, toggleCellState, a
                       key={columnIndex}
                       onClick={(event) => handleCellClick(rowIndex, columnIndex, event)}
                       className={`cursor-pointer shadow-md border-2 p-2 rounded-lg transition-all 
-                        hover:bg-opacity-50 hover:bg-cyan-700
-                        ${cell.supercharged ? "border-yellow-500" : cell.active ? "border-cyan-500" : "border-cyan-700"}`}
+                        ${cell.supercharged ? "grid-supercharged" : cell.active ? "grid-active" : "grid-inactive"}
+                        grid-hover`}
                       style={{
                         backgroundImage: cell?.image ? `url(/src/assets/img/${cell.image})` : "none",
                         backgroundSize: "cover",
                         backgroundPosition: "center",
-                        width: "72px",
-                        height: "72px",
+                        width: "64px",
+                        height: "64px",
                       }}
                     ></td>
                   </Tooltip>
@@ -101,15 +101,16 @@ const GridTable: React.FC<GridTableProps> = ({ grid, loading, toggleCellState, a
                   <td
                     key={columnIndex}
                     onClick={(event) => handleCellClick(rowIndex, columnIndex, event)}
-                    className={`cursor-pointer shadow-md border-2 p-2 rounded-lg transition-all hover:bg-opacity-50 hover:bg-cyan-700
-                      ${cell.supercharged ? "border-yellow-500" : "border-cyan-500"}
-                      ${cell.active ? "border-cyan-500" : "border-cyan-700"}`}
+                    className={`cursor-pointer shadow-md border-2 p-2 rounded-lg
+                      ${cell.supercharged ? "grid-supercharged" : "grid-active"}
+                      ${cell.active ? "grid-active" : "grid-inactive"}
+                      grid-hover`}
                     style={{
                       backgroundImage: cell.image ? `url(${cell.image})` : "none",
                       backgroundSize: "cover",
                       backgroundPosition: "center",
-                      width: "72px",
-                      height: "72px",
+                      width: "64px",
+                      height: "64px",
                     }}
                   ></td>
                 )
@@ -142,7 +143,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, loading, toggleCellState, a
           ))}
           <tr>
             <td colSpan={8}>
-              <ul className="mt-2 list-disc list-inside">
+              <ul className="mt-2 list-disc list-inside" style={{ color: "var(--gray-11)" }}>
                 <li>
                   <strong>Click</strong> a cell to toggle its <em>Supercharged</em> state. No more than 4.
                 </li>

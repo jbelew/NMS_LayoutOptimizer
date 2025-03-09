@@ -145,7 +145,7 @@ def generate_data_from_optimize_placement(
     for _ in range(num_grids):
         empty_grid = generate_empty_grid(width, height)
         set_grid_state(empty_grid, width, height)
-        optimal_grid, optimal_bonus = optimize_placement(empty_grid, modules, tech)
+        optimal_grid, optimal_bonus = optimize_placement(empty_grid, "Exotic", modules, tech)
 
         if optimal_grid is None:
             continue
