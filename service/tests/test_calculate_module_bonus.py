@@ -1,8 +1,11 @@
 import unittest
 import sys
+import os
 
-sys.path.insert(0, '../')  # add parent directory to sys.path
-from service.optimizer import Grid, calculate_module_bonus, print_grid # type: ignore
+# Add the parent directory to sys.path to import modules from there
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from optimizer import Grid, calculate_module_bonus, print_grid  # type: ignore
 
 class TestCalculateModuleBonus(unittest.TestCase):
 

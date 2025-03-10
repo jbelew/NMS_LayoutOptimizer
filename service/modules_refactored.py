@@ -7,7 +7,7 @@ modules = {
                     "key": "cyclotron",
                     "modules": [
                         {"id": "CB", "type": "core", "label": "Cyclotron Ballista", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "cyclotron.png"},
-                        {"id": "QR", "type": "core", "label": "Dyson Pump", "bonus": 0.1, "adjacency": True, "sc_eligible": True, "image": "dyson.png"},
+                        {"id": "QR", "type": "bonus", "label": "Dyson Pump", "bonus": 0.1, "adjacency": True, "sc_eligible": True, "image": "dyson.png"},
                         {"id": "Xa", "type": "bonus", "label": "Cyclotron Ballista Upgrade Sigma", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "cyclotron-upgrade.png"},
                         {"id": "Xb", "type": "bonus", "label": "Cyclotron Ballista Upgrade Tau", "bonus": 0.19, "adjacency": True, "sc_eligible": True, "image": "cyclotron-upgrade.png"},
                         {"id": "Xc", "type": "bonus", "label": "Cyclotron Ballista Upgrade Theta", "bonus": 0.18, "adjacency": True, "sc_eligible": True, "image": "cyclotron-upgrade.png"},
@@ -18,7 +18,7 @@ modules = {
                     "key": "infra",
                     "modules": [
                         {"id": "IK", "type": "core", "label": "Infraknife Accelerator", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "infra.png"},
-                        {"id": "QR", "type": "core", "label": "Q-Resonator", "bonus": 0.1, "adjacency": True, "sc_eligible": True, "image": "q-resonator.png"},
+                        {"id": "QR", "type": "bonus", "label": "Q-Resonator", "bonus": 0.1, "adjacency": True, "sc_eligible": True, "image": "q-resonator.png"},
                         {"id": "Xa", "type": "bonus", "label": "Infraknife Accelerator Upgrade Sigma", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "infra-upgrade.png"},
                         {"id": "Xb", "type": "bonus", "label": "Infraknife Accelerator Upgrade Tau", "bonus": 0.19, "adjacency": True, "sc_eligible": True, "image": "infra-upgrade.png"},
                         {"id": "Xc", "type": "bonus", "label": "Infraknife Accelerator Upgrade Theta", "bonus": 0.18, "adjacency": True, "sc_eligible": True, "image": "infra-upgrade.png"},
@@ -29,7 +29,7 @@ modules = {
                     "key": "phase",
                     "modules": [
                         {"id": "PB", "type": "core", "label": "Phase Beam", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "phase-beam.png"},
-                        {"id": "FD", "type": "core", "label": "Fourier De-Limiter", "bonus": 0.1, "adjacency": True, "sc_eligible": True, "image": "fourier.png"},
+                        {"id": "FD", "type": "bonus", "label": "Fourier De-Limiter", "bonus": 0.1, "adjacency": True, "sc_eligible": True, "image": "fourier.png"},
                         {"id": "Xa", "type": "bonus", "label": "Phase Beam Upgrade Sigma", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "phase-upgrade.png"},
                         {"id": "Xb", "type": "bonus", "label": "Phase Beam Upgrade Tau", "bonus": 0.19, "adjacency": True, "sc_eligible": True, "image": "phase-upgrade.png"},
                         {"id": "Xc", "type": "bonus", "label": "Phase Beam Upgrade Theta", "bonus": 0.18, "adjacency": True, "sc_eligible": True, "image": "phase-upgrade.png"},
@@ -40,7 +40,7 @@ modules = {
                     "key": "photon",
                     "modules": [
                         {"id": "PC", "type": "core", "label": "Photon Cannon", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "photon.png"},
-                        {"id": "NO", "type": "core", "label": "Nonlinear Optics", "bonus": 0.1, "adjacency": True, "sc_eligible": True, "image": "nonlinear.png"},
+                        {"id": "NO", "type": "bonus", "label": "Nonlinear Optics", "bonus": 0.1, "adjacency": True, "sc_eligible": True, "image": "nonlinear.png"},
                         {"id": "Xa", "type": "bonus", "label": "Photon Cannon Upgrade Sigma", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "photon-upgrade.png"},
                         {"id": "Xb", "type": "bonus", "label": "Photon Cannon Upgrade Tau", "bonus": 0.19, "adjacency": True, "sc_eligible": True, "image": "photon-upgrade.png"},
                         {"id": "Xc", "type": "bonus", "label": "Photon Cannon Upgrade Theta", "bonus": 0.18, "adjacency": True, "sc_eligible": True, "image": "photon-upgrade.png"},
@@ -51,7 +51,7 @@ modules = {
                     "key": "positron",
                     "modules": [
                         {"id": "PE", "type": "core", "label": "Positron Ejector", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "positron.png"},
-                        {"id": "FS", "type": "core", "label": "Fragment Supercharger", "bonus": 0.1, "adjacency": True, "sc_eligible": True, "image": "fragment.png"},
+                        {"id": "FS", "type": "bonus", "label": "Fragment Supercharger", "bonus": 0.1, "adjacency": True, "sc_eligible": True, "image": "fragment.png"},
                         {"id": "Xa", "type": "bonus", "label": "Positron Ejector Upgrade Sigma", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "positron-upgrade.png"},
                         {"id": "Xb", "type": "bonus", "label": "Positron Ejector Upgrade Tau", "bonus": 0.19, "adjacency": True, "sc_eligible": True, "image": "positron-upgrade.png"},
                         {"id": "Xc", "type": "bonus", "label": "Positron Ejector Upgrade Theta", "bonus": 0.18, "adjacency": True, "sc_eligible": True, "image": "positron-upgrade.png"},

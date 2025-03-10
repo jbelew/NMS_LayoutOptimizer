@@ -1,8 +1,10 @@
 import unittest
 import sys
+import os
 
-sys.path.insert(0, '../')  # add parent directory to sys.path
-from service.optimizer import Grid, calculate_adjacency_bonus
+# Add the parent directory to sys.path to import modules from there
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from optimizer import Grid, calculate_adjacency_bonus
 
 class TestCalculateAdjacencyBonus(unittest.TestCase):
     def test_adjacent_one_module(self):

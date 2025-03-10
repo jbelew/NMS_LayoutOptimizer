@@ -208,7 +208,6 @@ def get_tech_tree_json(ship):
     except Exception as e:
         return json.dumps({"error": str(e)})  # Catch any errors during tree generation
 
-
 def get_tech_tree(ship):
     """Generates a technology tree for a given ship."""
     ship_data = modules.get(ship)
@@ -234,19 +233,23 @@ def get_tech_tree(ship):
     return tech_tree
 
 def optimize_placement(grid, ship, modules, tech):
+    # Initialize variables to store the optimal grid and the highest bonus found
     optimal_grid = None
     highest_bonus = 0.0
     iteration = 0
 
+    # Retrieve the list of technology-specific modules for the given ship and tech
     tech_modules = get_tech_modules(modules, ship, tech)
-    
+
+    # Separate core and bonus modules from the list of tech modules
     core_modules = [module for module in tech_modules if module["type"] == "core"]
     bonus_modules = [module for module in tech_modules if module["type"] == "bonus"]
 
-    if not bonus_modules or not core_modules:
-        raise ValueError("No bonus or core modules specified")
+    # Ensure there are both bonus and core modules available for placement
+    if not core_modules:
+        raise ValueError("No core modules specified")
 
-    # Find all valid positions in the grid
+    # Find all grid positions that are empty and active
     available_positions = [
         (x, y)
         for y in range(grid.height)
@@ -254,11 +257,22 @@ def optimize_placement(grid, ship, modules, tech):
         if grid.get_cell(x, y)["module"] is None and grid.get_cell(x, y)["active"]
     ]
 
+    # Iterate over every possible core module position
     for core_position in available_positions:
-        for bonus_placement in permutations(available_positions, len(bonus_modules)):
-            temp_grid = Grid.from_dict(grid.to_dict())  # changed to from_dict
+        # Generate all permutations of bonus module positions if there are bonus modules
+        bonus_permutations = (
+            [permutations(available_positions, len(bonus_modules))]
+            if bonus_modules
+            else [[]]
+        )
+        for bonus_placement in bonus_permutations[
+            0
+        ]:  # always loop at least once, even if empty.
 
-            # Place the core module
+            # Create a temporary grid to test the current configuration
+            temp_grid = Grid.from_dict(grid.to_dict())  # Clone the grid
+
+            # Place the core module at the specified position
             core_x, core_y = core_position
             core_module = core_modules[0]
             place_module(
@@ -275,7 +289,7 @@ def optimize_placement(grid, ship, modules, tech):
                 core_module["image"],
             )
 
-            # Place the bonus modules
+            # Place each bonus module at its respective position
             for index, bonus_position in enumerate(bonus_placement):
                 x, y = bonus_position
                 if temp_grid.get_cell(x, y)["module"] is not None:
@@ -295,20 +309,18 @@ def optimize_placement(grid, ship, modules, tech):
                     bonus_module["image"],
                 )
 
-            # Calculate total bonus for the core module
+            # Calculate adjacency bonuses and total bonuses for current grid configuration
             populate_adjacency_bonuses(temp_grid, tech)
             populate_module_bonuses(temp_grid, tech)
             core_bonus = populate_core_bonus(temp_grid, tech)
 
-            # Update optimal placement if current bonus is higher
+            # Update the optimal grid if the current configuration yields a higher bonus
             iteration += 1
-
             if core_bonus > highest_bonus:
                 highest_bonus = core_bonus
-                optimal_grid = Grid.from_dict(
-                    temp_grid.to_dict()
-                )  # changed to from_dict
+                optimal_grid = Grid.from_dict(temp_grid.to_dict())  # Clone the temp grid
 
+    # Return the grid configuration with the highest bonus and its bonus value
     return optimal_grid, highest_bonus
 
 
