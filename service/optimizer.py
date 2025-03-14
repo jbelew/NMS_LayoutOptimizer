@@ -387,10 +387,11 @@ def simulated_annealing_optimization(
 
         # Decrease temperature using the cooling rate
         temperature *= cooling_rate
-
+        
         # Print progress
-        # if iteration % 100 == 0:
-        #     print(f"simulated_annealing_optimization - tech: {tech} - Iteration {iteration}/{max_iterations}, Temp: {temperature:.2f}, Best Bonus: {best_bonus:.2f}, Cooling Rate: {cooling_rate:.4f}")
+        if iteration % 100 == 0:
+            print(f"simulated_annealing_optimization - tech: {tech} - Iteration {iteration}/{max_iterations}, Temp: {temperature:.2f}, Best Bonus: {best_bonus:.2f}, Cooling Rate: {cooling_rate:.4f}")
+
 
     return best_grid, best_bonus
 
@@ -419,11 +420,19 @@ def generate_neighbor_grid_with_movement(
         if neighbor_grid.get_cell(x, y)["module"] is None
         and neighbor_grid.get_cell(x, y)["active"]
     ]
+    supercharged_positions = [
+        (x, y)
+        for y in range(grid.height)
+        for x in range(grid.width)
+        if neighbor_grid.get_cell(x, y)["supercharged"] and neighbor_grid.get_cell(x,y)["tech"] == tech
+    ]
+    
+    unoccupied_supercharged_positions = [pos for pos in supercharged_positions if pos not in occupied_positions]
 
     move_count = max(
         1, int(5 * (temperature / initial_temp))
     )  # More moves when temp is high
-
+    
     if not occupied_positions:
         random.shuffle(available_positions)
         for core_module in core_modules:
@@ -466,7 +475,17 @@ def generate_neighbor_grid_with_movement(
         for _ in range(move_count):
             if not occupied_positions:
                 break
-            old_x, old_y = random.choice(occupied_positions)
+
+            # Prioritize moving modules from non-supercharged positions if there are unoccupied supercharged slots
+            if unoccupied_supercharged_positions:
+                non_supercharged_occupied = [pos for pos in occupied_positions if pos not in supercharged_positions]
+                if non_supercharged_occupied:
+                    old_x, old_y = random.choice(non_supercharged_occupied)
+                else:
+                     old_x, old_y = random.choice(occupied_positions)
+            else:
+                old_x, old_y = random.choice(occupied_positions)
+            
             occupied_positions.remove((old_x, old_y))
             old_cell = neighbor_grid.get_cell(old_x, old_y)
             old_module = old_cell["module"]
@@ -476,8 +495,12 @@ def generate_neighbor_grid_with_movement(
             )
 
             if available_positions:
-                new_x, new_y = random.choice(available_positions)
-                available_positions.remove((new_x, new_y))
+                 # Prioritize moving to unoccupied supercharged positions
+                if unoccupied_supercharged_positions:
+                    new_x, new_y = unoccupied_supercharged_positions.pop()
+                else:
+                    new_x, new_y = random.choice(available_positions)
+                    available_positions.remove((new_x, new_y))
 
                 # Enforce supercharged slot limit when placing a module
                 is_supercharged = (
@@ -490,6 +513,7 @@ def generate_neighbor_grid_with_movement(
                     new_x,
                     new_y,
                     old_module,
+                    old_cell["label"],
                     old_cell["tech"],
                     old_cell["type"],
                     old_cell["bonus"],
@@ -499,7 +523,6 @@ def generate_neighbor_grid_with_movement(
                 )
 
     return neighbor_grid
-
 
 def count_supercharged_slots(grid, tech):
     count = 0
@@ -532,14 +555,23 @@ def calculate_adjacency_bonus(grid, x, y):
     directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # Only orthogonal directions
     adjacency_bonus = 0.0
 
+    # for dx, dy in directions:
+    #     nx, ny = x + dx, y + dy
+    #     if 0 <= nx < grid.width and 0 <= ny < grid.height:
+    #         neighbor = grid.get_cell(nx, ny)
+    #         if neighbor["module"] is not None and neighbor["tech"] == cell["tech"]:
+    #             if neighbor["adjacency"] is True:
+    #                 adjacency_bonus += 0.1
+    #                 grid.set_adjacency_bonus(x, y, adjacency_bonus)
+    
+    # Trying a different approach
     for dx, dy in directions:
         nx, ny = x + dx, y + dy
         if 0 <= nx < grid.width and 0 <= ny < grid.height:
             neighbor = grid.get_cell(nx, ny)
             if neighbor["module"] is not None and neighbor["tech"] == cell["tech"]:
-                if neighbor["adjacency"] is True:
-                    adjacency_bonus += 0.1
-                    grid.set_adjacency_bonus(x, y, adjacency_bonus)
+                adjacency_bonus += 1
+                grid.set_adjacency_bonus(x, y, adjacency_bonus)
 
     return adjacency_bonus
 
@@ -554,18 +586,19 @@ def populate_adjacency_bonuses(grid, tech):
 
 def calculate_module_bonus(grid, x, y):
     cell = grid.get_cell(x, y)
+    
     base_bonus = cell["bonus"]
     adjacency_bonus = cell["adjacency_bonus"]
     is_supercharged = cell["supercharged"]
     is_sc_eligible = cell["sc_eligible"]
 
-    total_bonus = base_bonus + adjacency_bonus
+    total_bonus = base_bonus * adjacency_bonus
+    
     if is_supercharged & is_sc_eligible == True:
         total_bonus *= 1.25
 
     grid.set_total(x, y, total_bonus)
     return total_bonus
-
 
 def populate_module_bonuses(grid, tech):
     for row in range(grid.height):
@@ -586,12 +619,11 @@ def calculate_core_bonus(grid, tech):
         for col in range(grid.width):
             cell = grid.get_cell(col, row)
             if cell["type"] == "bonus" and cell["tech"] == tech:
-                bonus_total += cell["total"]
-            elif cell["type"] == "core" and cell["tech"] == tech:
-                core_total = cell["bonus"] + cell["adjacency_bonus"]
+                bonus_total += cell["total"] * cell["adjacency_bonus"]
+            # elif cell["type"] == "core" and cell["tech"] == tech:
+            #     core_total = cell["bonus"] + cell["adjacency_bonus"]
 
     return bonus_total + core_total
-
 
 def populate_core_bonus(grid, tech):
     core_bonus = calculate_core_bonus(grid, tech)

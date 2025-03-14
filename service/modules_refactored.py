@@ -18,7 +18,7 @@ modules = {
                     "key": "infra",
                     "modules": [
                         {"id": "IK", "type": "core", "label": "Infraknife Accelerator", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "infra.png"},
-                        {"id": "QR", "type": "bonus", "label": "Q-Resonator", "bonus": 0.1, "adjacency": True, "sc_eligible": True, "image": "q-resonator.png"},
+                        {"id": "QR", "type": "bonus", "label": "Q-Resonator", "bonus": 0.1, "adjacency": False, "sc_eligible": True, "image": "q-resonator.png"},
                         {"id": "Xa", "type": "bonus", "label": "Infraknife Accelerator Upgrade Sigma", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "infra-upgrade.png"},
                         {"id": "Xb", "type": "bonus", "label": "Infraknife Accelerator Upgrade Tau", "bonus": 0.19, "adjacency": True, "sc_eligible": True, "image": "infra-upgrade.png"},
                         {"id": "Xc", "type": "bonus", "label": "Infraknife Accelerator Upgrade Theta", "bonus": 0.18, "adjacency": True, "sc_eligible": True, "image": "infra-upgrade.png"},

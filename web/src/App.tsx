@@ -26,27 +26,26 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <Flex className="justify-center p-0 md:pt-8 md:items-top md:p-4">
-      {/* Container Box with content-driven height, Tint + Blur */}
+    <Flex className="items-start justify-center optimizer lg:pt-16 lg:items-top lg:p-4">
+      {/* Container Box */}
       <Box
-        className="relative w-full max-w-screen-xl p-2 mx-auto overflow-hidden rounded-none shadow-lg md:rounded-xl md:border-1 md:shadow-none backdrop-blur-lg"
+        className="optimizer__container relative min-w-[min-content] max-w-fit mx-auto overflow-hidden p-2 rounded-none shadow-lg lg:rounded-xl lg:border-1 lg:shadow-xl backdrop-blur-lg"
         style={{ borderColor: "var(--blue-1)" }}
       >
-        {/* Lighten the background with a transparent white overlay */}
-        <Box className="absolute inset-0 z-0 bg-white rounded-none opacity-10"></Box>
+        {/* Background Overlay */}
+        <Box className="absolute inset-0 z-0 bg-white rounded-none optimizer__overlay opacity-10"></Box>
 
         {/* Header */}
-        <Box asChild className="p-4 text-custom-cyan-light">
-          <header>
-            <Heading as="h1" style={{ color: "var(--gray-12)" }}>
-              No Man's Sky Starship Optimizer v0.3
-            </Heading>
-          </header>
+        <Box asChild className="p-4 optimizer__header text-custom-cyan-light">
+          <Heading as="h1" className="optimizer__title" style={{ color: "var(--gray-12)" }}>
+            No Man's Sky Starship Optimizer v0.3
+          </Heading>
         </Box>
 
-        <Flex className="flex-col md:flex-row bg-custom-cyan-dark">
+        {/* Main Layout */}
+        <Flex className="flex-col items-start optimizer__layout lg:flex-row">
           {/* Main Content */}
-          <Box className="p-2 md:flex-shrink-0">
+          <Box className="flex-grow p-2 optimizer__grid lg:flex-shrink-0">
             <GridTable
               grid={grid}
               loading={loading}
@@ -58,20 +57,32 @@ const App: React.FC = () => {
             />
           </Box>
 
-          {/* Sidebar - 1/4 width */}
-          <Box className="z-10 w-full p-2 text-white md:flex-shrink-0 md:flex-grow-0 md:w-1/4 md:mr-4">
-            {techTree &&
+          {/* Sidebar */}
+          <Box className="sidebar z-10 p-2 text-white flex-grow-0 flex-shrink-0 w-full lg:w-[300px]">
+            {techTree ? (
               Object.entries(techTree).map(([type, technologies]) => (
-                <React.Fragment key={type}>
-                  <h2 className="text-2xl" style={{ color: "var(--gray-12)" }}>
+                <div key={type} className="mb-4 sidebar__section">
+                  <h2 className="text-2xl sidebar__title" style={{ color: "var(--gray-12)" }}>
                     {type.toUpperCase()}
                   </h2>
-                  <Separator orientation="horizontal" size="4" className="mb-4" />
+                  <Separator orientation="horizontal" size="4" className="mb-4 sidebar__separator" />
                   {technologies.map((tech) => (
-                    <OptimizationButton key={tech.key} label={tech.label} onClick={() => handleOptimize(tech.key)} loading={loading} tech={tech.key} />
+                    <OptimizationButton
+                      key={tech.key}
+                      label={tech.label}
+                      onClick={() => handleOptimize(tech.key)}
+                      loading={loading}
+                      tech={tech.key}
+                      className="sidebar__button"
+                    />
                   ))}
-                </React.Fragment>
-              ))}
+                </div>
+              ))
+            ) : (
+              <p className="sidebar__loading" style={{ color: "var(--gray-12)" }}>
+                Loading tech tree...
+              </p>
+            )}
           </Box>
         </Flex>
       </Box>
