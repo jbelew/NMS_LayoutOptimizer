@@ -5,7 +5,6 @@ import GridTable from "./components/GridTableComponent";
 import { useGridStore } from "./store/useGridStore";
 import TechTreeComponent from "./components/TechTreeComponent"; // Import TechTreeComponent
 
-
 const App: React.FC = () => {
   const { grid, result, solving, handleOptimize, toggleCellState, activateRow, deActivateRow, resetGrid } = useGridStore();
 
