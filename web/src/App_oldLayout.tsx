@@ -2,7 +2,7 @@ import { UpdateIcon } from "@radix-ui/react-icons";
 import { IconButton, Flex, ScrollArea, Separator, Box, Text } from "@radix-ui/themes";
 
 import React from "react";
-import GridTable from "./components/GridTable"; // Corrected import path
+import GridTable from "./components/GridTableComponent"; // Corrected import path
 import { useGridStore } from "./store/useGridStore";
 import { useState, useEffect } from "react";
 

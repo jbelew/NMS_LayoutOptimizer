@@ -1,14 +1,13 @@
 import { Heading, Flex, Box } from "@radix-ui/themes";
 
 import React from "react";
-import GridTable from "./components/GridTable";
-import TechTreeComponent from "./components/TechTree";
+import GridTable from "./components/GridTableComponent";
 import { useGridStore } from "./store/useGridStore";
-import { useFetchTechTree } from "./hooks/useTechTree";
+import TechTreeComponent from "./components/TechTreeComponent"; // Import TechTreeComponent
+
 
 const App: React.FC = () => {
   const { grid, result, loading, handleOptimize, toggleCellState, activateRow, deActivateRow, resetGrid } = useGridStore();
-  const { techTreeState: techTree } = useFetchTechTree();
 
   return (
     <Flex className="items-start justify-center optimizer lg:pt-16 lg:items-top lg:p-4">
@@ -45,7 +44,7 @@ const App: React.FC = () => {
 
           {/* Sidebar */}
           <Box className="sidebar z-10 p-2  flex-grow-0 flex-shrink-0 w-full lg:w-[300px]" style={{ color: "var(--gray-12)" }}>
-            <TechTreeComponent techTree={techTree} handleOptimize={handleOptimize} loading={loading} />
+            <TechTreeComponent handleOptimize={handleOptimize} loading={loading} />
           </Box>
         </Flex>
       </Box>
