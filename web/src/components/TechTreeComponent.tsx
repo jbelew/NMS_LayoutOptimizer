@@ -12,7 +12,7 @@ export interface TechTree {
 
 interface TechTreeComponentProps {
   handleOptimize: (tech: string) => void;
-  loading: boolean;
+  solving: boolean; // Correctly named prop for grid optimization state
 }
 
 /**
@@ -24,12 +24,12 @@ interface TechTreeComponentProps {
  *
  * @param {TechTreeComponentProps} props Properties passed to the component.
  * @param {(tech: string) => void} props.handleOptimize The function to call when an optimization button is clicked.
- * @param {boolean} props.loading Whether the component is loading. If true, the optimization buttons are disabled.
+ * @param {boolean} props.solving Whether the grid is solving. If true, the optimization buttons are disabled.
  * @returns {JSX.Element} The rendered component.
  */
 const TechTreeComponent: React.FC<TechTreeComponentProps> = ({
   handleOptimize,
-  loading,
+  solving, // Correctly named prop for grid optimization state
 }: TechTreeComponentProps): JSX.Element => {
   const [techTree, techTreeLoading, error] = useFetchTechTree(); // Fetch the tech tree data here
 
@@ -77,7 +77,7 @@ const TechTreeComponent: React.FC<TechTreeComponentProps> = ({
               key={tech.key}
               label={tech.label}
               onClick={() => handleOptimize(tech.key)}
-              loading={loading}
+              solving={solving} // Correct: Now passing the solving prop
               tech={tech.key}
             />
           ))}

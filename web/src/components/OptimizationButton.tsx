@@ -7,7 +7,7 @@ import { UpdateIcon, ResetIcon, DoubleArrowLeftIcon } from "@radix-ui/react-icon
 interface OptimizationButtonProps {
   label: string;
   onClick: () => void;
-  loading: boolean;
+  solving: boolean; // Renamed loading to solving
   tech: string;
 }
 
@@ -19,14 +19,14 @@ interface OptimizationButtonProps {
  * @param {OptimizationButtonProps} props - The properties passed to the component.
  * @param {string} props.label - The label to display next to the button.
  * @param {() => void} props.onClick - The function to call when the button is clicked.
- * @param {boolean} props.loading - Whether the button should appear in a loading state.
+ * @param {boolean} props.solving - Whether the button should appear in a solving state.
  * @param {string} props.tech - The tech key associated with the button.
  * @returns {JSX.Element} The rendered button component.
  */
 const OptimizationButton: React.FC<OptimizationButtonProps> = ({
   label,
   onClick,
-  loading,
+  solving, // Renamed loading to solving
   tech,
 }) => {
   const hasTechInGrid = useGridStore((state) => state.hasTechInGrid(tech));
@@ -35,13 +35,13 @@ const OptimizationButton: React.FC<OptimizationButtonProps> = ({
   return (
     <Flex className="items-center gap-2 mt-2 mb-2">
       {/* Main icon button for triggering optimization */}
-      <IconButton onClick={onClick} disabled={loading} variant="soft">
+      <IconButton onClick={onClick} disabled={solving} variant="soft"> {/* Renamed loading to solving */}
         {hasTechInGrid ? <UpdateIcon /> : <DoubleArrowLeftIcon />}
       </IconButton>
       {/* Button to reset the specific tech in the grid */}
       <IconButton
         onClick={() => handleResetGridTech(tech)}
-        disabled={!hasTechInGrid || loading}
+        disabled={!hasTechInGrid || solving} 
         variant="soft"
       >
         <ResetIcon />

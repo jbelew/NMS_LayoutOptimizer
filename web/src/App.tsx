@@ -7,7 +7,7 @@ import TechTreeComponent from "./components/TechTreeComponent"; // Import TechTr
 
 
 const App: React.FC = () => {
-  const { grid, result, loading, handleOptimize, toggleCellState, activateRow, deActivateRow, resetGrid } = useGridStore();
+  const { grid, result, solving, handleOptimize, toggleCellState, activateRow, deActivateRow, resetGrid } = useGridStore();
 
   return (
     <Flex className="items-start justify-center optimizer lg:pt-16 lg:items-top lg:p-4">
@@ -33,7 +33,7 @@ const App: React.FC = () => {
           <Box className="flex-grow p-2 optimizer__grid lg:flex-shrink-0">
             <GridTable
               grid={grid}
-              loading={loading}
+              solving={solving}
               toggleCellState={toggleCellState}
               result={result}
               activateRow={activateRow}
@@ -44,7 +44,7 @@ const App: React.FC = () => {
 
           {/* Sidebar */}
           <Box className="sidebar z-10 p-2  flex-grow-0 flex-shrink-0 w-full lg:w-[300px]" style={{ color: "var(--gray-12)" }}>
-            <TechTreeComponent handleOptimize={handleOptimize} loading={loading} />
+            <TechTreeComponent handleOptimize={handleOptimize} solving={solving} />
           </Box>
         </Flex>
       </Box>

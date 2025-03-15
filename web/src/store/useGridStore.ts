@@ -55,11 +55,11 @@ const createGrid = (width: number, height: number): Grid => ({
 type GridStore = {
   grid: Grid;
   result: ApiResponse | null;
-  loading: boolean;
+  solving: boolean; // Correct: Represents the grid optimization process
   setGrid: (grid: Grid) => void;
   resetGrid: () => void;
   setResult: (result: ApiResponse | null) => void;
-  setLoading: (loading: boolean) => void;
+  setSolving: (solving: boolean) => void;
   toggleCellState: (rowIndex: number, columnIndex: number, event: React.MouseEvent) => void;
   handleOptimize: (tech: string) => Promise<void>;
   activateRow: (rowIndex: number) => void;
@@ -71,11 +71,11 @@ type GridStore = {
 export const useGridStore = create<GridStore>((set, get) => ({
   grid: createGrid(10, 6),
   result: null,
-  loading: false,
+  solving: false, // Correct: Represents the grid optimization process
 
   setGrid: (grid) => set({ grid }),
   setResult: (result) => set({ result }),
-  setLoading: (loading) => set({ loading }),
+  setSolving: (solving) => set({ solving }),
 
   resetGrid: () => {
     set((state) => ({
@@ -129,8 +129,8 @@ export const useGridStore = create<GridStore>((set, get) => ({
   },
 
   handleOptimize: async (tech) => {
-    set({ loading: true });
-    const { grid, setGrid, setResult, setLoading } = get();
+    set({ solving: true }); // Correct: Setting the solving state
+    const { grid, setGrid, setResult, setSolving } = get();
 
     // Create a new grid without modifying state immediately
     const updatedGrid: Grid = {
@@ -164,7 +164,7 @@ export const useGridStore = create<GridStore>((set, get) => ({
       console.error("Error during optimization:", error);
       setResult(null);
     } finally {
-      setLoading(false);
+      setSolving(false); // Correct: Setting the solving state
     }
   },
 

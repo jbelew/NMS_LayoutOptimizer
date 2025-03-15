@@ -6,7 +6,7 @@ import { PlusIcon, MinusIcon, ResetIcon } from "@radix-ui/react-icons";
 interface GridTableProps {
   grid: Grid;
   resetGrid: () => void;
-  loading: boolean;
+  solving: boolean; // Correct: Now expects 'solving'
   toggleCellState: (rowIndex: number, columnIndex: number, event: React.MouseEvent) => void;
   result: ApiResponse | null;
   activateRow: (rowIndex: number) => void;
@@ -31,7 +31,7 @@ const Wrapper: React.FC<{ shaking: boolean; children: React.ReactNode }> = ({ sh
  * renders a set of buttons to activate or deactivate entire rows at once.
  *
  * @param {Grid} grid - The grid to display
- * @param {boolean} loading - Whether the component is currently loading
+ * @param {boolean} solving - Whether the component is currently solving
  * @param {function} toggleCellState - A function to toggle the state of a cell
  * @param {function} activateRow - A function to activate an entire row
  * @param {function} deActivateRow - A function to deactivate an entire row
@@ -39,7 +39,7 @@ const Wrapper: React.FC<{ shaking: boolean; children: React.ReactNode }> = ({ sh
  *   or null if no calculation has been done.
  * @param {function} resetGrid - A function to reset the grid
  */
-const GridTable: React.FC<GridTableProps> = ({ grid, loading, toggleCellState, activateRow, deActivateRow, result, resetGrid }) => {
+const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, activateRow, deActivateRow, result, resetGrid }) => {
   const [shaking, setShaking] = React.useState(false);
 
   /**
@@ -70,12 +70,12 @@ const GridTable: React.FC<GridTableProps> = ({ grid, loading, toggleCellState, a
 
   return (
     <Wrapper shaking={shaking}>
-      {loading && (
+      {solving && (
         <div className="absolute inset-0 flex items-center justify-center bg-opacity-50 rounded-lg">
           <div className="w-16 h-16 border-8 rounded-full border-t-cyan-500 border-slate-500 animate-spin"></div>
         </div>
       )}
-      <table className={`border-separate border-spacing-2 rounded-lg ${loading ? "opacity-50" : ""}`}>
+      <table className={`border-separate border-spacing-2 rounded-lg ${solving ? "opacity-50" : ""}`}>
         <tbody>
           {grid.cells.map((row, rowIndex) => (
             <tr key={rowIndex}>
