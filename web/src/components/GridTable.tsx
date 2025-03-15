@@ -143,7 +143,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, loading, toggleCellState, a
           ))}
           <tr>
             <td colSpan={8}>
-              <ul className="mt-2 list-disc list-inside" style={{ color: "var(--gray-11)" }}>
+              <ul className="mt-2 list-disc list-inside" style={{ color: "var(--gray-12)" }}>
                 <li>
                   <strong>Click</strong> a cell to toggle its <em>Supercharged</em> state. No more than 4.
                 </li>
