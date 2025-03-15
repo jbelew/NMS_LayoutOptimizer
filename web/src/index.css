@@ -29,10 +29,10 @@
   h2 {
     font-family: "GeosansLight", sans-serif;
   }
-} 
+}
 
 .radix-themes {
-	--default-font-family: "SourceSans", sans-serif;
+  --default-font-family: "SourceSans", sans-serif;
 }
 
 /* Background styles */
@@ -200,7 +200,8 @@ body::before {
 }
 
 .grid-inactive {
-  border-color: var(--blue-7); /* Or use any other color variable */
+  border-color: var(--blue-7); /* Set initial border color */
+  transition: border-color .25s ease; /* Transition the border color over 1.25s */
 }
 
 .grid-hover:hover {
@@ -210,8 +211,32 @@ body::before {
 
 .grid-supercharged {
   border-color: #E6C133; /* Or use any other color variable */
+  transition: border-color .25s ease; /* Transition the border color over 1.25s */
 }
 
 .grid-fill {
   border-color: var(--blue-7); /* Or use any other color variable */
+  transition: border-color .25s ease; /* Transition the border color over 1.25s */
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(10, 64px) auto; /* 10 columns for cells, 1 for actions */
+  grid-template-rows: repeat(6, 64px); /* 6 rows */
+  gap: 8px; /* Adjust the gap as needed */
+}
+
+.grid-instructions {
+  grid-column: 1 / span 8;
+  grid-row: 7;
+}
+
+.grid-reset-button {
+  grid-column: 9 / span 2;
+  grid-row: 7;
+}
+
+.grid-result {
+  grid-column: 1 / span 10;
+  grid-row: 8;
 }

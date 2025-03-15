@@ -37,7 +37,7 @@ const GridCell: React.FC<GridCellProps> = ({ rowIndex, columnIndex, cell, toggle
     if (cell.label) {
       return (
         <Tooltip content={cell.label}>
-          <td
+          <div
             onClick={handleClick}
             className={`cursor-pointer shadow-md border-2 p-2 rounded-lg transition-all 
               ${cell.supercharged ? "grid-supercharged" : cell.active ? "grid-active" : "grid-inactive"}
@@ -49,14 +49,14 @@ const GridCell: React.FC<GridCellProps> = ({ rowIndex, columnIndex, cell, toggle
               width: "64px",
               height: "64px",
             }}
-          ></td>
+          ></div>
         </Tooltip>
       );
     }
 
     // If no label, render the cell without Tooltip
     return (
-      <td
+      <div
         onClick={handleClick}
         className={`cursor-pointer shadow-md border-2 p-2 rounded-lg transition-all 
           ${cell.supercharged ? "grid-supercharged" : "grid-active"}
@@ -69,11 +69,11 @@ const GridCell: React.FC<GridCellProps> = ({ rowIndex, columnIndex, cell, toggle
           width: "64px",
           height: "64px",
         }}
-      ></td>
+      ></div>
     );
   };
 
-  return renderCellContent();
+  return <div style={{ gridColumn: columnIndex + 1, gridRow: rowIndex + 1 }}>{renderCellContent()}</div>;
 };
 
 export default GridCell;
