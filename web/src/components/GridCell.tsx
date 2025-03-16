@@ -73,6 +73,7 @@ const gridCell: React.FC<gridCellProps> = ({ rowIndex, columnIndex, cell, toggle
            * that the background image is centered and covers the entire element.
            */}
           <div
+            role="gridcell"
             onClick={handleClick}
             className={`gridCell gridCell--interactive shadow-md border-2 rounded-lg transition-all
               ${cell.supercharged ? "gridCell--supercharged" : cell.active ? "gridCell--active" : "gridCell--inactive"}
@@ -91,7 +92,7 @@ const gridCell: React.FC<gridCellProps> = ({ rowIndex, columnIndex, cell, toggle
 
     // If no label, render the cell without Tooltip
     return (
-      <div
+      <div role="gridcell"
         onClick={handleClick}
         className={`gridCell gridCell--interactive shadow-md border-2 rounded-lg transition-all
           ${cell.supercharged ? "gridCell--supercharged" : "gridCell--active"}

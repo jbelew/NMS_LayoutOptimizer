@@ -1,6 +1,6 @@
 import { Box, Flex, Heading } from "@radix-ui/themes";
 import React from "react";
-import GridTable from "./components/GridTable.tsx";
+import GridTable from "./components/GridTable";
 import TechTreeComponent from "./components/TechTree"; // Import TechTreeComponent
 import { useGridStore } from "./store/useGridStore";
 
