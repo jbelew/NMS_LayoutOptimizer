@@ -86,7 +86,7 @@ const TechTreeComponent: React.FC<TechTreeComponentProps> = (props) => {
       {error ? (
         <div className="flex flex-col items-center justify-center h-full">
           <ExclamationTriangleIcon className="w-8 h-8" style={{ color: "#C44A34" }} />
-          <h2 className="text-2xl text-center" style={{ color: "#e6c133" }}>
+          <h2 className="pt-2 text-2xl text-center" style={{ color: "#e6c133" }}>
             -kzzkt- Error! -kzzkt-
           </h2>
           <p className="text-center sidebar__error" style={{ color: "var(--gray-12)" }}>

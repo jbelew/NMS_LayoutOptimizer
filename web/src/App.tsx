@@ -1,7 +1,7 @@
 import { Box, Flex, Heading } from "@radix-ui/themes";
 import React from "react";
-import GridTable from "./components/GridTable2";
-import TechTreeComponent from "./components/TechTreeComponent"; // Import TechTreeComponent
+import GridTable from "./components/GridTable.tsx";
+import TechTreeComponent from "./components/TechTree"; // Import TechTreeComponent
 import { useGridStore } from "./store/useGridStore";
 
 /**
@@ -41,7 +41,7 @@ const App: React.FC = () => {
         {/* Header */}
         <Box asChild className="pb-4 optimizer__header text-custom-cyan-light">
           <Heading as="h1" size="7" className="shadow-md optimizer__title" style={{ color: "var(--gray-12)" }}>
-            No Man's Sky Starship Optimizer v0.3
+            No Man's Sky Starship Optimizer v0.4
           </Heading>
         </Box>
 

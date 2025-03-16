@@ -1,4 +1,4 @@
-import { TechTree } from "../components/TechTreeComponent";
+import { TechTree } from "../components/TechTree";
 
 type Resource<T> = {
   read: () => T;
