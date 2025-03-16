@@ -3,7 +3,7 @@
   src: url("/src/assets/fonts/GeosansLight.woff") format("woff");
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: auto;
 }
 
 @font-face {
@@ -11,7 +11,7 @@
   src: url("/assets/fonts/SourceSans3-VariableFont_wght.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: auto;
 }
 
 /* Import Radix styles first */
