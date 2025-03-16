@@ -40,7 +40,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
 
   return (
     <ShakingWrapper shaking={shaking}>
-      <GridSpinner solving={solving} />
+      <GridSpinner solving={solving} message="Optimizing Technology. Please wait..." />
       <div className={`gridContainer ${solving ? "opacity-50" : ""}`}>
         {grid.cells.map((row, rowIndex) => (
           <React.Fragment key={rowIndex}>

@@ -1,5 +1,6 @@
 import { Separator } from "@radix-ui/themes";
-import React, { Suspense, useMemo } from "react";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { useFetchTechTreeSuspense } from "../hooks/useTechTree";
 import OptimizationButton from "./OptimizationButton";
 
@@ -65,16 +66,73 @@ const TechTreeContent: React.FC<TechTreeComponentProps> = React.memo(({ handleOp
  * @param {TechTreeComponentProps} props - Component properties.
  * @returns {JSX.Element} Suspense-wrapped tech tree content or loading state.
  */
-const TechTreeComponent: React.FC<TechTreeComponentProps> = (props) => (
-  <Suspense
-    fallback={
-      <p className="sidebar__loading" style={{ color: "var(--gray-12)" }}>
-        Loading tech tree...
-      </p>
+const TechTreeComponent: React.FC<TechTreeComponentProps> = (props) => {
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    setError(null); // Reset error when component mounts or props change
+  }, [props]);
+
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center h-full">
+          <p className="text-center sidebar__loading" style={{ color: "var(--gray-12)" }}>
+            Loading tech tree...
+          </p>
+        </div>
+      }
+    >
+      {error ? (
+        <div className="flex flex-col items-center justify-center h-full">
+          <ExclamationTriangleIcon className="w-8 h-8" style={{ color: "#C44A34" }} />
+          <h2 className="text-2xl text-center" style={{ color: "#e6c133" }}>
+            -kzzkt- Error! -kzzkt-
+          </h2>
+          <p className="text-center sidebar__error" style={{ color: "var(--gray-12)" }}>
+            Problem connecting to the server!<br />
+            {error.message}
+          </p>
+        </div>
+      ) : (
+        <ErrorBoundary onError={setError}>
+          <TechTreeContent {...props} />
+        </ErrorBoundary>
+      )}
+    </Suspense>
+  );
+};
+
+interface ErrorBoundaryProps {
+  onError: (error: Error) => void;
+  children: React.ReactNode;
+}
+
+interface ErrorBoundaryState {
+  error: Error | null;
+}
+
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { error: null };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    this.props.onError(error);
+    console.error("ErrorBoundary caught an error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.error) {
+      return null; // Render nothing, error is handled by parent
     }
-  >
-    <TechTreeContent {...props} />
-  </Suspense>
-);
+    return this.props.children;
+  }
+}
 
 export default TechTreeComponent;
