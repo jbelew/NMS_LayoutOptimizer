@@ -1,14 +1,34 @@
-import { Heading, Flex, Box } from "@radix-ui/themes";
-
+import { Box, Flex, Heading } from "@radix-ui/themes";
 import React from "react";
 import GridTable from "./components/GridTable2";
-import { useGridStore } from "./store/useGridStore";
 import TechTreeComponent from "./components/TechTreeComponent"; // Import TechTreeComponent
+import { useGridStore } from "./store/useGridStore";
 
+/**
+ * The main app component, which is responsible for rendering the entire user interface.
+ */
 const App: React.FC = () => {
-  const { grid, result, solving, handleOptimize, toggleCellState, activateRow, deActivateRow, resetGrid } = useGridStore();
+  const {
+    // The grid of cells to display
+    grid,
+    // The result of the optimization calculation
+    result,
+    // A boolean indicating whether or not the app is currently solving
+    solving,
+    // A function that starts the optimization calculation
+    handleOptimize,
+    // A function that toggles the state of a cell in the grid
+    toggleCellState,
+    // A function that activates an entire row in the grid
+    activateRow,
+    // A function that deactivates an entire row in the grid
+    deActivateRow,
+    // A function that resets the grid to its initial state
+    resetGrid
+  } = useGridStore();
 
   return (
+    // The main container of the app
     <Flex className="items-start justify-center optimizer lg:pt-16 lg:items-top lg:p-4">
       {/* Container Box */}
       <Box
@@ -30,6 +50,7 @@ const App: React.FC = () => {
           {/* Main Content */}
           <Box className="flex-grow pt-2 optimizer__grid lg:flex-shrink-0">
             <GridTable
+              // Pass the grid, solving state, and various functions to the GridTable component
               grid={grid}
               solving={solving}
               toggleCellState={toggleCellState}
@@ -42,7 +63,11 @@ const App: React.FC = () => {
 
           {/* Sidebar */}
           <Box className="sidebar z-10 flex-grow-0 lg:pl-8 lg:pt-0 pt-4 flex-shrink-0 w-full lg:w-[300px] items-start" style={{ color: "var(--gray-12)" }}>
-            <TechTreeComponent handleOptimize={handleOptimize} solving={solving} />
+            <TechTreeComponent
+              // Pass the handleOptimize function and the solving state to the TechTreeComponent
+              handleOptimize={handleOptimize}
+              solving={solving}
+            />
           </Box>
         </Flex>
       </Box>

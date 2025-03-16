@@ -38,7 +38,7 @@
 /* Background styles */
 body {
   /* Combine background properties */
-  background: url("/src/assets/img/nms_background3.jpg") center/cover fixed;
+  background: url("/src/assets/img/nms_background.webp") center/cover fixed;
   height: 100vh; /* Consider min-height: 100vh for content exceeding viewport height */
 }
 
