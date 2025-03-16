@@ -1,8 +1,8 @@
 // GridTable.tsx
+import { ResetIcon } from "@radix-ui/react-icons";
+import { Button } from "@radix-ui/themes";
 import React from "react";
 import { ApiResponse, Grid } from "../store/useGridStore";
-import { Button } from "@radix-ui/themes";
-import { ResetIcon } from "@radix-ui/react-icons";
 import GridCell from "./GridCell";
 import GridRowActions from "./GridRowActions";
 import ShakingWrapper from "./GridShake";
@@ -18,15 +18,30 @@ interface GridTableProps {
   deActivateRow: (rowIndex: number) => void;
 }
 
+/**
+ * A table component that displays a grid of cells, where each cell can be in
+ * one of three states: normal, active, or supercharged. The component also
+ * renders a set of buttons to activate or deactivate entire rows at once.
+ *
+ * @param {Grid} grid - The grid to display
+ * @param {boolean} solving - Whether the component is currently solving
+ * @param {function} toggleCellState - A function to toggle the state of a cell
+ * @param {function} activateRow - A function to activate an entire row
+ * @param {function} deActivateRow - A function to deactivate an entire row
+ * @param {ApiResponse | null} result - The result of an optimization calculation,
+ *   or null if no calculation has been done.
+ * @param {function} resetGrid - A function to reset the grid
+ */
 const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, activateRow, deActivateRow, result, resetGrid }) => {
   const [shaking, setShaking] = React.useState(false);
 
+  // Whether there are any modules in the grid
   const hasModulesInGrid = grid.cells.flat().some((cell) => cell.module !== null);
 
   return (
     <ShakingWrapper shaking={shaking}>
       <GridSpinner solving={solving} />
-      <div className={`grid-container ${solving ? "opacity-50" : ""}`}>
+      <div className={`gridContainer ${solving ? "opacity-50" : ""}`}>
         {grid.cells.map((row, rowIndex) => (
           <React.Fragment key={rowIndex}>
             {row.map((cell, columnIndex) => (
@@ -59,7 +74,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
             />
           </React.Fragment>
         ))}
-        <div className="pt-2 grid-instructions">
+        <div className="pt-2 gridInstructions">
           <ul className="list-disc list-inside " style={{ color: "var(--gray-12)" }}>
             <li>
               <strong>Click</strong> a cell to toggle its <em>Supercharged</em> state. No more than 4.
@@ -72,7 +87,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
             </li>
           </ul>
         </div>
-        <div className="grid-reset-button">
+        <div className="gridReset">
           <div className="flex justify-end pt-2">
             <Button variant="solid" onClick={resetGrid}>
               <ResetIcon />
@@ -80,9 +95,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
             </Button>
           </div>
         </div>
-        <div className="grid-result">
-          {result && <p className="text-white">Max Bonus: {result.max_bonus.toFixed(2)}</p>}
-        </div>
+        <div className="gridResults">{result && <p className="text-white">Max Bonus: {result.max_bonus.toFixed(2)}</p>}</div>
       </div>
     </ShakingWrapper>
   );

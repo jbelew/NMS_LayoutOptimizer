@@ -1,9 +1,9 @@
 @font-face {
   font-family: "GeosansLight";
-  src: url("/src/assets/fonts/GeosansLight.woff") format("woff"); /* Consider woff2 for better compression */
+  src: url("/src/assets/fonts/GeosansLight.woff") format("woff");
   font-weight: normal;
   font-style: normal;
-  font-display: swap; /* Improve perceived performance */
+  font-display: swap;
 }
 
 @font-face {
@@ -84,7 +84,8 @@ body::before {
   animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
-.dark, .dark-theme {
+.dark,
+.dark-theme {
   --blue-1: #0c161e;
   --blue-2: #0f1a24;
   --blue-3: #092a40;
@@ -119,7 +120,8 @@ body::before {
 
 @supports (color: color(display-p3 1 1 1)) {
   @media (color-gamut: p3) {
-    .dark, .dark-theme {
+    .dark,
+    .dark-theme {
       --blue-1: oklch(19.4% 0.0214 243.3);
       --blue-2: oklch(21.4% 0.0243 243.3);
       --blue-3: oklch(27.4% 0.0559 243.3);
@@ -156,7 +158,8 @@ body::before {
 
 @supports (color: color(display-p3 1 1 1)) {
   @media (color-gamut: p3) {
-    .dark, .dark-theme {
+    .dark,
+    .dark-theme {
       --gray-1: oklch(19.4% 0.0093 250.2);
       --gray-2: oklch(22.3% 0.0098 250.2);
       --gray-3: oklch(25.8% 0.014 250.2);
@@ -191,52 +194,63 @@ body::before {
   }
 }
 
-.dark, .dark-theme, :is(.dark, .dark-theme) :where(.radix-themes:not(.light, .light-theme)) {
+.dark,
+.dark-theme,
+:is(.dark, .dark-theme) :where(.radix-themes:not(.light, .light-theme)) {
   --color-background: #121226;
 }
 
-.grid-active {
-  border-color: var(--blue-9); /* Or use any other color variable */
+/* Grid Cell Styles (BEM) */
+.gridCell {
+  /* Base styles for all grid cells */
 }
 
-.grid-inactive {
-  border-color: var(--blue-7); /* Set initial border color */
-  transition: border-color .25s ease; /* Transition the border color over 1.25s */
+.gridCell--interactive {
+  /* Styles for grid cells interaction*/
+  cursor: pointer;
 }
 
-.grid-hover:hover {
-  background-color: var(--blue-a5); /* Or use any other color variable */
-  transition: opacity 0.25s ease, background-color 0.25s ease; /* Smooth transition for both */
+.gridCell--active {
+  /* Styles for active grid cells */
+  border-color: var(--blue-9);
 }
 
-.grid-supercharged {
-  border-color: #E6C133; /* Or use any other color variable */
-  transition: border-color .25s ease; /* Transition the border color over 1.25s */
+.gridCell--inactive {
+  /* Styles for inactive grid cells */
+  border-color: var(--blue-7);
+  transition: border-color 0.25s ease;
 }
 
-.grid-fill {
-  border-color: var(--blue-7); /* Or use any other color variable */
-  transition: border-color .25s ease; /* Transition the border color over 1.25s */
+.gridCell--interactive:hover {
+  /* Styles for hovered grid cells */
+  background-color: var(--blue-a5);
+  transition: opacity 0.25s ease, background-color 0.25s ease;
 }
 
-.grid-container {
+.gridCell--supercharged {
+  /* Styles for supercharged grid cells */
+  border-color: #e6c133;
+  transition: border-color 0.25s ease;
+}
+
+.gridContainer {
   display: grid;
-  grid-template-columns: repeat(10, 64px) auto; /* 10 columns for cells, 1 for actions */
-  grid-template-rows: repeat(6, 64px); /* 6 rows */
-  gap: 8px; /* Adjust the gap as needed */
+  grid-template-columns: repeat(10, 64px) auto;
+  grid-template-rows: repeat(6, 64px);
+  gap: 8px;
 }
 
-.grid-instructions {
+.gridInstructions {
   grid-column: 1 / span 8;
   grid-row: 7;
 }
 
-.grid-reset-button {
+.gridReset {
   grid-column: 9 / span 2;
   grid-row: 7;
 }
 
-.grid-result {
+.gridResults {
   grid-column: 1 / span 10;
   grid-row: 8;
 }
