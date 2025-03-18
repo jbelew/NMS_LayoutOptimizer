@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import GridCell from './GridCell';
-import { Grid } from '../store/useGridStore';
+import { Grid } from '../../store/useGridStore';
 
 import { describe } from '@jest/globals'
 

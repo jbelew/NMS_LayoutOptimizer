@@ -3,7 +3,7 @@ import { ResetIcon } from "@radix-ui/react-icons";
 import { Button } from "@radix-ui/themes";
 import React from "react";
 import { ApiResponse, Grid } from "../store/useGridStore";
-import GridCell from "./GridCell";
+import GridCell from "./GridCell/GridCell";
 import GridRowActions from "./GridRowActions";
 import ShakingWrapper from "./GridShake";
 import GridSpinner from "./GridSpinner";

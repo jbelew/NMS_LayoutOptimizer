@@ -1,7 +1,7 @@
 // gridCell.tsx
 import React from "react";
 import { Tooltip } from "@radix-ui/themes";
-import { Grid } from "../store/useGridStore";
+import { Grid } from "../../store/useGridStore";
 
 interface gridCellProps {
   rowIndex: number;
@@ -79,11 +79,7 @@ const gridCell: React.FC<gridCellProps> = ({ rowIndex, columnIndex, cell, toggle
               ${cell.supercharged ? "gridCell--supercharged" : cell.active ? "gridCell--active" : "gridCell--inactive"}
               `}
             style={{
-              backgroundImage: cell?.image ? `url(/src/assets/img/${cell.image})` : "none",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              width: "64px",
-              height: "64px",
+              backgroundImage: cell?.image ? `url(/src/assets/img/${cell.image})` : "none"
             }}
           ></div>
         </Tooltip>
@@ -99,11 +95,7 @@ const gridCell: React.FC<gridCellProps> = ({ rowIndex, columnIndex, cell, toggle
           ${cell.active ? "gridCell--active" : "gridCell--inactive"}
           `}
         style={{
-          backgroundImage: cell.image ? `url(/src/assets/img/${cell.image})` : "none",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          width: "64px",
-          height: "64px",
+          backgroundImage: cell.image ? `url(/src/assets/img/${cell.image})` : "none"
         }}
       ></div>
     );
