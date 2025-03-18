@@ -7,6 +7,7 @@ import GridCell from "./GridCell/GridCell";
 import GridRowActions from "./GridRowActions";
 import ShakingWrapper from "./GridShake";
 import GridSpinner from "./GridSpinner";
+import { useEffect, useState, useRef } from "react";
 
 interface GridTableProps {
   grid: Grid;
@@ -35,6 +36,32 @@ interface GridTableProps {
 const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, activateRow, deActivateRow, result, resetGrid }) => {
   const [shaking, setShaking] = React.useState(false);
 
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [columnWidth, setColumnWidth] = useState("40px");
+  
+  useEffect(() => {
+    const updateColumnWidth = () => {
+      if (gridRef.current) {
+        const computedStyle = window.getComputedStyle(gridRef.current);
+        const gridTemplate = computedStyle.getPropertyValue("grid-template-columns").split(" ");
+        const eleventhColumn = gridTemplate[10] || "40px"; // Default to 64px if missing
+        const gap = computedStyle.getPropertyValue("gap") || "8px"; // Default to 8px
+  
+        // Convert values to numbers and calculate
+        const columnWidthNum = parseFloat(eleventhColumn);
+        const gapNum = parseFloat(gap);
+        const totalWidth = `${columnWidthNum + gapNum}px`;
+  
+        setColumnWidth(totalWidth);
+      }
+    };
+  
+    updateColumnWidth(); // Initial calculation
+    window.addEventListener("resize", updateColumnWidth);
+  
+    return () => window.removeEventListener("resize", updateColumnWidth);
+  }, []);
+
   // Whether there are any modules in the grid
   const hasModulesInGrid = grid.cells.flat().some((cell) => cell.module !== null);
 
@@ -42,7 +69,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
     <>
       <ShakingWrapper shaking={shaking}>
         <GridSpinner solving={solving} message="Optimizing Technology. Please wait..." />
-        <div className={`gridContainer ${solving ? "opacity-50" : ""}`}>
+        <div ref={gridRef} className={`gridContainer ${solving ? "opacity-50" : ""}`}>
           {grid.cells.map((row, rowIndex) => (
             <React.Fragment key={rowIndex}>
               {row.map((cell, columnIndex) => (
@@ -91,7 +118,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
             </li>
           </ul>
         </div>
-        <div className="pt-4 pr-9">
+        <div className="pt-4" style={{ paddingRight: columnWidth }}>
           <Button variant="solid" onClick={resetGrid} disabled={solving}>
             <ResetIcon />Reset Grid
           </Button>
