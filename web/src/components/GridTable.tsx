@@ -118,9 +118,10 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
             </li>
           </ul>
         </div>
-        <div className="pt-4" style={{ paddingRight: columnWidth }}>
+        <div className="z-10 pt-4" style={{ paddingRight: columnWidth }}>
           <Button variant="solid" onClick={resetGrid} disabled={solving}>
-            <ResetIcon />Reset Grid
+            <ResetIcon />
+            Reset Grid
           </Button>
         </div>
       </div>
