@@ -214,7 +214,7 @@ describe('GridCell', () => {  it('calls toggleCellState with correct arguments w
       />
     );
 
-    const cellElement = screen.getByRole('gridcell');
+    const cellElement = screen.getByRole('gridCell');
     fireEvent.click(cellElement);
 
     expect(mockToggleCellState).toHaveBeenCalledWith(rowIndex, columnIndex, expect.any(Object));
