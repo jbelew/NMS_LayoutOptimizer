@@ -77,7 +77,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
         <div className="pt-2 pr-8 gridInstructions">
         
         {/* TODO: Need to figure out why the list isn't overflowing correctly. */}
-        <ul className="list-disc list-inside" style={{ color: "var(--gray-12)", overflowWrap: "normal" }}>
+        <ul className="pl-4 font-thin list-disc" style={{ color: "var(--gray-12)", overflowWrap: "normal" }}>
             <li>
               <strong>Click</strong> a cell to toggle its <em>Supercharged</em> state. No more than 4.
             </li>
