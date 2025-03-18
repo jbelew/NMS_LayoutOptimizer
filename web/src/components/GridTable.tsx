@@ -39,45 +39,47 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
   const hasModulesInGrid = grid.cells.flat().some((cell) => cell.module !== null);
 
   return (
-    <ShakingWrapper shaking={shaking}>
-      <GridSpinner solving={solving} message="Optimizing Technology. Please wait..." />
-      <div className={`gridContainer ${solving ? "opacity-50" : ""}`}>
-        {grid.cells.map((row, rowIndex) => (
-          <React.Fragment key={rowIndex}>
-            {row.map((cell, columnIndex) => (
-              <GridCell
-                key={columnIndex}
+    <>
+      <ShakingWrapper shaking={shaking}>
+        <GridSpinner solving={solving} message="Optimizing Technology. Please wait..." />
+        <div className={`gridContainer ${solving ? "opacity-50" : ""}`}>
+          {grid.cells.map((row, rowIndex) => (
+            <React.Fragment key={rowIndex}>
+              {row.map((cell, columnIndex) => (
+                <GridCell
+                  key={columnIndex}
+                  rowIndex={rowIndex}
+                  columnIndex={columnIndex}
+                  cell={{
+                    label: cell.label,
+                    supercharged: cell.supercharged,
+                    active: cell.active,
+                    image: cell.image || undefined,
+                  }}
+                  grid={grid}
+                  toggleCellState={toggleCellState}
+                  setShaking={setShaking}
+                />
+              ))}
+              <GridRowActions
                 rowIndex={rowIndex}
-                columnIndex={columnIndex}
-                cell={{
-                  label: cell.label,
-                  supercharged: cell.supercharged,
-                  active: cell.active,
-                  image: cell.image || undefined,
-                }}
-                grid={grid}
-                toggleCellState={toggleCellState}
-                setShaking={setShaking}
+                activateRow={activateRow}
+                deActivateRow={deActivateRow}
+                hasModulesInGrid={hasModulesInGrid}
+                isFirstInactiveRow={row.every((cell) => !cell.active) && rowIndex === grid.cells.findIndex((r) => r.every((cell) => !cell.active))}
+                isLastActiveRow={
+                  rowIndex >= grid.cells.length - 3 &&
+                  row.some((cell) => cell.active) &&
+                  rowIndex === grid.cells.map((r) => r.some((cell) => cell.active)).lastIndexOf(true)
+                }
               />
-            ))}
-            <GridRowActions
-              rowIndex={rowIndex}
-              activateRow={activateRow}
-              deActivateRow={deActivateRow}
-              hasModulesInGrid={hasModulesInGrid}
-              isFirstInactiveRow={row.every((cell) => !cell.active) && rowIndex === grid.cells.findIndex((r) => r.every((cell) => !cell.active))}
-              isLastActiveRow={
-                rowIndex >= grid.cells.length - 3 &&
-                row.some((cell) => cell.active) &&
-                rowIndex === grid.cells.map((r) => r.some((cell) => cell.active)).lastIndexOf(true)
-              }
-            />
-          </React.Fragment>
-        ))}
-        <div className="pt-2 pr-8 gridInstructions">
-        
-        {/* TODO: Need to figure out why the list isn't overflowing correctly. */}
-        <ul className="pl-4 font-thin list-disc" style={{ color: "var(--gray-12)", overflowWrap: "normal" }}>
+            </React.Fragment>
+          ))}
+        </div>
+      </ShakingWrapper>
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex-1 pt-4 pr-9">
+          <ul className="pl-4 font-thin list-disc" style={{ color: "var(--gray-12)" }}>
             <li>
               <strong>Click</strong> a cell to toggle its <em>Supercharged</em> state. No more than 4.
             </li>
@@ -89,17 +91,14 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
             </li>
           </ul>
         </div>
-        <div className="gridReset">
-          <div className="flex justify-end pt-2">
-            <Button variant="solid" onClick={resetGrid}>
-              <ResetIcon />
-              Reset Grid
-            </Button>
-          </div>
+        <div className="pt-4 pr-9">
+          <Button variant="solid" onClick={resetGrid} disabled={solving}>
+            <ResetIcon />Reset Grid
+          </Button>
         </div>
-        <div className="gridResults">{result && <p className="text-white">Max Bonus: {result.max_bonus.toFixed(2)}</p>}</div>
       </div>
-    </ShakingWrapper>
+      <div className="pt-4 gridResults">{result && <p className="text-white">Max Bonus: {result.max_bonus.toFixed(2)}</p>}</div>
+    </>
   );
 };
 
