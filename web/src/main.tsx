@@ -2,7 +2,10 @@ import { Theme } from "@radix-ui/themes";
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
+// Main App CSS
 import './index.css';
+
+// Component CSS files
 import './components/GridCell/GridCell.css'
 
 import App from './App';

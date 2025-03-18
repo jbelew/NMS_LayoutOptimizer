@@ -39,7 +39,7 @@
 body {
   /* Combine background properties */
   background: url("/src/assets/img/nms_background.webp") center/cover fixed;
-  height: 100vh; /* Consider min-height: 100vh for content exceeding viewport height */
+  height: 100vh; 
 }
 
 /* Background overlay */
@@ -200,44 +200,17 @@ body::before {
   --color-background: #121226;
 }
 
-/* Grid Cell Styles (BEM) */
-.gridCell {
-  /* Base styles for all grid cells */
-}
-
-.gridCell--interactive {
-  /* Styles for grid cells interaction*/
-  cursor: pointer;
-}
-
-.gridCell--active {
-  /* Styles for active grid cells */
-  border-color: var(--blue-9);
-}
-
-.gridCell--inactive {
-  /* Styles for inactive grid cells */
-  border-color: var(--blue-7);
-  transition: border-color 0.25s ease;
-}
-
-.gridCell--interactive:hover {
-  /* Styles for hovered grid cells */
-  background-color: var(--blue-a5);
-  transition: opacity 0.25s ease, background-color 0.25s ease;
-}
-
-.gridCell--supercharged {
-  /* Styles for supercharged grid cells */
-  border-color: #e6c133;
-  transition: border-color 0.25s ease;
+/* Vaiablies for our grid CLAMP calculations */
+:root {
+  --grid-cell-size: clamp(24px, 7.1vw, 64px);
+  --grid-gap: clamp(2px, 1vw, 8px);
 }
 
 .gridContainer {
   display: grid;
-  grid-template-columns: repeat(10, 64px) auto;
-  grid-template-rows: repeat(6, 64px);
-  gap: 8px;
+  grid-template-columns: repeat(10, var(--grid-cell-size)) auto;
+  grid-template-rows: repeat(6, var(--grid-cell-size));
+  gap: var(--grid-gap);
 }
 
 .gridInstructions {

@@ -2,9 +2,10 @@
 .gridCell {
   background-size: cover;  
   background-position: center;  
-  width: 64px;
-  height: 64px;
+  width: var(--grid-cell-size);
+  height: var(--grid-cell-size);
 }
+
 
 .gridCell--interactive {
   /* Styles for grid cells interaction*/
