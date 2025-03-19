@@ -34,7 +34,7 @@ const RowControlButton: React.FC<RowControlButtonProps> = ({
   isLastActiveRow,
 }) => {
   return (
-    <div style={{ gridColumn: 11, gridRow: rowIndex + 1 }} className="flex items-center justify-center">
+    <div style={{ gridColumn: 11, gridRow: rowIndex + 1, width: "40px" }} className="flex items-center justify-center">
       {isFirstInactiveRow && (
         <div className="align-middle">
           <Tooltip content="Activate Row">

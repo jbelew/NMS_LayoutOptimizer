@@ -75,7 +75,7 @@ const gridCell: React.FC<gridCellProps> = ({ rowIndex, columnIndex, cell, toggle
           <div
             role="gridCell"
             onClick={handleClick}
-            className={`gridCell gridCell--interactive shadow-md border-2 rounded-lg transition-all
+            className={`gridCell gridCell--interactive shadow-md sm:border-2 border-1 sm:rounded-lg transition-all
               ${cell.supercharged ? "gridCell--supercharged" : cell.active ? "gridCell--active" : "gridCell--inactive"}
               `}
             style={{
@@ -90,7 +90,7 @@ const gridCell: React.FC<gridCellProps> = ({ rowIndex, columnIndex, cell, toggle
     return (
       <div role="gridCell"
         onClick={handleClick}
-        className={`gridCell gridCell--interactive shadow-md border-2 rounded-lg transition-all
+        className={`gridCell gridCell--interactive shadow-md sm:border-2 border-1 sm:rounded-lg transition-all
           ${cell.supercharged ? "gridCell--supercharged" : cell.active ? "gridCell--active" : "gridCell--inactive"}
           `}
         style={{

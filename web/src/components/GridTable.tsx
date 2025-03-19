@@ -51,6 +51,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
         const columnWidthNum = parseFloat(eleventhColumn);
         const gapNum = parseFloat(gap);
         const totalWidth = `${columnWidthNum + gapNum}px`;
+        console.log("totalWidth", totalWidth);
   
         setColumnWidth(totalWidth);
       }
