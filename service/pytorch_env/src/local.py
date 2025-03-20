@@ -2,8 +2,8 @@ from optimizer import simulated_annealing_optimization, optimize_placement, prin
 from modules_refactored import modules
 
 grid = Grid(
-    width=4,
-    height=3
+    width=10,
+    height=6
 )
 
 grid = Grid.from_dict(
@@ -12,8 +12,8 @@ grid = Grid.from_dict(
             [
                 {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True, "label": ""},
                 {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": True, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True, "label": ""},
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True, "label": ""},
                 {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": True, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True, "label": ""},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True, "label": ""},
             ],
             [
                 {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True, "label": ""},
@@ -25,7 +25,7 @@ grid = Grid.from_dict(
                 {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True, "label": ""},
                 {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True, "label": ""},
                 {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True, "label": ""},
-                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": True, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True, "label": ""}
+                {"adjacency": False, "adjacency_bonus": 0.0, "bonus": 0.0, "image": None, "module": None, "sc_eligible": False, "supercharged": False, "tech": None, "total": 0.0, "type": "", "value": 0, "active": True, "label": ""}
             ]
         ],
         "height": 3,
@@ -33,8 +33,8 @@ grid = Grid.from_dict(
     }
 )
 
-#grid, max_bonus = simulated_annealing_optimization(grid, "Exotic", modules, "pulse", initial_temp=8000, cooling_rate=0.9997, max_iterations=20000, patience=500, decay_factor=0.995)
-grid, max_bonus = optimize_placement(grid, "Exotic", modules, "infra")
+grid, max_bonus = simulated_annealing_optimization(grid, "Exotic", modules, "infra", initial_temp=8000, cooling_rate=0.9997, max_iterations=20000, patience=500, decay_factor=0.995)
+#grid, max_bonus = optimize_placement(grid, "Exotic", modules, "infra")
 
 print("Optimized layout -- " + str(max_bonus))
 print_grid(grid)

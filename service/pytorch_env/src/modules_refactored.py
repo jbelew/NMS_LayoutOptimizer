@@ -17,7 +17,7 @@ modules = {
                     "label": "Infraknife Accelerator",
                     "key": "infra",
                     "modules": [
-                        {"id": "IK", "type": "core", "label": "Infraknife Accelerator", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "infra.png"},
+                        {"id": "IK", "type": "core", "label": "Infraknife Accelerator", "bonus": 0.3, "adjacency": True, "sc_eligible": True, "image": "infra.png"},
                         {"id": "QR", "type": "bonus", "label": "Q-Resonator", "bonus": 0.1, "adjacency": False, "sc_eligible": True, "image": "q-resonator.png"},
                         {"id": "Xa", "type": "bonus", "label": "Infraknife Accelerator Upgrade Sigma", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "infra-upgrade.png"},
                         {"id": "Xb", "type": "bonus", "label": "Infraknife Accelerator Upgrade Tau", "bonus": 0.19, "adjacency": True, "sc_eligible": True, "image": "infra-upgrade.png"},
@@ -59,10 +59,10 @@ modules = {
                 },
                 {
                     "label": "Rocket Launcher",
-                    "key": "rocker",
+                    "key": "rocket",
                     "modules": [
                         {"id": "RL", "type": "core", "label": "Rocket Launger", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "rocket.png"},
-                        {"id": "LR", "type": "core", "label": "Large Rocket Tubes", "bonus": 0.1, "adjacency": True, "sc_eligible": True, "image": "tubes.png"},
+                        {"id": "LR", "type": "bonus", "label": "Large Rocket Tubes", "bonus": 0.1, "adjacency": True, "sc_eligible": True, "image": "tubes.png"},
                    ],
                 },
             ],
@@ -97,4 +97,17 @@ modules = {
         },
     },
     # Add other ships here if needed (e.g., "Fighter", "Hauler")
+}
+
+solves = {
+    "Exotic": {  # Ship type
+        "infra": {  # Weapon technology
+            (0, 0): "IK",
+            (1, 0): "Xa",
+            (2, 0): "QR",
+            (0, 1): "Xb",
+            (1, 1): "Xc",
+            (2, 1): None,
+        },
+    },
 }

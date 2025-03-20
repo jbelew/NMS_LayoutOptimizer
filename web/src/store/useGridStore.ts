@@ -146,11 +146,11 @@ export const useGridStore = create<GridStore>((set, get) => ({
           ship: "Exotic",
           tech,
           grid: updatedGrid,
-          initial_temp: 80000,
-          cooling_rate: 0.9997,
-          max_iterations: 30000,
-          patience: 500,
-          decay_factor: 0.9997,
+          initial_temp: 100,
+          cooling_rate: 0.999,
+          max_iterations: 20000,
+          patience: 200,
+          decay_factor: 0.995,
         }),
       });
 
