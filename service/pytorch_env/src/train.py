@@ -5,6 +5,7 @@ from torch.utils.tensorboard import SummaryWriter
 # Assuming data_generator.py is in the same directory
 from data_generator import train_loader, num_output_classes, generate_training_data
 from modules_refactored import modules
+from modules_data import get_tech_modules_for_training # Import get_tech_modules_for_training from modules_data.py
 
 # Set the tech filter here
 tech_filter = "infra"

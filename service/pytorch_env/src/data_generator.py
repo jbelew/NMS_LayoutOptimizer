@@ -2,7 +2,9 @@ import random
 import numpy as np
 import torch
 import torch.utils.data as data
-from optimizer import simulated_annealing_optimization, Grid, modules, get_tech_modules_for_training, print_grid_compact
+from optimizer import simulated_annealing_optimization, Grid, print_grid_compact
+from modules_refactored import modules  # Import modules from modules_refactored.py
+from modules_data import get_tech_modules_for_training # Import get_tech_modules_for_training from modules_data.py
 
 # --- Data Generation ---
 def generate_training_data(num_samples, grid_width, grid_height, max_supercharged, ship, num_techs, tech_filter):
@@ -69,24 +71,6 @@ def generate_training_data(num_samples, grid_width, grid_height, max_supercharge
     print(f"Length of bonus_scores: {len(bonus_scores)}")
 
     return X_train, y_train, bonus_scores, max_output_classes
-
-def get_tech_modules_for_training(modules, ship, tech_key):
-    """Retrieves modules for training, returning the modules as they are in modules_refactored.py."""
-    ship_data = modules.get(ship)
-    if ship_data is None:
-        print(f"Error: Ship '{ship}' not found in modules data.")
-        return []
-
-    types_data = ship_data.get("types")
-    if types_data is None:
-        print(f"Error: 'types' key not found for ship '{ship}'.")
-        return []
-
-    for tech_list in types_data.values():
-        for tech_data in tech_list:
-            if tech_data.get("key") == tech_key:
-                return tech_data.get("modules", [])
-    return []
 
 # Example usage:
 num_samples = 32  # Adjust this to a larger number for better results
