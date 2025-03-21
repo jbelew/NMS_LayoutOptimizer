@@ -1,0 +1,438 @@
+import random
+import math
+from grid_utils import Grid
+from modules_data import get_tech_modules, get_tech_modules_for_training
+from grid_display import print_grid_compact, print_grid
+from bonus_calculations import (
+    populate_adjacency_bonuses,
+    populate_module_bonuses,
+    populate_core_bonus,
+    calculate_potential_adjacency_bonus,
+    count_supercharged_slots,
+)
+from module_placement import place_module
+from itertools import permutations
+import copy
+from modules_refactored import (
+    solves,
+)  # Import the solves dictionary from the correct file
+
+
+def refine_placement(grid, ship, modules, tech):
+    optimal_grid = None
+    highest_bonus = 0.0
+    tech_modules = get_tech_modules(modules, ship, tech)
+    core_modules = [module for module in tech_modules if module["type"] == "core"]
+    bonus_modules = [module for module in tech_modules if module["type"] == "bonus"]
+    if not core_modules:
+        raise ValueError("No core modules specified")
+    available_positions = [
+        (x, y)
+        for y in range(grid.height)
+        for x in range(grid.width)
+        if grid.get_cell(x, y)["module"] is None and grid.get_cell(x, y)["active"]
+    ]
+    for core_position in available_positions:
+        bonus_permutations = (
+            [permutations(available_positions, len(bonus_modules))]
+            if bonus_modules
+            else [[]]
+        )
+        for bonus_placement in bonus_permutations[0]:
+            temp_grid = Grid.from_dict(grid.to_dict())
+            core_x, core_y = core_position
+            core_module = core_modules[0]
+            place_module(
+                temp_grid,
+                core_x,
+                core_y,
+                core_module["id"],
+                core_module["label"],
+                tech,
+                core_module["type"],
+                core_module["bonus"],
+                core_module["adjacency"],
+                core_module["sc_eligible"],
+                core_module["image"],
+            )
+            for index, bonus_position in enumerate(bonus_placement):
+                x, y = bonus_position
+                if temp_grid.get_cell(x, y)["module"] is not None:
+                    continue
+                bonus_module = bonus_modules[index]
+                place_module(
+                    temp_grid,
+                    x,
+                    y,
+                    bonus_module["id"],
+                    bonus_module["label"],
+                    tech,
+                    bonus_module["type"],
+                    bonus_module["bonus"],
+                    bonus_module["adjacency"],
+                    bonus_module["sc_eligible"],
+                    bonus_module["image"],
+                )
+            populate_adjacency_bonuses(temp_grid, tech)
+            populate_module_bonuses(temp_grid, tech)
+            core_bonus = populate_core_bonus(temp_grid, tech)
+            if core_bonus > highest_bonus:
+                highest_bonus = core_bonus
+                optimal_grid = Grid.from_dict(temp_grid.to_dict())
+    
+    print("Refined score:", highest_bonus)
+    print_grid_compact(optimal_grid)
+    return optimal_grid, highest_bonus
+
+
+def rotate_pattern(pattern):
+    """Rotates a pattern 90 degrees clockwise."""
+    x_coords = [coord[0] for coord in pattern.keys()]
+    y_coords = [coord[1] for coord in pattern.keys()]
+    if not x_coords or not y_coords:
+        return {}  # Return empty dict if pattern is empty
+    max_x = max(x_coords)
+    rotated_pattern = {}
+    for (x, y), module_label in pattern.items():
+        new_x = y
+        new_y = max_x - x
+        rotated_pattern[(new_x, new_y)] = module_label
+    return rotated_pattern
+
+def mirror_pattern_horizontally(pattern):
+    """Mirrors a pattern horizontally."""
+    x_coords = [coord[0] for coord in pattern.keys()]
+    if not x_coords:
+        return {}
+    max_x = max(x_coords)
+    mirrored_pattern = {}
+    for (x, y), module_label in pattern.items():
+        new_x = max_x - x
+        mirrored_pattern[(new_x, y)] = module_label
+    return mirrored_pattern
+
+def mirror_pattern_vertically(pattern):
+    """Mirrors a pattern vertically."""
+    y_coords = [coord[1] for coord in pattern.keys()]
+    if not y_coords:
+        return {}
+    max_y = max(y_coords)
+    mirrored_pattern = {}
+    for (x, y), module_label in pattern.items():
+        new_y = max_y - y
+        mirrored_pattern[(x, new_y)] = module_label
+    return mirrored_pattern
+
+def apply_pattern_to_grid(grid, pattern, modules, tech, start_x, start_y, ship):
+    """Applies a pattern to an existing grid at a given starting position,
+    preserving the original grid's state (except for modules of the same tech)
+    and only filling empty, active slots with the pattern's modules.
+    """
+    # Clear existing modules of the selected technology
+    for y in range(grid.height):
+        for x in range(grid.width):
+            if grid.get_cell(x, y)["tech"] == tech:
+                grid.cells[y][x]["module"] = None
+                grid.cells[y][x]["tech"] = None
+                grid.cells[y][x]["type"] = None
+                grid.cells[y][x]["bonus"] = 0
+                grid.cells[y][x]["adjacency"] = False
+                grid.cells[y][x]["sc_eligible"] = False
+                grid.cells[y][x]["image"] = None
+
+    tech_modules = get_tech_modules(modules, ship, tech)
+    # Create a mapping from module id to module data
+    module_id_map = {module["id"]: module for module in tech_modules}
+
+    for (pattern_x, pattern_y), module_id in pattern.items():
+        grid_x = start_x + pattern_x
+        grid_y = start_y + pattern_y
+
+        if 0 <= grid_x < grid.width and 0 <= grid_y < grid.height:
+            if module_id is None:
+                continue
+            if module_id in module_id_map:
+                module_data = module_id_map[module_id]
+                if (
+                    grid.get_cell(grid_x, grid_y)["active"]
+                    and grid.get_cell(grid_x, grid_y)["module"] is None
+                ):
+                    place_module(
+                        grid,  # Apply changes directly to the input grid
+                        grid_x,
+                        grid_y,
+                        module_data["id"],
+                        module_data["label"],
+                        tech,
+                        module_data["type"],
+                        module_data["bonus"],
+                        module_data["adjacency"],
+                        module_data["sc_eligible"],
+                        module_data["image"],
+                    )
+                    
+    return grid  # Return the modified grid
+
+
+def optimize_placement(
+    grid,
+    ship,
+    modules,
+    tech,
+    max_supercharged=4,
+):
+    best_grid = Grid.from_dict(grid.to_dict())
+    best_bonus = -float("inf")
+    current_grid = Grid.from_dict(grid.to_dict())
+
+    best_pattern_grid = None
+    highest_pattern_bonus = -float("inf")
+
+    if ship in solves and tech in solves[ship]:
+        original_pattern = solves[ship][tech]
+        patterns_to_try = [original_pattern]
+        rotated_pattern_90 = rotate_pattern(original_pattern)
+        if rotated_pattern_90 != original_pattern:
+            patterns_to_try.append(rotated_pattern_90)
+            rotated_pattern_180 = rotate_pattern(rotated_pattern_90)
+            if (
+                rotated_pattern_180 != original_pattern
+                and rotated_pattern_180 != rotated_pattern_90
+            ):
+                patterns_to_try.append(rotated_pattern_180)
+                rotated_pattern_270 = rotate_pattern(rotated_pattern_180)
+                if (
+                    rotated_pattern_270 != original_pattern
+                    and rotated_pattern_270 != rotated_pattern_90
+                    and rotated_pattern_270 != rotated_pattern_180
+                ):
+                    patterns_to_try.append(rotated_pattern_270)
+
+        # Add mirrored patterns
+        mirrored_horizontal = mirror_pattern_horizontally(original_pattern)
+        if mirrored_horizontal != original_pattern:
+            patterns_to_try.append(mirrored_horizontal)
+        mirrored_vertical = mirror_pattern_vertically(original_pattern)
+        if mirrored_vertical != original_pattern:
+            patterns_to_try.append(mirrored_vertical)
+        
+        # Add mirrored and rotated patterns
+        for pattern in list(patterns_to_try):
+            mirrored_horizontal = mirror_pattern_horizontally(pattern)
+            if mirrored_horizontal not in patterns_to_try:
+                patterns_to_try.append(mirrored_horizontal)
+            mirrored_vertical = mirror_pattern_vertically(pattern)
+            if mirrored_vertical not in patterns_to_try:
+                patterns_to_try.append(mirrored_vertical)
+
+        # Create temp_grid outside the pattern loop
+        grid_dict = grid.to_dict()
+        if grid_dict is None:
+            print("Error: grid.to_dict() returned None")
+            return best_grid, best_bonus
+        temp_grid = Grid.from_dict(grid_dict)
+        if temp_grid is None:
+            print("Error: Grid.from_dict() returned None")
+            return best_grid, best_bonus
+
+        for pattern in patterns_to_try:
+            x_coords = [coord[0] for coord in pattern.keys()]
+            y_coords = [coord[1] for coord in pattern.keys()]
+            if not x_coords or not y_coords:
+                continue
+            pattern_width = max(x_coords) + 1
+            pattern_height = max(y_coords) + 1
+
+            for start_x in range(grid.width - pattern_width + 1):
+                for start_y in range(grid.height - pattern_height + 1):
+                    # Apply the pattern to the persistent temp_grid
+                    apply_pattern_to_grid(
+                        temp_grid, pattern, modules, tech, start_x, start_y, ship
+                    )
+
+                    populate_adjacency_bonuses(temp_grid, tech)
+                    populate_module_bonuses(temp_grid, tech)
+                    current_pattern_bonus = populate_core_bonus(temp_grid, tech)
+
+                    if current_pattern_bonus > highest_pattern_bonus:
+                        highest_pattern_bonus = current_pattern_bonus
+                        best_pattern_grid = Grid.from_dict(temp_grid.to_dict())
+                        # print("New highest pattern bonus: ", highest_pattern_bonus)
+
+            # Reset temp_grid for the next pattern
+            temp_grid = Grid.from_dict(grid_dict)
+
+    if best_pattern_grid:
+        # Initialize current_grid with best_pattern_grid
+        current_grid = Grid.from_dict(best_pattern_grid.to_dict())
+        best_grid = Grid.from_dict(best_pattern_grid.to_dict())
+        best_bonus = highest_pattern_bonus
+    else:
+        print(
+            f"No best pattern definition found for ship: {ship}, tech: {tech}. Starting with the initial grid."
+        )
+    
+    populate_adjacency_bonuses(best_grid, tech)
+    populate_module_bonuses(best_grid, tech)
+    solved_bonus = populate_core_bonus(best_grid, tech)
+    
+    print("Solved grid bonus:", solved_bonus)
+    print_grid_compact(best_grid)
+
+    # Check for opportunities
+    opportunity = find_supercharged_opportunities(best_grid, modules, ship, tech)
+    if opportunity:
+        # Create a localized grid
+        opportunity_x, opportunity_y = opportunity
+        localized_grid, start_x, start_y = create_localized_grid(best_grid, opportunity_x, opportunity_y)
+        
+        # Refine the localized grid
+        optimized_localized_grid, refined_bonus = refine_placement(localized_grid, ship, modules, tech)
+        
+        # Compare bonuses and apply changes if the refined bonus is higher
+        if refined_bonus > solved_bonus:
+            apply_localized_grid_changes(best_grid, optimized_localized_grid, tech, start_x, start_y)
+            print("BETTER, REFINED GRID FOUND!.")
+            populate_adjacency_bonuses(best_grid, tech)
+            populate_module_bonuses(best_grid, tech)
+            solved_bonus = populate_core_bonus(best_grid, tech)
+            
+    print("Final grid bonus:", solved_bonus)
+    print_grid_compact(best_grid)
+
+    return best_grid, solved_bonus
+
+def find_supercharged_opportunities(grid, modules, ship, tech):
+    """
+    Checks if there are any opportunities to utilize unused supercharged slots or swap modules
+    with supercharged slots, focusing on the outer boundary of the solve.
+
+    Args:
+        grid (Grid): The current grid layout.
+        modules (dict): The module data.
+        ship (str): The ship type.
+        tech (str): The technology type.
+
+    Returns:
+        tuple or None: A tuple (opportunity_x, opportunity_y) if an opportunity is found,
+                       None otherwise.
+    """
+    occupied_positions = [(x, y) for y in range(grid.height) for x in range(grid.width) if grid.get_cell(x, y)["module"] is not None]
+    supercharged_positions = [(x, y) for y in range(grid.height) for x in range(grid.width) if grid.get_cell(x, y)["supercharged"]]
+    occupied_supercharged_count = sum(1 for x, y in occupied_positions if (x, y) in supercharged_positions)
+
+    # --- Helper Functions ---
+    def is_valid_position(x, y):
+        """Checks if a position is within the grid bounds."""
+        return 0 <= x < grid.width and 0 <= y < grid.height
+
+    def get_adjacent_positions(grid, x, y):
+        """Gets the valid adjacent positions to a given position."""
+        adjacent = [(x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)]
+        return [(nx, ny) for nx, ny in adjacent if is_valid_position(nx, ny)]
+
+    def is_on_boundary(grid, x, y):
+        """Checks if a cell is on the outer boundary of the solve."""
+        if grid.get_cell(x,y)["module"] is not None:
+            return False
+        for nx, ny in get_adjacent_positions(grid, x, y):
+            if grid.get_cell(nx, ny)["module"] is not None:
+                return True
+        return False
+    
+    def count_supercharged_in_localized(localized_grid):
+        """Counts the number of supercharged slots in a localized grid."""
+        count = 0
+        for y in range(localized_grid.height):
+            for x in range(localized_grid.width):
+                if localized_grid.get_cell(x, y)["supercharged"]:
+                    count += 1
+        return count
+
+    # --- Main Logic ---
+    boundary_supercharged_slots = [(x, y) for x, y in supercharged_positions if is_on_boundary(grid, x, y)]
+    unused_boundary_supercharged_slots = [(x, y) for x, y in boundary_supercharged_slots if grid.get_cell(x, y)["module"] is None]
+
+    if unused_boundary_supercharged_slots:
+        # There's an unused supercharged slot on the boundary, so there's an opportunity
+        opportunity_x, opportunity_y = unused_boundary_supercharged_slots[0]
+        localized_grid, _, _ = create_localized_grid(grid, opportunity_x, opportunity_y)  # Unpack the tuple
+        if count_supercharged_in_localized(localized_grid) > occupied_supercharged_count:
+            return opportunity_x, opportunity_y
+
+    modules_in_boundary_supercharged = [(x, y) for x, y in occupied_positions if (x, y) in boundary_supercharged_slots]
+    if not modules_in_boundary_supercharged:
+        return None
+    for sx, sy in boundary_supercharged_slots:
+        for nx, ny in get_adjacent_positions(grid, sx, sy):
+            if (nx, ny) in occupied_positions and (nx, ny) not in modules_in_boundary_supercharged:
+                # There's a module adjacent to a supercharged slot on the boundary, so there's a swap opportunity
+                localized_grid, _, _ = create_localized_grid(grid, sx, sy)  # Unpack the tuple
+                if count_supercharged_in_localized(localized_grid) > occupied_supercharged_count:
+                    return sx, sy
+
+    # No opportunities found
+    return None
+
+
+def create_localized_grid(grid, opportunity_x, opportunity_y):
+    """Creates a localized grid around a given opportunity, without copying module data."""
+    localized_width = 3  # Adjust as needed
+    localized_height = 3  # Adjust as needed
+
+    # Calculate the bounds of the localized grid
+    start_x = max(0, opportunity_x - localized_width // 2)
+    start_y = max(0, opportunity_y - localized_height // 2)
+    end_x = min(grid.width, start_x + localized_width)
+    end_y = min(grid.height, start_y + localized_height)
+
+    # Create the localized grid
+    localized_grid = Grid(localized_width, localized_height)
+
+    # Copy only the grid structure (active/inactive, supercharged)
+    for y in range(start_y, end_y):
+        for x in range(start_x, end_x):
+            localized_x = x - start_x
+            localized_y = y - start_y
+            cell = grid.get_cell(x, y)
+            localized_grid.cells[localized_y][localized_x]["active"] = cell["active"]
+            localized_grid.cells[localized_y][localized_x]["supercharged"] = cell["supercharged"]
+
+    return localized_grid, start_x, start_y
+
+def apply_localized_grid_changes(grid, localized_grid, tech, start_x, start_y):
+    """Applies changes from the localized grid back to the main grid."""
+    localized_width = localized_grid.width
+    localized_height = localized_grid.height
+    
+    # Clear all existing modules of the specified tech in the main grid
+    clear_all_modules_of_tech(grid, tech)
+
+    # Copy module placements from the localized grid back to the main grid
+    for y in range(localized_height):
+        for x in range(localized_width):
+            main_x = start_x + x
+            main_y = start_y + y
+            if 0 <= main_x < grid.width and 0 <= main_y < grid.height:
+                grid.cells[main_y][main_x]["module"] = localized_grid.cells[y][x]["module"]
+                grid.cells[main_y][main_x]["label"] = localized_grid.cells[y][x]["label"]
+                grid.cells[main_y][main_x]["tech"] = localized_grid.cells[y][x]["tech"]
+                grid.cells[main_y][main_x]["type"] = localized_grid.cells[y][x]["type"]
+                grid.cells[main_y][main_x]["bonus"] = localized_grid.cells[y][x]["bonus"]
+                grid.cells[main_y][main_x]["adjacency"] = localized_grid.cells[y][x]["adjacency"]
+                grid.cells[main_y][main_x]["sc_eligible"] = localized_grid.cells[y][x]["sc_eligible"]
+                grid.cells[main_y][main_x]["image"] = localized_grid.cells[y][x]["image"]
+
+def clear_all_modules_of_tech(grid, tech):
+    """Clears all modules of the specified tech type from the entire grid."""
+    for y in range(grid.height):
+        for x in range(grid.width):
+            if grid.get_cell(x, y)["tech"] == tech:
+                grid.cells[y][x]["module"] = None
+                grid.cells[y][x]["label"] = ""
+                grid.cells[y][x]["tech"] = None
+                grid.cells[y][x]["type"] = ""
+                grid.cells[y][x]["bonus"] = 0
+                grid.cells[y][x]["adjacency"] = False
+                grid.cells[y][x]["sc_eligible"] = False
+                grid.cells[y][x]["image"] = None

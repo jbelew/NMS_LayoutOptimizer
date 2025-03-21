@@ -107,7 +107,7 @@ solves = {
             (2, 0): "QR",
             (0, 1): "Xb",
             (1, 1): "Xc",
-            (2, 1): None,
+            (2, 1): None, # <--- Added None here
         },
     },
 }

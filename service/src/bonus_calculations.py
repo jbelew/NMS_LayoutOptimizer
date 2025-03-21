@@ -59,34 +59,51 @@ def populate_module_bonuses(grid: Grid, tech: str) -> None:
 
 
 def calculate_core_bonus(grid: Grid, tech: str) -> float:
-    """Calculates the core bonus for the grid."""
+    """Calculates the core bonus for the grid, requiring bonus modules to be adjacent."""
     bonus_total = 0
     core_total = 0
+    core_x, core_y = None, None
 
+    # First, find the core module's coordinates
     for row in range(grid.height):
         for col in range(grid.width):
             cell = grid.get_cell(col, row)
-            if cell["type"] == "bonus" and cell["tech"] == tech:
-                bonus_total += cell["total"] * cell["adjacency_bonus"]
-            elif cell["type"] == "core" and cell["tech"] == tech:
-                core_total = cell["bonus"] + cell["adjacency_bonus"]
+            if cell["type"] == "core" and cell["tech"] == tech:
+                core_x, core_y = col, row
+                core_total = cell["bonus"] + cell["adjacency_bonus"] # Let's keep this part
 
-    return bonus_total + core_total
+    # Now, iterate to calculate bonus based on adjacent 'bonus' modules
+    if core_x is not None and core_y is not None:
+        for row in range(grid.height):
+            for col in range(grid.width):
+                cell = grid.get_cell(col, row)
+                if cell["type"] == "bonus" and cell["tech"] == tech:
+                    # Check for adjacency to the core module
+                    if (abs(col - core_x) == 1 and row == core_y) or (abs(row - core_y) == 1 and col == core_x):
+                        bonus_total += cell["total"] * cell["adjacency_bonus"]
 
+    return bonus_total
 
 def populate_core_bonus(grid: Grid, tech: str) -> float:
-    """Populates the core bonus for the core module in the grid."""
+    """Populates the core bonus and includes adjacency bonuses."""
     core_bonus = calculate_core_bonus(grid, tech)
     final_bonus = 0
+    adjacency_total_bonus = 0
+
     for row in range(grid.height):
         for col in range(grid.width):
             cell = grid.get_cell(col, row)
             if cell["type"] == "core" and cell["tech"] == tech:
                 if cell["sc_eligible"] and cell["supercharged"]:
-                    final_bonus = core_bonus * 1.25  # Apply bonus if supercharged
+                    final_bonus = core_bonus * 1.25
                 else:
                     final_bonus = core_bonus
                 grid.set_total(col, row, final_bonus)
+            if cell["module"] is not None and cell["tech"] == tech:  # Consider bonuses for all modules
+                adjacency_total_bonus += cell["adjacency_bonus"]
+
+    # Add the total adjacency bonus (you might want to adjust the weight here)
+    final_bonus += adjacency_total_bonus * 0.1  # Example weight of 0.1
 
     return final_bonus
 

@@ -60,23 +60,18 @@ patience = 500
 decay_factor = 0.995
 
 # Run the simulated annealing optimization
-# grid, max_bonus = simulated_annealing_optimization(
-#     grid,
-#     ship,
-#     modules,
-#     tech,
-#     initial_temp=initial_temp,
-#     cooling_rate=cooling_rate,
-#     max_iterations=max_iterations,
-#     patience=patience,
-#     decay_factor=decay_factor,
-# )
+grid, max_bonus = optimize_placement(
+    grid,
+    ship,
+    modules,
+    tech
+)
 
 # Print the results
-#print(f"Optimized layout for {ship} ({tech}) -- Max Bonus: {max_bonus}")
-#print_grid_compact(grid)
+print(f"Optimized layout for {ship} ({tech}) -- Max Bonus: {max_bonus}")
+print_grid_compact(grid)
 
 # Alternative: Run the brute-force optimization (uncomment to use)
-grid, max_bonus = optimize_placement(grid, ship, modules, tech)
-print(f"Optimized layout (brute-force) for {ship} ({tech}) -- Max Bonus: {max_bonus}")
-print_grid(grid)
+# grid, max_bonus = optimize_placement(grid, ship, modules, tech)
+# print(f"Optimized layout (brute-force) for {ship} ({tech}) -- Max Bonus: {max_bonus}")
+# print_grid(grid)
