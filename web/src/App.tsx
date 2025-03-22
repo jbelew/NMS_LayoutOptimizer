@@ -41,7 +41,7 @@ const App: React.FC = () => {
         {/* Header */}
         <Box asChild className="pb-4 optimizer__header text-custom-cyan-light">
           <Heading as="h1" size="7" className="font-black shadow-md optimizer__title" style={{ color: "var(--gray-12)" }}>
-            No Man's Sky Starship Optimizer v0.4
+            No Man's Sky Starship Optimizer v0.5
           </Heading>
         </Box>
 
