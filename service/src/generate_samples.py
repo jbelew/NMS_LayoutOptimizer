@@ -68,6 +68,6 @@ grid_width = 8
 grid_height = 8
 max_supercharged = 4
 ship = "Exotic"
-tech_filter = "pulse"
+tech_filter = "cyclotron"
 
 debug_data = generate_debug_data(num_samples, grid_width, grid_height, max_supercharged, ship, tech_filter)

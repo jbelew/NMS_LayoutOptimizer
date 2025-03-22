@@ -21,42 +21,44 @@ def refine_placement(grid, ship, modules, tech, player_owned_rewards=None):
 
     if not core_modules:
         raise ValueError("No core modules specified")
-    available_positions = [
-        (x, y)
-        for y in range(grid.height)
-        for x in range(grid.width)
-        if grid.get_cell(x, y)["module"] is None and grid.get_cell(x, y)["active"]
-    ]
-    for core_position in available_positions:
+    
+    for core_position in [(x, y) for y in range(grid.height) for x in range(grid.width) if grid.get_cell(x, y)["module"] is None and grid.get_cell(x, y)["active"]]:
+        
+        temp_grid = Grid.from_dict(grid.to_dict())
+        core_x, core_y = core_position
+        core_module = core_modules[0]
+        place_module(
+            temp_grid,
+            core_x,
+            core_y,
+            core_module["id"],
+            core_module["label"],
+            tech,
+            core_module["type"],
+            core_module["bonus"],
+            core_module["adjacency"],
+            core_module["sc_eligible"],
+            core_module["image"],
+        )
+        
+        available_positions = [(x, y) for y in range(temp_grid.height) for x in range(temp_grid.width) if temp_grid.get_cell(x, y)["module"] is None and temp_grid.get_cell(x, y)["active"]]
+        
         bonus_permutations = (
             [permutations(available_positions, len(bonus_modules))]
             if bonus_modules
             else [[]]
         )
         for bonus_placement in bonus_permutations[0]:
-            temp_grid = Grid.from_dict(grid.to_dict())
-            core_x, core_y = core_position
-            core_module = core_modules[0]
-            place_module(
-                temp_grid,
-                core_x,
-                core_y,
-                core_module["id"],
-                core_module["label"],
-                tech,
-                core_module["type"],
-                core_module["bonus"],
-                core_module["adjacency"],
-                core_module["sc_eligible"],
-                core_module["image"],
-            )
+            
+            temp_grid_inner = Grid.from_dict(temp_grid.to_dict())
+            
             for index, bonus_position in enumerate(bonus_placement):
                 x, y = bonus_position
-                if temp_grid.get_cell(x, y)["module"] is not None:
+                if temp_grid_inner.get_cell(x, y)["module"] is not None:
                     continue
                 bonus_module = bonus_modules[index]
                 place_module(
-                    temp_grid,
+                    temp_grid_inner,
                     x,
                     y,
                     bonus_module["id"],
@@ -70,14 +72,13 @@ def refine_placement(grid, ship, modules, tech, player_owned_rewards=None):
                 )
 
             # Calculate the core bonus *inside* the loop
-            core_bonus = calculate_grid_score(temp_grid, tech)
+            core_bonus = calculate_grid_score(temp_grid_inner, tech)
 
             if core_bonus > highest_bonus:
                 highest_bonus = core_bonus
-                optimal_grid = Grid.from_dict(temp_grid.to_dict())
+                optimal_grid = Grid.from_dict(temp_grid_inner.to_dict())
 
     return optimal_grid, highest_bonus
-
 
 def rotate_pattern(pattern):
     """Rotates a pattern 90 degrees clockwise."""
@@ -173,6 +174,66 @@ def apply_pattern_to_grid(grid, pattern, modules, tech, start_x, start_y, ship, 
 
     return grid  # Return the modified grid
 
+def get_all_unique_pattern_variations(original_pattern):
+    """
+    Generates all unique variations of a pattern (rotations and mirrors).
+
+    Args:
+        original_pattern (dict): The original pattern.
+
+    Returns:
+        list: A list of unique pattern variations.
+    """
+    patterns_to_try = [original_pattern]
+    rotated_patterns = set()
+    mirrored_patterns = set()
+
+    rotated_pattern_90 = rotate_pattern(original_pattern)
+    if rotated_pattern_90 != original_pattern:
+        if tuple(rotated_pattern_90.items()) not in rotated_patterns:
+            patterns_to_try.append(rotated_pattern_90)
+            rotated_patterns.add(tuple(rotated_pattern_90.items()))
+            rotated_pattern_180 = rotate_pattern(rotated_pattern_90)
+            if (
+                rotated_pattern_180 != original_pattern
+                and tuple(rotated_pattern_180.items()) not in rotated_patterns
+            ):
+                patterns_to_try.append(rotated_pattern_180)
+                rotated_patterns.add(tuple(rotated_pattern_180.items()))
+                rotated_pattern_270 = rotate_pattern(rotated_pattern_180)
+                if (
+                    rotated_pattern_270 != original_pattern
+                    and tuple(rotated_pattern_270.items()) not in rotated_patterns
+                ):
+                    patterns_to_try.append(rotated_pattern_270)
+                    rotated_patterns.add(tuple(rotated_pattern_270.items()))
+
+    # Add mirrored patterns
+    mirrored_horizontal = mirror_pattern_horizontally(original_pattern)
+    if mirrored_horizontal != original_pattern:
+        if tuple(mirrored_horizontal.items()) not in mirrored_patterns:
+            patterns_to_try.append(mirrored_horizontal)
+            mirrored_patterns.add(tuple(mirrored_horizontal.items()))
+    mirrored_vertical = mirror_pattern_vertically(original_pattern)
+    if mirrored_vertical != original_pattern:
+        if tuple(mirrored_vertical.items()) not in mirrored_patterns:
+            patterns_to_try.append(mirrored_vertical)
+            mirrored_patterns.add(tuple(mirrored_vertical.items()))
+
+    # Add mirrored and rotated patterns
+    for pattern in list(patterns_to_try):
+        mirrored_horizontal = mirror_pattern_horizontally(pattern)
+        if tuple(mirrored_horizontal.items()) not in mirrored_patterns:
+            patterns_to_try.append(mirrored_horizontal)
+            mirrored_patterns.add(tuple(mirrored_horizontal.items()))
+        mirrored_vertical = mirror_pattern_vertically(pattern)
+        if tuple(mirrored_vertical.items()) not in mirrored_patterns:
+            patterns_to_try.append(mirrored_vertical)
+            mirrored_patterns.add(tuple(mirrored_vertical.items()))
+
+    return patterns_to_try
+
+
 def optimize_placement(
     grid,
     ship,
@@ -190,8 +251,10 @@ def optimize_placement(
     filtered_solves = filter_solves(solves, ship, modules, tech, player_owned_rewards)
 
     if ship in filtered_solves and tech in filtered_solves[ship]:
-        original_pattern = filtered_solves[ship][tech]
-        original_pattern = solves[ship][tech]
+        solve_data = filtered_solves[ship][tech]
+        original_pattern = solve_data["map"]
+        solve_score = solve_data["score"] # Get the solve score
+
         patterns_to_try = [original_pattern]
         rotated_pattern_90 = rotate_pattern(original_pattern)
         if rotated_pattern_90 != original_pattern:
@@ -262,14 +325,19 @@ def optimize_placement(
             # Reset temp_grid for the next pattern
             temp_grid = Grid.from_dict(grid_dict)
 
-    if best_pattern_grid:
-        # Initialize current_grid with best_pattern_grid
-        best_grid = Grid.from_dict(best_pattern_grid.to_dict())
-        best_bonus = highest_pattern_bonus
+        if best_pattern_grid:
+            # Initialize current_grid with best_pattern_grid
+            best_grid = Grid.from_dict(best_pattern_grid.to_dict())
+            best_bonus = highest_pattern_bonus
+        else:
+            print(
+                f"No best pattern definition found for ship: {ship}, tech: {tech}. Starting with the initial grid."
+            )
     else:
-        print(
-            f"No best pattern definition found for ship: {ship}, tech: {tech}. Starting with the initial grid."
-        )
+        print(f"No solve found for {ship} {tech}, placing modules in empty slots.")
+        best_grid = place_all_modules_in_empty_slots(grid, modules, ship, tech, player_owned_rewards)
+        best_bonus = calculate_grid_score(best_grid, tech)
+        solve_score = 0
 
     solved_bonus = calculate_grid_score(best_grid, tech)
 
@@ -277,6 +345,7 @@ def optimize_placement(
     all_modules_placed = check_all_modules_placed(best_grid, modules, ship, tech)
     if not all_modules_placed:
         print("WARNING: Not all modules for this tech were placed in the grid. Running brute-force solver.")
+        clear_all_modules_of_tech(best_grid, tech)
         temp_best_grid, temp_best_bonus = refine_placement(best_grid, ship, modules, tech, player_owned_rewards)
         if temp_best_grid is not None:
             best_grid = temp_best_grid
@@ -285,7 +354,6 @@ def optimize_placement(
         else:
             print("Brute-force solver failed to find a valid placement.")
     else:
-        print("All modules for this tech were placed in the grid.")
         # Check for opportunities
         opportunity = find_supercharged_opportunities(best_grid, modules, ship, tech)
 
@@ -316,13 +384,46 @@ def optimize_placement(
             else:
                 print("refine_placement returned None. No changes made.")
 
-    print("Final grid bonus:", best_bonus)
+    # Calculate the percentage
+    if solve_score > 0:  # Avoid division by zero
+        percentage = (best_bonus / solve_score) * 100
+    else:
+        percentage = 0  # Handle the case where solve_score is zero
+
+    print(f"Percentage of Solve Score Achieved: {percentage:.2f}%")
     if best_grid is not None:
         print_grid_compact(best_grid)
     else:
         print("No valid grid could be generated.")
 
-    return best_grid, best_bonus
+    return best_grid, percentage # Return the percentage instead of best_bonus
+
+def place_all_modules_in_empty_slots(grid, modules, ship, tech, player_owned_rewards=None):
+    """Places all modules of a given tech in any remaining empty slots, starting from (0,0)."""
+    tech_modules = get_tech_modules(modules, ship, tech, player_owned_rewards)
+    if tech_modules is None:
+        print(f"Error: No modules found for ship '{ship}' and tech '{tech}'.")
+        return grid
+
+    empty_positions = [(x, y) for y in range(grid.height) for x in range(grid.width) if grid.get_cell(x, y)["module"] is None and grid.get_cell(x, y)["active"]]
+    
+    for index, (x, y) in enumerate(empty_positions):
+        if index < len(tech_modules):
+            module = tech_modules[index]
+            place_module(
+                grid,
+                x,
+                y,
+                module["id"],
+                module["label"],
+                tech,
+                module["type"],
+                module["bonus"],
+                module["adjacency"],
+                module["sc_eligible"],
+                module["image"],
+            )
+    return grid
 
 def find_supercharged_opportunities(grid, modules, ship, tech):
     """
