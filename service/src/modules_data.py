@@ -2,8 +2,22 @@
 import json
 from modules import modules
 
-def get_tech_modules(modules, ship, tech_key):
-    """Retrieves modules for a specified ship and technology key, ignoring technology type."""
+def get_tech_modules(modules, ship, tech_key, player_owned_rewards=None):
+    """
+    Retrieves modules for a specified ship and technology key, considering player-owned rewards.
+
+    Args:
+        modules (dict): The modules data dictionary.
+        ship (str): The ship type.
+        tech_key (str): The technology key.
+        player_owned_rewards (list, optional): A list of reward module IDs owned by the player. Defaults to None.
+
+    Returns:
+        list: A list of module dictionaries, or None if an error occurs.
+    """
+    if player_owned_rewards is None:
+        player_owned_rewards = []
+
     ship_data = modules.get(ship)
     if ship_data is None:
         print(f"Error: Ship '{ship}' not found in modules data.")
@@ -17,16 +31,30 @@ def get_tech_modules(modules, ship, tech_key):
     for tech_type in types_data:
         tech_category = types_data.get(tech_type)
         if tech_category is None:
-            print(f"Error: Technology type '{tech_type}' not found for ship '{ship}'.")
-            continue #skip this type and check the next
-        
+            print(
+                f"Error: Technology type '{tech_type}' not found for ship '{ship}'."
+            )
+            continue  # skip this type and check the next
+
         for technology in tech_category:
             if technology.get("key") == tech_key:
                 modules_list = technology.get("modules")
                 if modules_list is None:
-                    print(f"Error: 'modules' key not found for technology '{tech_key}' within type '{tech_type}' on ship '{ship}'.")
+                    print(
+                        f"Error: 'modules' key not found for technology '{tech_key}' within type '{tech_type}' on ship '{ship}'."
+                    )
                     return None
-                return modules_list
+
+                filtered_modules = []
+                for module in modules_list:
+                    if module["type"] == "reward":
+                        if module["id"] in player_owned_rewards:
+                            module["type"] = "bonus"  # Convert type to bonus
+                            filtered_modules.append(module)
+                    else:
+                        filtered_modules.append(module)
+                        
+                return filtered_modules
 
     print(f"Error: Technology '{tech_key}' not found for ship '{ship}'.")
     return None

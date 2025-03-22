@@ -18,7 +18,7 @@ modules = {
                     "key": "infra",
                     "modules": [
                         {"id": "IK", "type": "core", "label": "Infraknife Accelerator", "bonus": 1.0, "adjacency": False, "sc_eligible": True, "image": "infra.png"},
-                        {"id": "QR", "type": "bonus", "label": "Q-Resonator", "bonus": 0.1, "adjacency": False, "sc_eligible": True, "image": "q-resonator.png"},
+                        {"id": "QR", "type": "reward", "label": "Q-Resonator", "bonus": 0.1, "adjacency": False, "sc_eligible": True, "image": "q-resonator.png"},
                         {"id": "Xa", "type": "bonus", "label": "Infraknife Accelerator Upgrade Sigma", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "infra-upgrade.png"},
                         {"id": "Xb", "type": "bonus", "label": "Infraknife Accelerator Upgrade Tau", "bonus": 0.19, "adjacency": True, "sc_eligible": True, "image": "infra-upgrade.png"},
                         {"id": "Xc", "type": "bonus", "label": "Infraknife Accelerator Upgrade Theta", "bonus": 0.18, "adjacency": True, "sc_eligible": True, "image": "infra-upgrade.png"},
@@ -29,7 +29,7 @@ modules = {
                     "key": "phase",
                     "modules": [
                         {"id": "PB", "type": "core", "label": "Phase Beam", "bonus": 1.0, "adjacency": False, "sc_eligible": True, "image": "phase-beam.png"},
-                        {"id": "FD", "type": "bonus", "label": "Fourier De-Limiter", "bonus": 0.1, "adjacency": False, "sc_eligible": True, "image": "fourier.png"},
+                        {"id": "FD", "type": "bonus", "label": "Fourier De-Limiter", "bonus": 0.034, "adjacency": False, "sc_eligible": True, "image": "fourier.png"},
                         {"id": "Xa", "type": "bonus", "label": "Phase Beam Upgrade Sigma", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "phase-upgrade.png"},
                         {"id": "Xb", "type": "bonus", "label": "Phase Beam Upgrade Tau", "bonus": 0.19, "adjacency": True, "sc_eligible": True, "image": "phase-upgrade.png"},
                         {"id": "Xc", "type": "bonus", "label": "Phase Beam Upgrade Theta", "bonus": 0.18, "adjacency": True, "sc_eligible": True, "image": "phase-upgrade.png"},
@@ -73,7 +73,7 @@ modules = {
                     "modules": [
                         {"id": "PE", "type": "core", "label": "Pulse Engine", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "pulse.png"},
                         {"id": "FA", "type": "bonus", "label": "Flight Assist Override", "bonus": 0.11, "adjacency": True, "sc_eligible": False, "image": "flight-assist.png"},
-                        {"id": "PC", "type": "bonus", "label": "Photonix Core", "bonus": 0.11, "adjacency": True, "sc_eligible": False, "image": "photonix.png"},
+                        {"id": "PC", "type": "reward", "label": "Photonix Core", "bonus": 0.11, "adjacency": True, "sc_eligible": False, "image": "photonix.png"},
                         {"id": "SL", "type": "bonus", "label": "Sub-Light Amplifier", "bonus": 0.00, "adjacency": True, "sc_eligible": False, "image": "sublight.png"},
                         {"id": "ID", "type": "bonus", "label": "Instability Drive", "bonus": 0.00, "adjacency": True, "sc_eligible": False, "image": "sublight.png"},
                         {"id": "Xa", "type": "bonus", "label": "Pulse Engine Upgrade Sigma", "bonus": 0.20, "adjacency": True, "sc_eligible": True, "image": "pulse-upgrade.png"},

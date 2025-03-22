@@ -6,13 +6,16 @@ from module_placement import place_module
 from itertools import permutations
 from modules import (
     solves,
-)  # Import the solves dictionary from the correct file
+)  
+from solve_map_utils import filter_solves # Import the new function
 
-
-def refine_placement(grid, ship, modules, tech):
+def refine_placement(grid, ship, modules, tech, player_owned_rewards=None):
     optimal_grid = None
     highest_bonus = 0.0
-    tech_modules = get_tech_modules(modules, ship, tech)
+    tech_modules = get_tech_modules(modules, ship, tech, player_owned_rewards)
+    if tech_modules is None:
+        print(f"Error: No modules found for ship '{ship}' and tech '{tech}'.")
+        return None, 0.0
     core_modules = [module for module in tech_modules if module["type"] == "core"]
     bonus_modules = [module for module in tech_modules if module["type"] == "bonus"]
 
@@ -117,7 +120,7 @@ def mirror_pattern_vertically(pattern):
     return mirrored_pattern
 
 
-def apply_pattern_to_grid(grid, pattern, modules, tech, start_x, start_y, ship):
+def apply_pattern_to_grid(grid, pattern, modules, tech, start_x, start_y, ship, player_owned_rewards=None):
     """Applies a pattern to an existing grid at a given starting position,
     preserving the original grid's state (except for modules of the same tech)
     and only filling empty, active slots with the pattern's modules.
@@ -134,7 +137,10 @@ def apply_pattern_to_grid(grid, pattern, modules, tech, start_x, start_y, ship):
                 grid.cells[y][x]["sc_eligible"] = False
                 grid.cells[y][x]["image"] = None
 
-    tech_modules = get_tech_modules(modules, ship, tech)
+    tech_modules = get_tech_modules(modules, ship, tech, player_owned_rewards)
+    if tech_modules is None:
+        print(f"Error: No modules found for ship '{ship}' and tech '{tech}'.")
+        return grid
     # Create a mapping from module id to module data
     module_id_map = {module["id"]: module for module in tech_modules}
 
@@ -167,21 +173,24 @@ def apply_pattern_to_grid(grid, pattern, modules, tech, start_x, start_y, ship):
 
     return grid  # Return the modified grid
 
-
 def optimize_placement(
     grid,
     ship,
     modules,
     tech,
+    player_owned_rewards=None
 ):
     best_grid = Grid.from_dict(grid.to_dict())
     best_bonus = -float("inf")
-    current_grid = Grid.from_dict(grid.to_dict())
 
     best_pattern_grid = None
     highest_pattern_bonus = -float("inf")
 
-    if ship in solves and tech in solves[ship]:
+    # Filter the solves dictionary based on player-owned rewards
+    filtered_solves = filter_solves(solves, ship, modules, tech, player_owned_rewards)
+
+    if ship in filtered_solves and tech in filtered_solves[ship]:
+        original_pattern = filtered_solves[ship][tech]
         original_pattern = solves[ship][tech]
         patterns_to_try = [original_pattern]
         rotated_pattern_90 = rotate_pattern(original_pattern)
@@ -240,7 +249,7 @@ def optimize_placement(
                 for start_y in range(grid.height - pattern_height + 1):
                     # Apply the pattern to the persistent temp_grid
                     apply_pattern_to_grid(
-                        temp_grid, pattern, modules, tech, start_x, start_y, ship
+                        temp_grid, pattern, modules, tech, start_x, start_y, ship, player_owned_rewards
                     )
 
                     current_pattern_bonus = calculate_grid_score(temp_grid, tech)
@@ -268,7 +277,7 @@ def optimize_placement(
     all_modules_placed = check_all_modules_placed(best_grid, modules, ship, tech)
     if not all_modules_placed:
         print("WARNING: Not all modules for this tech were placed in the grid. Running brute-force solver.")
-        temp_best_grid, temp_best_bonus = refine_placement(best_grid, ship, modules, tech)
+        temp_best_grid, temp_best_bonus = refine_placement(best_grid, ship, modules, tech, player_owned_rewards)
         if temp_best_grid is not None:
             best_grid = temp_best_grid
             best_bonus = temp_best_bonus
@@ -289,7 +298,7 @@ def optimize_placement(
 
             # Refine the localized grid
             optimized_localized_grid, refined_bonus = refine_placement(
-                localized_grid, ship, modules, tech
+                localized_grid, ship, modules, tech, player_owned_rewards
             )
 
             # Handle potential None return from refine_placement

@@ -27,7 +27,7 @@ def generate_debug_data(num_samples, grid_width, grid_height, max_supercharged, 
 
         # Determine the number of inactive cells (25% of total grid cells)
         total_cells = grid_width * grid_height
-        num_inactive_cells = int(total_cells * 0.50)
+        num_inactive_cells = int(total_cells * 0.10)
 
         # Randomly select 25% of the grid to be inactive
         inactive_positions = random.sample(
@@ -53,7 +53,7 @@ def generate_debug_data(num_samples, grid_width, grid_height, max_supercharged, 
         tech = tech_filter
 
         # try:
-        optimized_grid, best_bonus = optimize_placement(grid, ship, modules, tech)
+        optimized_grid, best_bonus = optimize_placement(grid, ship, modules, tech, ["PC"])
         results.append((optimized_grid, best_bonus))
         # except Exception as e:
         #     print(f"Error during optimization for sample {i + 1}: {e}")
@@ -64,10 +64,10 @@ def generate_debug_data(num_samples, grid_width, grid_height, max_supercharged, 
 
 # Example usage for debugging:
 num_samples = 32  # Generate 5 samples for debugging
-grid_width = 10
-grid_height = 6
+grid_width = 8
+grid_height = 8
 max_supercharged = 4
 ship = "Exotic"
-tech_filter = "infra"
+tech_filter = "pulse"
 
 debug_data = generate_debug_data(num_samples, grid_width, grid_height, max_supercharged, ship, tech_filter)
