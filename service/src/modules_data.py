@@ -1,6 +1,6 @@
 # modules_data.py
 import json
-from modules_refactored import modules
+from modules import modules
 
 def get_tech_modules(modules, ship, tech_key):
     """Retrieves modules for a specified ship and technology key, ignoring technology type."""

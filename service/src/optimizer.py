@@ -2,7 +2,7 @@
 from grid_utils import Grid
 from modules_data import get_tech_modules, get_tech_modules_for_training, get_tech_tree, get_tech_tree_json
 from optimization_algorithms import optimize_placement
-from bonus_calculations import calculate_adjacency_bonus, populate_adjacency_bonuses, calculate_module_bonus, populate_module_bonuses, calculate_core_bonus, populate_core_bonus, calculate_potential_adjacency_bonus, count_supercharged_slots
+from bonus_calculations import calculate_adjacency_bonus, populate_adjacency_bonuses, calculate_module_bonus, populate_module_bonuses, calculate_core_bonus, populate_core_bonus
 from module_placement import place_module
 from grid_display import print_grid, print_grid_compact
 
@@ -24,8 +24,6 @@ __all__ = [
     "place_module",
     "print_grid",
     "print_grid_compact",
-    "calculate_potential_adjacency_bonus",
-    "count_supercharged_slots",
     "find_best_available_position",
     "perturb_grid"
 ]

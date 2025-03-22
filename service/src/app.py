@@ -2,8 +2,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from optimizer import simulated_annealing_optimization, get_tech_tree_json, Grid
-from modules_refactored import modules
+from optimizer import optimize_placement, get_tech_tree_json, Grid
+from modules import modules
 
 import logging
 import json
@@ -40,11 +40,15 @@ def optimize_grid():
 
     grid = Grid.from_dict(grid_data)
     
-    try:
-        grid, max_bonus = simulated_annealing_optimization(grid, ship, modules, tech, initial_temp, cooling_rate, max_iterations, patience, decay_factor)
-        return jsonify({'grid': grid.to_dict(), 'max_bonus': max_bonus})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+    # try:
+    #     grid, max_bonus = optimize_placement(grid, ship, modules, tech, initial_temp, cooling_rate, max_iterations, patience, decay_factor)
+    #     return jsonify({'grid': grid.to_dict(), 'max_bonus': max_bonus})
+    # except Exception as e:
+    #     return jsonify({'error': str(e)}), 500
+    
+    grid, max_bonus = optimize_placement(grid, ship, modules, tech)
+    return jsonify({'grid': grid.to_dict(), 'max_bonus': max_bonus})
+    
 
 @app.route('/tech_tree/<ship_name>')
 def get_technology_tree(ship_name):

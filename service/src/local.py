@@ -1,12 +1,11 @@
 # local.py
 from optimizer import (
-    simulated_annealing_optimization,
     optimize_placement,
     print_grid,
     print_grid_compact,
     Grid,
 )
-from modules_refactored import modules
+from modules import modules
 
 # Define the grid dimensions
 grid_width = 4
@@ -43,21 +42,20 @@ initial_grid_config = {
 }
 
 # Set supercharged slots in the initial grid (optional)
-supercharged_positions = [(1, 0), (3, 0)]  # Example: (x, y) coordinates
+supercharged_positions = [(0, 1), (1, 0), (1,1)]  # Example: (x, y) coordinates
 for x, y in supercharged_positions:
     initial_grid_config["cells"][y][x]["supercharged"] = True
+    
+inactive_positions = [(2, 0)]  # Example: (x, y) coordinates
+for x, y in inactive_positions:
+    initial_grid_config["cells"][y][x]["active"] = False
 
 # Load the initial grid configuration
 grid = Grid.from_dict(initial_grid_config)
 
 # Define the optimization parameters
 ship = "Exotic"
-tech = "infra"
-initial_temp = 8000
-cooling_rate = 0.9997
-max_iterations = 20000
-patience = 500
-decay_factor = 0.995
+tech = "pulse"
 
 # Run the simulated annealing optimization
 grid, max_bonus = optimize_placement(
@@ -69,7 +67,7 @@ grid, max_bonus = optimize_placement(
 
 # Print the results
 print(f"Optimized layout for {ship} ({tech}) -- Max Bonus: {max_bonus}")
-print_grid_compact(grid)
+print_grid(grid)
 
 # Alternative: Run the brute-force optimization (uncomment to use)
 # grid, max_bonus = optimize_placement(grid, ship, modules, tech)

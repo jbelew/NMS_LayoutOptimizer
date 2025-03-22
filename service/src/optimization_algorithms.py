@@ -1,19 +1,10 @@
-import random
-import math
 from grid_utils import Grid
-from modules_data import get_tech_modules, get_tech_modules_for_training
+from modules_data import get_tech_modules
 from grid_display import print_grid_compact, print_grid
-from bonus_calculations import (
-    populate_adjacency_bonuses,
-    populate_module_bonuses,
-    populate_core_bonus,
-    calculate_potential_adjacency_bonus,
-    count_supercharged_slots,
-)
+from bonus_calculations import calculate_grid_score
 from module_placement import place_module
 from itertools import permutations
-import copy
-from modules_refactored import (
+from modules import (
     solves,
 )  # Import the solves dictionary from the correct file
 
@@ -24,6 +15,7 @@ def refine_placement(grid, ship, modules, tech):
     tech_modules = get_tech_modules(modules, ship, tech)
     core_modules = [module for module in tech_modules if module["type"] == "core"]
     bonus_modules = [module for module in tech_modules if module["type"] == "bonus"]
+
     if not core_modules:
         raise ValueError("No core modules specified")
     available_positions = [
@@ -73,17 +65,15 @@ def refine_placement(grid, ship, modules, tech):
                     bonus_module["sc_eligible"],
                     bonus_module["image"],
                 )
-            populate_adjacency_bonuses(temp_grid, tech)
-            populate_module_bonuses(temp_grid, tech)
-            core_bonus = populate_core_bonus(temp_grid, tech)
+
+            # Calculate the core bonus *inside* the loop
+            core_bonus = calculate_grid_score(temp_grid, tech)
+
             if core_bonus > highest_bonus:
                 highest_bonus = core_bonus
                 optimal_grid = Grid.from_dict(temp_grid.to_dict())
-    
-    print("Refined score:", highest_bonus)
-    print_grid_compact(optimal_grid)
-    return optimal_grid, highest_bonus
 
+    return optimal_grid, highest_bonus
 
 def rotate_pattern(pattern):
     """Rotates a pattern 90 degrees clockwise."""
@@ -179,7 +169,6 @@ def optimize_placement(
     ship,
     modules,
     tech,
-    max_supercharged=4,
 ):
     best_grid = Grid.from_dict(grid.to_dict())
     best_bonus = -float("inf")
@@ -250,9 +239,7 @@ def optimize_placement(
                         temp_grid, pattern, modules, tech, start_x, start_y, ship
                     )
 
-                    populate_adjacency_bonuses(temp_grid, tech)
-                    populate_module_bonuses(temp_grid, tech)
-                    current_pattern_bonus = populate_core_bonus(temp_grid, tech)
+                    current_pattern_bonus = calculate_grid_score(temp_grid, tech)
 
                     if current_pattern_bonus > highest_pattern_bonus:
                         highest_pattern_bonus = current_pattern_bonus
@@ -272,35 +259,36 @@ def optimize_placement(
             f"No best pattern definition found for ship: {ship}, tech: {tech}. Starting with the initial grid."
         )
     
-    populate_adjacency_bonuses(best_grid, tech)
-    populate_module_bonuses(best_grid, tech)
-    solved_bonus = populate_core_bonus(best_grid, tech)
-    
-    print("Solved grid bonus:", solved_bonus)
-    print_grid_compact(best_grid)
+    solved_bonus = calculate_grid_score(best_grid, tech)
 
     # Check for opportunities
     opportunity = find_supercharged_opportunities(best_grid, modules, ship, tech)
+    
     if opportunity:
         # Create a localized grid
         opportunity_x, opportunity_y = opportunity
         localized_grid, start_x, start_y = create_localized_grid(best_grid, opportunity_x, opportunity_y)
-        
+
         # Refine the localized grid
         optimized_localized_grid, refined_bonus = refine_placement(localized_grid, ship, modules, tech)
-        
-        # Compare bonuses and apply changes if the refined bonus is higher
-        if refined_bonus > solved_bonus:
-            apply_localized_grid_changes(best_grid, optimized_localized_grid, tech, start_x, start_y)
-            print("BETTER, REFINED GRID FOUND!.")
-            populate_adjacency_bonuses(best_grid, tech)
-            populate_module_bonuses(best_grid, tech)
-            solved_bonus = populate_core_bonus(best_grid, tech)
+
+        # Handle potential None return from refine_placement
+        if optimized_localized_grid is not None:
+            # Compare bonuses and apply changes if the refined bonus is higher
+            if refined_bonus > solved_bonus:
+                apply_localized_grid_changes(best_grid, optimized_localized_grid, tech, start_x, start_y)
+                print("BETTER, REFINED GRID FOUND!.")
+                solved_bonus = refined_bonus #Update solved_bonus here
+                best_bonus = refined_bonus  # Update best_bonus here
+            else:
+                print("Refined grid did not improve the score.")
+        else:
+            print("refine_placement returned None. No changes made.")
             
-    print("Final grid bonus:", solved_bonus)
+    print("Final grid bonus:", best_bonus)
     print_grid_compact(best_grid)
 
-    return best_grid, solved_bonus
+    return best_grid, best_bonus
 
 def find_supercharged_opportunities(grid, modules, ship, tech):
     """
@@ -376,18 +364,36 @@ def find_supercharged_opportunities(grid, modules, ship, tech):
 
 
 def create_localized_grid(grid, opportunity_x, opportunity_y):
-    """Creates a localized grid around a given opportunity, without copying module data."""
-    localized_width = 3  # Adjust as needed
-    localized_height = 3  # Adjust as needed
+    """
+    Creates a localized grid around a given opportunity, ensuring it stays within
+    the bounds of the main grid.
 
-    # Calculate the bounds of the localized grid
+    Args:
+        grid (Grid): The main grid.
+        opportunity_x (int): The x-coordinate of the opportunity.
+        opportunity_y (int): The y-coordinate of the opportunity.
+
+    Returns:
+        tuple: A tuple containing:
+            - localized_grid (Grid): The localized grid.
+            - start_x (int): The starting x-coordinate of the localized grid in the main grid.
+            - start_y (int): The starting y-coordinate of the localized grid in the main grid.
+    """
+    localized_width = 3
+    localized_height = 3
+
+    # Calculate the bounds of the localized grid, clamping to the main grid's edges
     start_x = max(0, opportunity_x - localized_width // 2)
     start_y = max(0, opportunity_y - localized_height // 2)
-    end_x = min(grid.width, start_x + localized_width)
-    end_y = min(grid.height, start_y + localized_height)
+    end_x = min(grid.width, opportunity_x + localized_width // 2 + (localized_width % 2))
+    end_y = min(grid.height, opportunity_y + localized_height // 2 + (localized_height % 2))
 
-    # Create the localized grid
-    localized_grid = Grid(localized_width, localized_height)
+    # Adjust the localized grid size based on the clamped bounds
+    actual_localized_width = end_x - start_x
+    actual_localized_height = end_y - start_y
+
+    # Create the localized grid with the adjusted size
+    localized_grid = Grid(actual_localized_width, actual_localized_height)
 
     # Copy only the grid structure (active/inactive, supercharged)
     for y in range(start_y, end_y):

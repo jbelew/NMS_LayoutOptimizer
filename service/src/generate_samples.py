@@ -1,7 +1,7 @@
 import random
 import numpy as np
 from optimizer import optimize_placement, Grid, print_grid_compact
-from modules_refactored import modules  # Import modules from modules_refactored.py
+from modules import modules  # Import modules from modules_refactored.py
 
 # --- Data Generation ---
 def generate_debug_data(num_samples, grid_width, grid_height, max_supercharged, ship, tech_filter):
@@ -52,12 +52,12 @@ def generate_debug_data(num_samples, grid_width, grid_height, max_supercharged, 
         # Use the specified technology
         tech = tech_filter
 
-        try:
-            optimized_grid, best_bonus = optimize_placement(grid, ship, modules, tech)
-            results.append((optimized_grid, best_bonus))
-        except Exception as e:
-            print(f"Error during optimization for sample {i + 1}: {e}")
-            continue  # Skip this sample if optimization fails
+        # try:
+        optimized_grid, best_bonus = optimize_placement(grid, ship, modules, tech)
+        results.append((optimized_grid, best_bonus))
+        # except Exception as e:
+        #     print(f"Error during optimization for sample {i + 1}: {e}")
+        #     continue  # Skip this sample if optimization fails
 
     return results
 
@@ -68,6 +68,6 @@ grid_width = 10
 grid_height = 6
 max_supercharged = 4
 ship = "Exotic"
-tech_filter = "infra"
+tech_filter = "pulse"
 
 debug_data = generate_debug_data(num_samples, grid_width, grid_height, max_supercharged, ship, tech_filter)
