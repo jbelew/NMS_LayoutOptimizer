@@ -75,6 +75,7 @@ def refine_placement(grid, ship, modules, tech):
 
     return optimal_grid, highest_bonus
 
+
 def rotate_pattern(pattern):
     """Rotates a pattern 90 degrees clockwise."""
     x_coords = [coord[0] for coord in pattern.keys()]
@@ -89,6 +90,7 @@ def rotate_pattern(pattern):
         rotated_pattern[(new_x, new_y)] = module_label
     return rotated_pattern
 
+
 def mirror_pattern_horizontally(pattern):
     """Mirrors a pattern horizontally."""
     x_coords = [coord[0] for coord in pattern.keys()]
@@ -101,6 +103,7 @@ def mirror_pattern_horizontally(pattern):
         mirrored_pattern[(new_x, y)] = module_label
     return mirrored_pattern
 
+
 def mirror_pattern_vertically(pattern):
     """Mirrors a pattern vertically."""
     y_coords = [coord[1] for coord in pattern.keys()]
@@ -112,6 +115,7 @@ def mirror_pattern_vertically(pattern):
         new_y = max_y - y
         mirrored_pattern[(x, new_y)] = module_label
     return mirrored_pattern
+
 
 def apply_pattern_to_grid(grid, pattern, modules, tech, start_x, start_y, ship):
     """Applies a pattern to an existing grid at a given starting position,
@@ -160,7 +164,7 @@ def apply_pattern_to_grid(grid, pattern, modules, tech, start_x, start_y, ship):
                         module_data["sc_eligible"],
                         module_data["image"],
                     )
-                    
+
     return grid  # Return the modified grid
 
 
@@ -204,7 +208,7 @@ def optimize_placement(
         mirrored_vertical = mirror_pattern_vertically(original_pattern)
         if mirrored_vertical != original_pattern:
             patterns_to_try.append(mirrored_vertical)
-        
+
         # Add mirrored and rotated patterns
         for pattern in list(patterns_to_try):
             mirrored_horizontal = mirror_pattern_horizontally(pattern)
@@ -251,42 +255,63 @@ def optimize_placement(
 
     if best_pattern_grid:
         # Initialize current_grid with best_pattern_grid
-        current_grid = Grid.from_dict(best_pattern_grid.to_dict())
         best_grid = Grid.from_dict(best_pattern_grid.to_dict())
         best_bonus = highest_pattern_bonus
     else:
         print(
             f"No best pattern definition found for ship: {ship}, tech: {tech}. Starting with the initial grid."
         )
-    
+
     solved_bonus = calculate_grid_score(best_grid, tech)
 
-    # Check for opportunities
-    opportunity = find_supercharged_opportunities(best_grid, modules, ship, tech)
-    
-    if opportunity:
-        # Create a localized grid
-        opportunity_x, opportunity_y = opportunity
-        localized_grid, start_x, start_y = create_localized_grid(best_grid, opportunity_x, opportunity_y)
-
-        # Refine the localized grid
-        optimized_localized_grid, refined_bonus = refine_placement(localized_grid, ship, modules, tech)
-
-        # Handle potential None return from refine_placement
-        if optimized_localized_grid is not None:
-            # Compare bonuses and apply changes if the refined bonus is higher
-            if refined_bonus > solved_bonus:
-                apply_localized_grid_changes(best_grid, optimized_localized_grid, tech, start_x, start_y)
-                print("BETTER, REFINED GRID FOUND!.")
-                solved_bonus = refined_bonus #Update solved_bonus here
-                best_bonus = refined_bonus  # Update best_bonus here
-            else:
-                print("Refined grid did not improve the score.")
+    # --- Check if all modules were placed ---
+    all_modules_placed = check_all_modules_placed(best_grid, modules, ship, tech)
+    if not all_modules_placed:
+        print("WARNING: Not all modules for this tech were placed in the grid. Running brute-force solver.")
+        temp_best_grid, temp_best_bonus = refine_placement(best_grid, ship, modules, tech)
+        if temp_best_grid is not None:
+            best_grid = temp_best_grid
+            best_bonus = temp_best_bonus
+            solved_bonus = best_bonus
         else:
-            print("refine_placement returned None. No changes made.")
-            
+            print("Brute-force solver failed to find a valid placement.")
+    else:
+        print("All modules for this tech were placed in the grid.")
+        # Check for opportunities
+        opportunity = find_supercharged_opportunities(best_grid, modules, ship, tech)
+
+        if opportunity:
+            # Create a localized grid
+            opportunity_x, opportunity_y = opportunity
+            localized_grid, start_x, start_y = create_localized_grid(
+                best_grid, opportunity_x, opportunity_y
+            )
+
+            # Refine the localized grid
+            optimized_localized_grid, refined_bonus = refine_placement(
+                localized_grid, ship, modules, tech
+            )
+
+            # Handle potential None return from refine_placement
+            if optimized_localized_grid is not None:
+                # Compare bonuses and apply changes if the refined bonus is higher
+                if refined_bonus > solved_bonus:
+                    apply_localized_grid_changes(
+                        best_grid, optimized_localized_grid, tech, start_x, start_y
+                    )
+                    print("BETTER, REFINED GRID FOUND!.")
+                    solved_bonus = refined_bonus  # Update solved_bonus here
+                    best_bonus = refined_bonus  # Update best_bonus here
+                else:
+                    print("Refined grid did not improve the score.")
+            else:
+                print("refine_placement returned None. No changes made.")
+
     print("Final grid bonus:", best_bonus)
-    print_grid_compact(best_grid)
+    if best_grid is not None:
+        print_grid_compact(best_grid)
+    else:
+        print("No valid grid could be generated.")
 
     return best_grid, best_bonus
 
@@ -305,9 +330,21 @@ def find_supercharged_opportunities(grid, modules, ship, tech):
         tuple or None: A tuple (opportunity_x, opportunity_y) if an opportunity is found,
                        None otherwise.
     """
-    occupied_positions = [(x, y) for y in range(grid.height) for x in range(grid.width) if grid.get_cell(x, y)["module"] is not None]
-    supercharged_positions = [(x, y) for y in range(grid.height) for x in range(grid.width) if grid.get_cell(x, y)["supercharged"]]
-    occupied_supercharged_count = sum(1 for x, y in occupied_positions if (x, y) in supercharged_positions)
+    occupied_positions = [
+        (x, y)
+        for y in range(grid.height)
+        for x in range(grid.width)
+        if grid.get_cell(x, y)["module"] is not None
+    ]
+    supercharged_positions = [
+        (x, y)
+        for y in range(grid.height)
+        for x in range(grid.width)
+        if grid.get_cell(x, y)["supercharged"]
+    ]
+    occupied_supercharged_count = sum(
+        1 for x, y in occupied_positions if (x, y) in supercharged_positions
+    )
 
     # --- Helper Functions ---
     def is_valid_position(x, y):
@@ -321,13 +358,13 @@ def find_supercharged_opportunities(grid, modules, ship, tech):
 
     def is_on_boundary(grid, x, y):
         """Checks if a cell is on the outer boundary of the solve."""
-        if grid.get_cell(x,y)["module"] is not None:
+        if grid.get_cell(x, y)["module"] is not None:
             return False
         for nx, ny in get_adjacent_positions(grid, x, y):
             if grid.get_cell(nx, ny)["module"] is not None:
                 return True
         return False
-    
+
     def count_supercharged_in_localized(localized_grid):
         """Counts the number of supercharged slots in a localized grid."""
         count = 0
@@ -338,25 +375,46 @@ def find_supercharged_opportunities(grid, modules, ship, tech):
         return count
 
     # --- Main Logic ---
-    boundary_supercharged_slots = [(x, y) for x, y in supercharged_positions if is_on_boundary(grid, x, y)]
-    unused_boundary_supercharged_slots = [(x, y) for x, y in boundary_supercharged_slots if grid.get_cell(x, y)["module"] is None]
+    boundary_supercharged_slots = [
+        (x, y) for x, y in supercharged_positions if is_on_boundary(grid, x, y)
+    ]
+    unused_boundary_supercharged_slots = [
+        (x, y)
+        for x, y in boundary_supercharged_slots
+        if grid.get_cell(x, y)["module"] is None
+    ]
 
     if unused_boundary_supercharged_slots:
         # There's an unused supercharged slot on the boundary, so there's an opportunity
         opportunity_x, opportunity_y = unused_boundary_supercharged_slots[0]
-        localized_grid, _, _ = create_localized_grid(grid, opportunity_x, opportunity_y)  # Unpack the tuple
-        if count_supercharged_in_localized(localized_grid) > occupied_supercharged_count:
+        localized_grid, _, _ = create_localized_grid(
+            grid, opportunity_x, opportunity_y
+        )  # Unpack the tuple
+        if (
+            count_supercharged_in_localized(localized_grid)
+            > occupied_supercharged_count
+        ):
             return opportunity_x, opportunity_y
 
-    modules_in_boundary_supercharged = [(x, y) for x, y in occupied_positions if (x, y) in boundary_supercharged_slots]
+    modules_in_boundary_supercharged = [
+        (x, y) for x, y in occupied_positions if (x, y) in boundary_supercharged_slots
+    ]
     if not modules_in_boundary_supercharged:
         return None
     for sx, sy in boundary_supercharged_slots:
         for nx, ny in get_adjacent_positions(grid, sx, sy):
-            if (nx, ny) in occupied_positions and (nx, ny) not in modules_in_boundary_supercharged:
+            if (nx, ny) in occupied_positions and (
+                nx,
+                ny,
+            ) not in modules_in_boundary_supercharged:
                 # There's a module adjacent to a supercharged slot on the boundary, so there's a swap opportunity
-                localized_grid, _, _ = create_localized_grid(grid, sx, sy)  # Unpack the tuple
-                if count_supercharged_in_localized(localized_grid) > occupied_supercharged_count:
+                localized_grid, _, _ = create_localized_grid(
+                    grid, sx, sy
+                )  # Unpack the tuple
+                if (
+                    count_supercharged_in_localized(localized_grid)
+                    > occupied_supercharged_count
+                ):
                     return sx, sy
 
     # No opportunities found
@@ -385,8 +443,12 @@ def create_localized_grid(grid, opportunity_x, opportunity_y):
     # Calculate the bounds of the localized grid, clamping to the main grid's edges
     start_x = max(0, opportunity_x - localized_width // 2)
     start_y = max(0, opportunity_y - localized_height // 2)
-    end_x = min(grid.width, opportunity_x + localized_width // 2 + (localized_width % 2))
-    end_y = min(grid.height, opportunity_y + localized_height // 2 + (localized_height % 2))
+    end_x = min(
+        grid.width, opportunity_x + localized_width // 2 + (localized_width % 2)
+    )
+    end_y = min(
+        grid.height, opportunity_y + localized_height // 2 + (localized_height % 2)
+    )
 
     # Adjust the localized grid size based on the clamped bounds
     actual_localized_width = end_x - start_x
@@ -402,15 +464,18 @@ def create_localized_grid(grid, opportunity_x, opportunity_y):
             localized_y = y - start_y
             cell = grid.get_cell(x, y)
             localized_grid.cells[localized_y][localized_x]["active"] = cell["active"]
-            localized_grid.cells[localized_y][localized_x]["supercharged"] = cell["supercharged"]
+            localized_grid.cells[localized_y][localized_x]["supercharged"] = cell[
+                "supercharged"
+            ]
 
     return localized_grid, start_x, start_y
+
 
 def apply_localized_grid_changes(grid, localized_grid, tech, start_x, start_y):
     """Applies changes from the localized grid back to the main grid."""
     localized_width = localized_grid.width
     localized_height = localized_grid.height
-    
+
     # Clear all existing modules of the specified tech in the main grid
     clear_all_modules_of_tech(grid, tech)
 
@@ -420,14 +485,52 @@ def apply_localized_grid_changes(grid, localized_grid, tech, start_x, start_y):
             main_x = start_x + x
             main_y = start_y + y
             if 0 <= main_x < grid.width and 0 <= main_y < grid.height:
-                grid.cells[main_y][main_x]["module"] = localized_grid.cells[y][x]["module"]
-                grid.cells[main_y][main_x]["label"] = localized_grid.cells[y][x]["label"]
+                grid.cells[main_y][main_x]["module"] = localized_grid.cells[y][x][
+                    "module"
+                ]
+                grid.cells[main_y][main_x]["label"] = localized_grid.cells[y][x][
+                    "label"
+                ]
                 grid.cells[main_y][main_x]["tech"] = localized_grid.cells[y][x]["tech"]
                 grid.cells[main_y][main_x]["type"] = localized_grid.cells[y][x]["type"]
-                grid.cells[main_y][main_x]["bonus"] = localized_grid.cells[y][x]["bonus"]
-                grid.cells[main_y][main_x]["adjacency"] = localized_grid.cells[y][x]["adjacency"]
-                grid.cells[main_y][main_x]["sc_eligible"] = localized_grid.cells[y][x]["sc_eligible"]
-                grid.cells[main_y][main_x]["image"] = localized_grid.cells[y][x]["image"]
+                grid.cells[main_y][main_x]["bonus"] = localized_grid.cells[y][x][
+                    "bonus"
+                ]
+                grid.cells[main_y][main_x]["adjacency"] = localized_grid.cells[y][x][
+                    "adjacency"
+                ]
+                grid.cells[main_y][main_x]["sc_eligible"] = localized_grid.cells[y][x][
+                    "sc_eligible"
+                ]
+                grid.cells[main_y][main_x]["image"] = localized_grid.cells[y][x][
+                    "image"
+                ]
+
+def check_all_modules_placed(grid, modules, ship, tech):
+    """
+    Checks if all modules for a given tech have been placed in the grid.
+
+    Args:
+        grid (Grid): The grid layout.
+        modules (dict): The module data.
+        ship (str): The ship type.
+        tech (str): The technology type.
+
+    Returns:
+        bool: True if all modules are placed, False otherwise.
+    """
+    tech_modules = get_tech_modules(modules, ship, tech)
+    placed_module_ids = set()
+
+    for y in range(grid.height):
+        for x in range(grid.width):
+            cell = grid.get_cell(x, y)
+            if cell["tech"] == tech and cell["module"]:
+                placed_module_ids.add(cell["module"])
+
+    all_module_ids = {module["id"] for module in tech_modules}
+    return placed_module_ids == all_module_ids
+
 
 def clear_all_modules_of_tech(grid, tech):
     """Clears all modules of the specified tech type from the entire grid."""

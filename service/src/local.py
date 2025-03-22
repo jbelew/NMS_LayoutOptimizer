@@ -55,7 +55,7 @@ grid = Grid.from_dict(initial_grid_config)
 
 # Define the optimization parameters
 ship = "Exotic"
-tech = "pulse"
+tech = "infra"
 
 # Run the simulated annealing optimization
 grid, max_bonus = optimize_placement(
