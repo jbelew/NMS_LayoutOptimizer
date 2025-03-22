@@ -3,6 +3,7 @@ import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { useFetchTechTreeSuspense } from "../hooks/useTechTree";
 import OptimizationButton from "./OptimizationButton";
+import Spinner from "./Spinner";
 
 export interface TechTree {
   [key: string]: { label: string; key: string }[];
@@ -76,17 +77,13 @@ const TechTreeComponent: React.FC<TechTreeComponentProps> = (props) => {
   return (
     <Suspense
       fallback={
-        <div className="flex items-center justify-center h-full">
-          <p className="text-center sidebar__loading" style={{ color: "var(--gray-12)" }}>
-            Loading tech tree...
-          </p>
-        </div>
+        <Spinner solving={true} message="Loading Technology. Please wait..." />
       }
     >
       {error ? (
         <div className="flex flex-col items-center justify-center h-full">
-          <ExclamationTriangleIcon className="w-8 h-8" style={{ color: "#C44A34" }} />
-          <h2 className="pt-2 text-2xl text-center" style={{ color: "#e6c133" }}>
+          <ExclamationTriangleIcon className="w-16 h-16" style={{ color: "#C44A34" }} />
+          <h2 className="pt-4 text-2xl text-center" style={{ color: "#e6c133" }}>
             -kzzkt- Error! -kzzkt-
           </h2>
           <p className="text-center sidebar__error" style={{ color: "var(--gray-12)" }}>
@@ -101,9 +98,7 @@ const TechTreeComponent: React.FC<TechTreeComponentProps> = (props) => {
       )}
     </Suspense>
   );
-};
-
-interface ErrorBoundaryProps {
+};interface ErrorBoundaryProps {
   onError: (error: Error) => void;
   children: React.ReactNode;
 }

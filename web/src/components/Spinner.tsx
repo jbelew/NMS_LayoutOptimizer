@@ -18,8 +18,8 @@ interface GridSpinnerProps {
 const GridSpinner: React.FC<GridSpinnerProps> = ({ solving, message }) => {
   return (
     solving && (
-      <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-opacity-50 rounded-lg">
-        <div className="w-16 h-16 border-8 rounded-full border-t-cyan-500 border-slate-600 animate-spin"></div>
+      <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-opacity-75 rounded-lg">
+        <div className="w-16 h-16 border-8 rounded-full border-slate-600 animate-spin" style={{ borderTopColor: "var(--blue-9)" }}></div>
         {message && (
           <Text className="pt-4">{message}</Text>
         )}

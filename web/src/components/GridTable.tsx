@@ -6,7 +6,7 @@ import { ApiResponse, Grid } from "../store/useGridStore";
 import GridCell from "./GridCell/GridCell";
 import GridRowActions from "./GridRowActions";
 import ShakingWrapper from "./GridShake";
-import GridSpinner from "./GridSpinner";
+import Spinner from "./Spinner";
 import { useEffect, useState, useRef } from "react";
 
 interface GridTableProps {
@@ -33,7 +33,7 @@ interface GridTableProps {
  *   or null if no calculation has been done.
  * @param {function} resetGrid - A function to reset the grid
  */
-const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, activateRow, deActivateRow, result, resetGrid }) => {
+const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, activateRow, deActivateRow, resetGrid }) => {
   const [shaking, setShaking] = React.useState(false);
 
   const gridRef = useRef<HTMLDivElement>(null);
@@ -41,25 +41,21 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
   
   useEffect(() => {
     const updateColumnWidth = () => {
-      if (gridRef.current) {
-        const computedStyle = window.getComputedStyle(gridRef.current);
-        const gridTemplate = computedStyle.getPropertyValue("grid-template-columns").split(" ");
-        const eleventhColumn = gridTemplate[10] || "40px"; // Default to 64px if missing
-        const gap = computedStyle.getPropertyValue("gap") || "8px"; // Default to 8px
+      if (!gridRef.current) return;
   
-        // Convert values to numbers and calculate
-        const columnWidthNum = parseFloat(eleventhColumn);
-        const gapNum = parseFloat(gap);
-        const totalWidth = `${columnWidthNum + gapNum}px`;
-        console.log("totalWidth", totalWidth);
+      const computedStyle = window.getComputedStyle(gridRef.current);
+      const gridTemplate = computedStyle.getPropertyValue("grid-template-columns").split(" ");
+      
+      const parseSize = (value: string, fallback: number) => parseFloat(value) || fallback;
   
-        setColumnWidth(totalWidth);
-      }
+      const eleventhColumn = parseSize(gridTemplate[10] ?? "40px", 40);
+      const gap = parseSize(computedStyle.getPropertyValue("gap") ?? "8px", 8);
+      
+      setColumnWidth(`${eleventhColumn + gap}px`);
     };
   
-    updateColumnWidth(); // Initial calculation
+    updateColumnWidth();
     window.addEventListener("resize", updateColumnWidth);
-  
     return () => window.removeEventListener("resize", updateColumnWidth);
   }, []);
 
@@ -69,7 +65,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
   return (
     <>
       <ShakingWrapper shaking={shaking}>
-        <GridSpinner solving={solving} message="Optimizing Technology. Please wait..." />
+        <Spinner solving={solving} message="Optimizing Technology. Please wait..." />
         <div ref={gridRef} className={`gridContainer ${solving ? "opacity-50" : ""}`}>
           {grid.cells.map((row, rowIndex) => (
             <React.Fragment key={rowIndex}>
@@ -126,7 +122,6 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
           </Button>
         </div>
       </div>
-      <div className="pt-4 gridResults">{result && <p className="text-white">Max Bonus: {result.max_bonus.toFixed(2)}</p>}</div>
     </>
   );
 };

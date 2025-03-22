@@ -1,4 +1,6 @@
+// src/store/useGridStore.ts
 import { create } from "zustand";
+import { useTechStore } from "./useTechStore"; // Import useTechStore
 
 // Define types
 export type Cell = {
@@ -46,7 +48,11 @@ const createEmptyCell = (supercharged = false, active = true): Cell => ({
 });
 
 const createGrid = (width: number, height: number): Grid => ({
-  cells: Array.from({ length: height }, (_, rowIndex) => Array.from({ length: width }, () => createEmptyCell(false, rowIndex >= height - 3 ? false : true))),
+  cells: Array.from({ length: height }, (_, rowIndex) =>
+    Array.from({ length: width }, () =>
+      createEmptyCell(false, rowIndex >= height - 3 ? false : true)
+    )
+  ),
   width,
   height,
 });
@@ -58,9 +64,13 @@ type GridStore = {
   solving: boolean; // Correct: Represents the grid optimization process
   setGrid: (grid: Grid) => void;
   resetGrid: () => void;
-  setResult: (result: ApiResponse | null) => void;
+  setResult: (result: ApiResponse | null, tech: string) => void; // Add tech to setResult
   setSolving: (solving: boolean) => void;
-  toggleCellState: (rowIndex: number, columnIndex: number, event: React.MouseEvent) => void;
+  toggleCellState: (
+    rowIndex: number,
+    columnIndex: number,
+    event: React.MouseEvent
+  ) => void;
   handleOptimize: (tech: string) => Promise<void>;
   activateRow: (rowIndex: number) => void;
   deActivateRow: (rowIndex: number) => void;
@@ -74,14 +84,20 @@ export const useGridStore = create<GridStore>((set, get) => ({
   solving: false, // Correct: Represents the grid optimization process
 
   setGrid: (grid) => set({ grid }),
-  setResult: (result) => set({ result }),
   setSolving: (solving) => set({ solving }),
-
   resetGrid: () => {
     set((state) => ({
       grid: createGrid(state.grid.width, state.grid.height),
       result: null,
     }));
+    useTechStore.getState().clearResult(); // Clear the max_bonus when the grid is reset
+  },
+
+  setResult: (result, tech) => { // Add tech to setResult
+    set({ result });
+    if (result) {
+      useTechStore.getState().setMaxBonus(tech, result.max_bonus); // Update max_bonus in useTechStore with tech
+    }
   },
 
   /**
@@ -97,7 +113,11 @@ export const useGridStore = create<GridStore>((set, get) => ({
               if (event.ctrlKey) {
                 // Toggle active, and force supercharged to false if becoming inactive
                 const newActiveState = !cell.active;
-                return { ...cell, active: newActiveState, supercharged: newActiveState ? cell.supercharged : false };
+                return {
+                  ...cell,
+                  active: newActiveState,
+                  supercharged: newActiveState ? cell.supercharged : false,
+                };
               } else if (cell.active) {
                 // Toggle supercharged only if active
                 return { ...cell, supercharged: !cell.supercharged };
@@ -114,7 +134,11 @@ export const useGridStore = create<GridStore>((set, get) => ({
     set((state) => ({
       grid: {
         ...state.grid,
-        cells: state.grid.cells.map((row, rIdx) => (rIdx === rowIndex ? row.map((cell) => ({ ...cell, active: true })) : row)),
+        cells: state.grid.cells.map((row, rIdx) =>
+          rIdx === rowIndex
+            ? row.map((cell) => ({ ...cell, active: true }))
+            : row
+        ),
       },
     }));
   },
@@ -123,7 +147,11 @@ export const useGridStore = create<GridStore>((set, get) => ({
     set((state) => ({
       grid: {
         ...state.grid,
-        cells: state.grid.cells.map((row, rIdx) => (rIdx === rowIndex ? row.map((cell) => ({ ...cell, active: false })) : row)),
+        cells: state.grid.cells.map((row, rIdx) =>
+          rIdx === rowIndex
+            ? row.map((cell) => ({ ...cell, active: false }))
+            : row
+        ),
       },
     }));
   },
@@ -135,7 +163,11 @@ export const useGridStore = create<GridStore>((set, get) => ({
     // Create a new grid without modifying state immediately
     const updatedGrid: Grid = {
       ...grid,
-      cells: grid.cells.map((row) => row.map((cell) => (cell.tech === tech ? createEmptyCell(cell.supercharged) : cell))),
+      cells: grid.cells.map((row) =>
+        row.map((cell) =>
+          cell.tech === tech ? createEmptyCell(cell.supercharged) : cell
+        )
+      ),
     };
 
     try {
@@ -157,12 +189,12 @@ export const useGridStore = create<GridStore>((set, get) => ({
       if (!response.ok) throw new Error("Failed to fetch data");
 
       const data: ApiResponse = await response.json();
-      setResult(data);
+      setResult(data, tech); // Pass tech to setResult
       setGrid(data.grid);
       console.log("Response from API:", data.grid);
     } catch (error) {
       console.error("Error during optimization:", error);
-      setResult(null);
+      setResult(null, tech); // Pass tech to setResult
     } finally {
       setSolving(false); // Correct: Setting the solving state
     }
@@ -180,12 +212,14 @@ export const useGridStore = create<GridStore>((set, get) => ({
         cells: state.grid.cells.map((row) =>
           row.map((cell) =>
             cell.tech === tech
-              ? { ...createEmptyCell(cell.supercharged, cell.active), tech: null } // Preserve supercharged state
+              ? {
+                  ...createEmptyCell(cell.supercharged, cell.active),
+                  tech: null,
+                } // Preserve supercharged state
               : cell
           )
         ),
       },
     }));
   },
-
 }));

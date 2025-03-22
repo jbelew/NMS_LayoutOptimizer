@@ -54,9 +54,9 @@ modules = {
                     "modules": [
                         {"id": "PE", "type": "core", "label": "Positron Ejector", "bonus": 1.0, "adjacency": True, "sc_eligible": True, "image": "positron.png"},
                         {"id": "FS", "type": "bonus", "label": "Fragment Supercharger", "bonus": 0.04, "adjacency": True, "sc_eligible": True, "image": "fragment.png"},
-                        {"id": "Xa", "type": "bonus", "label": "Positron Ejector Upgrade Sigma", "bonus": 0.2, "adjacency": True, "sc_eligible": True, "image": "positron-upgrade.png"},
-                        {"id": "Xb", "type": "bonus", "label": "Positron Ejector Upgrade Tau", "bonus": 0.19, "adjacency": True, "sc_eligible": True, "image": "positron-upgrade.png"},
-                        {"id": "Xc", "type": "bonus", "label": "Positron Ejector Upgrade Theta", "bonus": 0.18, "adjacency": True, "sc_eligible": True, "image": "positron-upgrade.png"},
+                        {"id": "Xa", "type": "bonus", "label": "Positron Ejector Upgrade Sigma", "bonus": 0.4, "adjacency": True, "sc_eligible": True, "image": "positron-upgrade.png"},
+                        {"id": "Xb", "type": "bonus", "label": "Positron Ejector Upgrade Tau", "bonus": 0.39, "adjacency": True, "sc_eligible": True, "image": "positron-upgrade.png"},
+                        {"id": "Xc", "type": "bonus", "label": "Positron Ejector Upgrade Theta", "bonus": 0.38, "adjacency": True, "sc_eligible": True, "image": "positron-upgrade.png"},
                     ],
                 },
                 {
@@ -121,6 +121,15 @@ modules = {
                         {"id": "Xa", "type": "bonus", "label": "Shield Upgrade Sigma", "bonus": 0.3, "adjacency": True, "sc_eligible": True, "image": "shield-upgrade.png"},
                         {"id": "Xb", "type": "bonus", "label": "Shield Upgrade Tau", "bonus": 0.29, "adjacency": True, "sc_eligible": True, "image": "shield-upgrade.png"},
                         {"id": "Xc", "type": "bonus", "label": "Shield Upgrade Theta", "bonus": 0.28, "adjacency": True, "sc_eligible": True, "image": "shield-upgrade.png"},
+                    ],
+                 },
+                 {
+                "label": "Scanners, Teleporter, Etc ...",
+                    "key": "scanners",
+                    "modules": [
+                        {"id": "CD", "type": "core", "label": "Cargo Scan Deflector", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "cargo.png"},
+                        {"id": "ES", "type": "core", "label": "Economy Scanner", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "economy.png"},
+                        {"id": "CS", "type": "core", "label": "Conflict Scanner", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "conflict.png"},
                     ],
                  },
             ]

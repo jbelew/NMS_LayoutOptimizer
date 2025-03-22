@@ -3,11 +3,12 @@ import React from "react";
 import { useGridStore } from "../store/useGridStore";
 import { IconButton, Flex, Text } from "@radix-ui/themes";
 import { UpdateIcon, ResetIcon, DoubleArrowLeftIcon } from "@radix-ui/react-icons";
+import { useTechStore } from "../store/useTechStore"; // Import useTechStore
 
 interface OptimizationButtonProps {
   label: string;
   onClick: () => void;
-  solving: boolean; // Renamed loading to solving
+  solving: boolean;
   tech: string;
 }
 
@@ -26,28 +27,47 @@ interface OptimizationButtonProps {
 const OptimizationButton: React.FC<OptimizationButtonProps> = ({
   label,
   onClick,
-  solving, // Renamed loading to solving
+  solving,
   tech,
 }) => {
   const hasTechInGrid = useGridStore((state) => state.hasTechInGrid(tech));
   const handleResetGridTech = useGridStore((state) => state.resetGridTech);
+  const { max_bonus, clearTechMaxBonus } = useTechStore(); // Get clearTechMaxBonus from the store
+
+  const techMaxBonus = max_bonus?.[tech]; // Get the max_bonus for the specific tech
+
+  const handleReset = () => {
+    handleResetGridTech(tech);
+    clearTechMaxBonus(tech); // Clear techMaxBonus when the reset button is clicked
+  };
 
   return (
     <Flex className="items-center gap-2 mt-2 mb-2">
       {/* Main icon button for triggering optimization */}
-      <IconButton onClick={onClick} disabled={solving} variant="soft"> {/* Renamed loading to solving */}
+      <IconButton onClick={onClick} disabled={solving} variant="soft">
         {hasTechInGrid ? <UpdateIcon /> : <DoubleArrowLeftIcon />}
       </IconButton>
       {/* Button to reset the specific tech in the grid */}
       <IconButton
-        onClick={() => handleResetGridTech(tech)}
-        disabled={!hasTechInGrid || solving} 
+        onClick={() => handleReset()}
+        disabled={!hasTechInGrid || solving}
         variant="soft"
       >
         <ResetIcon />
       </IconButton>
       {/* Display the label next to the buttons */}
       <Text style={{ color: "var(--gray-12)" }}>{label}</Text>
+      {/* Display the max_bonus if it's not null */}
+      {techMaxBonus !== undefined && ( // Check if techMaxBonus is not undefined
+        <Text
+        className="font-thin font-condensed"
+        style={{
+          color: techMaxBonus > 101 ? "#e6c133" : "var(--gray-11)", // Apply yellow color if > 100
+        }}
+      >
+        {techMaxBonus.toFixed(0)}%
+      </Text>
+      )}
     </Flex>
   );
 };
