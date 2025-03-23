@@ -16,6 +16,7 @@ export default defineConfig({
           return 'assets/[name]-[hash].[ext]';
         }
       }
-    }
+    },
+    cssMinify: 'lightningcss'
   }
 });

@@ -64,13 +64,10 @@ const createGrid = (width: number, height: number): Grid => ({
 type GridStore = {
   grid: Grid;
   result: ApiResponse | null;
-  solving: boolean; // Correct: Represents the grid optimization process
   setGrid: (grid: Grid) => void;
   resetGrid: () => void;
   setResult: (result: ApiResponse | null, tech: string) => void; // Add tech to setResult
-  setSolving: (solving: boolean) => void;
   toggleCellState: (rowIndex: number, columnIndex: number, event: React.MouseEvent) => void;
-  handleOptimize: (tech: string) => Promise<void>;
   activateRow: (rowIndex: number) => void;
   deActivateRow: (rowIndex: number) => void;
   hasTechInGrid: (tech: string) => boolean;
@@ -80,10 +77,8 @@ type GridStore = {
 export const useGridStore = create<GridStore>((set, get) => ({
   grid: createGrid(10, 6),
   result: null,
-  solving: false, // Correct: Represents the grid optimization process
 
   setGrid: (grid) => set({ grid }),
-  setSolving: (solving) => set({ solving }),
   resetGrid: () => {
     set((state) => ({
       grid: createGrid(state.grid.width, state.grid.height),
@@ -146,41 +141,6 @@ export const useGridStore = create<GridStore>((set, get) => ({
         cells: state.grid.cells.map((row, rIdx) => (rIdx === rowIndex ? row.map((cell) => ({ ...cell, active: false })) : row)),
       },
     }));
-  },
-
-  handleOptimize: async (tech) => {
-    set({ solving: true }); // Correct: Setting the solving state
-    const { grid, setGrid, setResult, setSolving } = get();
-
-    // Create a new grid without modifying state immediately
-    const updatedGrid: Grid = {
-      ...grid,
-      cells: grid.cells.map((row) => row.map((cell) => (cell.tech === tech ? createEmptyCell(cell.supercharged) : cell))),
-    };
-
-    try {
-      const response = await fetch("http://localhost:5000/optimize", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ship: "Exotic",
-          tech,
-          grid: updatedGrid,
-        }),
-      });
-
-      if (!response.ok) throw new Error("Failed to fetch data");
-
-      const data: ApiResponse = await response.json();
-      setResult(data, tech); // Pass tech to setResult
-      setGrid(data.grid);
-      console.log("Response from API:", data.grid);
-    } catch (error) {
-      console.error("Error during optimization:", error);
-      setResult(null, tech); // Pass tech to setResult
-    } finally {
-      setSolving(false); // Correct: Setting the solving state
-    }
   },
 
   hasTechInGrid: (tech: string): boolean => {

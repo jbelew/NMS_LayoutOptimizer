@@ -1,38 +1,51 @@
 # app.py
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
 
 from optimizer import optimize_placement, get_tech_tree_json, Grid
 from modules import modules
+from optimization_algorithms import set_message_queue # Import the function
 
 import logging
 import json
+import time
+import threading
+import queue
+
 logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
-CORS(app)  # This will allow all domains by default
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+# Message queue for SSE
+message_queue = queue.Queue()
+
+# Set the message queue in optimization_algorithms
+set_message_queue(message_queue)
+
+def send_messages():
+    """Generator function for SSE to send messages from the queue."""
+    while True:
+        message = message_queue.get()
+        if message is None:
+            break  # Signal to stop the thread
+        yield f"data: {message}\n\n"
+        time.sleep(0.1)  # Adjust as needed
+
+@app.route('/stream')
+def stream():
+    """SSE endpoint to stream messages to the client."""
+    return Response(send_messages(), mimetype='text/event-stream')
 
 @app.route('/optimize', methods=['POST'])
 def optimize_grid():
+    """Endpoint to optimize the grid and send status updates via SSE."""
     data = request.get_json()
-    #logging.info(data)
-
-    # raw_data = request.data.decode('utf-8')  # Raw request body
-    # print("Raw request body:", raw_data)
-
-    # json_data = request.get_json()
-    # print("Parsed JSON:", json_data)
 
     ship = data.get("ship")
     tech = data.get('tech')
     if tech is None:
         return jsonify({'error': 'No tech specified'}), 400
-
-    initial_temp = data.get('initial_temp', 10000)
-    cooling_rate = data.get('cooling_rate', 0.9999)
-    max_iterations = data.get('max_iterations', 10000)
-    patience = data.get('patience', 200)
-    decay_factor = data.get('decay_factor', 0.99)
 
     grid_data = data.get('grid')
     if grid_data is None:
@@ -40,16 +53,11 @@ def optimize_grid():
 
     grid = Grid.from_dict(grid_data)
     
-    # try:
-    #     grid, max_bonus = optimize_placement(grid, ship, modules, tech, initial_temp, cooling_rate, max_iterations, patience, decay_factor)
-    #     return jsonify({'grid': grid.to_dict(), 'max_bonus': max_bonus})
-    # except Exception as e:
-    #     return jsonify({'error': str(e)}), 500
-    
+    message_queue.put(json.dumps({"status": "info", "message": "Starting optimization..."}))
     grid, max_bonus = optimize_placement(grid, ship, modules, tech)
+    message_queue.put(json.dumps({"status": "success", "message": "Optimization complete!"}))
     return jsonify({'grid': grid.to_dict(), 'max_bonus': max_bonus})
     
-
 @app.route('/tech_tree/<ship_name>')
 def get_technology_tree(ship_name):
     """Endpoint to get the technology tree for a given ship."""

@@ -1,22 +1,23 @@
-// GridTable.tsx
+// src/components/GridTable.tsx
 import { ResetIcon } from "@radix-ui/react-icons";
 import { Button } from "@radix-ui/themes";
 import React from "react";
 import { ApiResponse, Grid } from "../store/useGridStore";
 import GridCell from "./GridCell/GridCell";
 import GridRowActions from "./GridRowActions";
-import ShakingWrapper from "./GridShake";
+import ShakingWrapper from "./GridShake/GridShake";
 import Spinner from "./Spinner";
 import { useEffect, useState, useRef } from "react";
+import { useSSE } from "../hooks/useSSE"; // Import useSSE
 
 interface GridTableProps {
   grid: Grid;
   resetGrid: () => void;
-  solving: boolean;
   toggleCellState: (rowIndex: number, columnIndex: number, event: React.MouseEvent) => void;
   result: ApiResponse | null;
   activateRow: (rowIndex: number) => void;
   deActivateRow: (rowIndex: number) => void;
+  solving: boolean; // Receive solving as a prop
 }
 
 /**
@@ -25,7 +26,6 @@ interface GridTableProps {
  * renders a set of buttons to activate or deactivate entire rows at once.
  *
  * @param {Grid} grid - The grid to display
- * @param {boolean} solving - Whether the component is currently solving
  * @param {function} toggleCellState - A function to toggle the state of a cell
  * @param {function} activateRow - A function to activate an entire row
  * @param {function} deActivateRow - A function to deactivate an entire row
@@ -33,27 +33,28 @@ interface GridTableProps {
  *   or null if no calculation has been done.
  * @param {function} resetGrid - A function to reset the grid
  */
-const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, activateRow, deActivateRow, resetGrid }) => {
+const GridTable: React.FC<GridTableProps> = ({ grid, toggleCellState, activateRow, deActivateRow, resetGrid, solving }) => {
   const [shaking, setShaking] = React.useState(false);
+  const [currentMessage, setCurrentMessage] = useState<string | null>(null);
 
   const gridRef = useRef<HTMLDivElement>(null);
   const [columnWidth, setColumnWidth] = useState("40px");
-  
+
   useEffect(() => {
     const updateColumnWidth = () => {
       if (!gridRef.current) return;
-  
+
       const computedStyle = window.getComputedStyle(gridRef.current);
       const gridTemplate = computedStyle.getPropertyValue("grid-template-columns").split(" ");
-      
+
       const parseSize = (value: string, fallback: number) => parseFloat(value) || fallback;
-  
+
       const eleventhColumn = parseSize(gridTemplate[10] ?? "40px", 40);
       const gap = parseSize(computedStyle.getPropertyValue("gap") ?? "8px", 8);
-      
+
       setColumnWidth(`${eleventhColumn + gap}px`);
     };
-  
+
     updateColumnWidth();
     window.addEventListener("resize", updateColumnWidth);
     return () => window.removeEventListener("resize", updateColumnWidth);
@@ -62,10 +63,26 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
   // Whether there are any modules in the grid
   const hasModulesInGrid = grid.cells.flat().some((cell) => cell.module !== null);
 
+  // Use the useSSE hook
+  const { messageQueue } = useSSE();
+
+  // Log SSE messages to the console
+  useEffect(() => {
+    if (messageQueue.length > 0) {
+      console.log("GridTable: SSE Message:", messageQueue[0]); // Log the message here
+    }
+  }, [messageQueue]);
+
+  useEffect(() => {
+    if (solving && messageQueue.length > 0) {
+      setCurrentMessage(messageQueue[0]);
+    }
+  }, [solving, messageQueue]);
+
   return (
     <>
       <ShakingWrapper shaking={shaking}>
-        <Spinner solving={solving} message="Optimizing Technology. Please wait..." />
+        <Spinner solving={solving} message={currentMessage || ""} />
         <div ref={gridRef} className={`gridContainer ${solving ? "opacity-50" : ""}`}>
           {grid.cells.map((row, rowIndex) => (
             <React.Fragment key={rowIndex}>
@@ -125,5 +142,4 @@ const GridTable: React.FC<GridTableProps> = ({ grid, solving, toggleCellState, a
     </>
   );
 };
-
 export default GridTable;

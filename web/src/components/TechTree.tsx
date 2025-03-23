@@ -10,7 +10,7 @@ export interface TechTree {
 }
 
 interface TechTreeComponentProps {
-  handleOptimize: (tech: string) => void;
+  handleOptimize: (tech: string) => Promise<void>;
   solving: boolean;
 }
 
@@ -27,7 +27,7 @@ interface TechTreeComponentProps {
 const TechTreeSection: React.FC<{
   type: string;
   technologies: { label: string; key: string }[];
-  handleOptimize: (tech: string) => void;
+  handleOptimize: (tech: string) => Promise<void>;
   solving: boolean;
 }> = ({ type, technologies, handleOptimize, solving }) => (
   <div className="mb-4 sidebar__section">
@@ -36,7 +36,7 @@ const TechTreeSection: React.FC<{
     </h2>
     <Separator orientation="horizontal" size="4" className="mb-4 sidebar__separator" />
     {technologies.map((tech) => (
-      <OptimizationButton key={tech.key} label={tech.label} onClick={() => handleOptimize(tech.key)} solving={solving} tech={tech.key} />
+      <OptimizationButton key={tech.key} label={tech.label} tech={tech.key} handleOptimize={handleOptimize} solving={solving} />
     ))}
   </div>
 );

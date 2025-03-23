@@ -7,6 +7,7 @@ import './index.css';
 
 // Component CSS files
 import './components/GridCell/GridCell.css'
+import './components/GridShake/GridShake.css'
 
 import App from './App';
 

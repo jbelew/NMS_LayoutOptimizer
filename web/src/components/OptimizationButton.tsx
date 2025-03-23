@@ -1,3 +1,4 @@
+// src/components/OptimizationButton.tsx
 import React from "react";
 import { useGridStore } from "../store/useGridStore";
 import { useTechStore } from "../store/useTechStore";
@@ -6,9 +7,9 @@ import { UpdateIcon, ResetIcon, DoubleArrowLeftIcon } from "@radix-ui/react-icon
 
 interface OptimizationButtonProps {
   label: string;
-  onClick: () => void;
-  solving: boolean;
   tech: string;
+  handleOptimize: (tech: string) => Promise<void>; // Receive handleOptimize as a prop
+  solving: boolean; // Receive solving as a prop
 }
 
 /**
@@ -16,10 +17,11 @@ interface OptimizationButtonProps {
  */
 const OptimizationButton: React.FC<OptimizationButtonProps> = ({
   label,
-  onClick,
-  solving,
   tech,
+  handleOptimize, // Receive handleOptimize as a prop
+  solving, // Receive solving as a prop
 }) => {
+  //const { solving, handleOptimize } = useOptimize(); // Remove useOptimize
   const hasTechInGrid = useGridStore((state) => state.hasTechInGrid(tech));
   const handleResetGridTech = useGridStore((state) => state.resetGridTech);
   const { max_bonus, clearTechMaxBonus } = useTechStore();
@@ -33,9 +35,8 @@ const OptimizationButton: React.FC<OptimizationButtonProps> = ({
 
   return (
     <Flex className="items-center gap-2 mt-2 mb-2">
-      {/* Optimization button */}
       <Tooltip content={hasTechInGrid ? "Update" : "Solve"}>
-        <IconButton onClick={onClick} disabled={solving} variant="soft">
+        <IconButton onClick={() => handleOptimize(tech)} disabled={solving} variant="soft">
           {hasTechInGrid ? <UpdateIcon /> : <DoubleArrowLeftIcon />}
         </IconButton>
       </Tooltip>
@@ -53,11 +54,8 @@ const OptimizationButton: React.FC<OptimizationButtonProps> = ({
         </IconButton>
       )}
 
-      {/* Label */}
       <Text style={{ color: "var(--gray-12)" }}>{label}</Text>
-
-      {/* Max bonus display */}
-	  {techMaxBonus !== undefined && techMaxBonus !== 0 && (
+      {techMaxBonus !== undefined && techMaxBonus !== 0 && (
         <Text
           className="font-thin font-condensed"
           style={{
