@@ -117,6 +117,7 @@ body::before {
   --blue-track: #36a1ea;
 }
 
+
 .dark,
 .dark-theme,
 :is(.dark, .dark-theme) :where(.radix-themes:not(.light, .light-theme)) {
@@ -125,7 +126,7 @@ body::before {
 
 /* Vaiablies for our grid CLAMP calculations */
 :root {
-  --grid-cell-size: clamp(36px, 7.0vw, 64px);
+  --grid-cell-size: clamp(36px, 7.2vw, 64px);
   --grid-gap: clamp(2px, 1vw, 8px);
 }
 

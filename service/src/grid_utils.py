@@ -1,5 +1,5 @@
 # grid_utils.py
-import copy
+from copy import deepcopy
 
 class Grid:
     def __init__(self, width, height):
@@ -38,6 +38,11 @@ class Grid:
             self.cells[y][x]["value"] = value
         else:
             raise IndexError("Cell out of bounds")
+        
+    def copy(self):
+        new_grid = Grid(self.width, self.height)  # Pass width and height
+        new_grid.cells = [deepcopy(row) for row in self.cells]  # Use deepcopy for nested lists
+        return new_grid
         
     def set_label(self, x, y, label):
         if 0 <= x < self.width and 0 <= y < self.height:
@@ -164,3 +169,4 @@ class Grid:
         )
 
 __all__ = ["Grid"]
+

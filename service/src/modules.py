@@ -74,7 +74,7 @@ modules = {
                     "key": "hyper",
                     "modules": [
                         {"id": "HD", "type": "core", "label": "Hyperdrive", "bonus": 1.0, "adjacency": True, "sc_eligible": False, "image": "hyperdrive.png"},
-                        {"id": "AD", "type": "bonus", "label": "Amethyst Drive", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "amethyst.png"},
+                        {"id": "AD", "type": "bonus", "label": "Atlantid Drive", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "atlantid.png"},
                         {"id": "CD", "type": "bonus", "label": "Cadmium Drive", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "cadmium.png"},
                         {"id": "ED", "type": "bonus", "label": "Emeril Drive", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "emeril.png"},
                         {"id": "ID", "type": "bonus", "label": "Indium Drive", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "indium.png"},              
@@ -110,8 +110,35 @@ modules = {
                         {"id": "Xc", "type": "bonus", "label": "Pulse Engine Upgrade Theta", "bonus": 0.10, "adjacency": True, "sc_eligible": True, "image": "pulse-upgrade.png"},
                     ],
                  },
+                 {
+                    "label": "Starship Trails",
+                    "key": "trails",
+                    "modules": [
+                        {"id": "AB", "type": "bonus", "label": "Artemis Figurine", "bonus": 0.05, "adjacency": True, "sc_eligible": True, "image": "artemis.png"},
+                        {"id": "PB", "type": "bonus", "label": "Polo Figurine", "bonus": 0.05, "adjacency": True, "sc_eligible": True, "image": "polo.png"},
+                        {"id": "SB", "type": "core", "label": "Tenticled Figurine", "bonus": 0.01, "adjacency": True, "sc_eligible": True, "image": "squid.png"},
+                        {"id": "SP", "type": "bonus", "label": "Sputtering Starship Trail", "bonus": 0.0, "adjacency": True, "sc_eligible": False, "image": "sputtering-trail.png"},
+                        {"id": "CT", "type": "bonus", "label": "Cadmium Starship Trail", "bonus": 0.0, "adjacency": True, "sc_eligible": False, "image": "cadmium-trail.png"},
+                        {"id": "ET", "type": "bonus", "label": "Emeril Starship Trail", "bonus": 0.0, "adjacency": True, "sc_eligible": True, "image": "emeril-trail.png"},
+                        {"id": "TT", "type": "bonus", "label": "Temporal Starship Trail", "bonus": 0.0, "adjacency": True, "sc_eligible": True, "image": "temporal-trail.png"},
+                        {"id": "ST", "type": "bonus", "label": "Stealth Starship Trail", "bonus": 0.0, "adjacency": True, "sc_eligible": True, "image": "stealth-trail.png"},
+                        {"id": "GT", "type": "bonus", "label": "Golden Starship Trail", "bonus": 0.0, "adjacency": True, "sc_eligible": True, "image": "golden-trail.png"},
+                        {"id": "RT", "type": "bonus", "label": "Chromatic Starship Trail", "bonus": 0.0, "adjacency": True, "sc_eligible": True, "image": "chromatic-trail.png"},
+  
+                    ],
+                 },
             ],
              "other": [
+                 {
+                    "label": "Bobbleheads",
+                    "key": "bobble",
+                    "modules": [
+                        {"id": "AP", "type": "core", "label": "Apollo Figurine", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "apollo.png"},
+                        {"id": "AT", "type": "core", "label": "Atlas Figurine", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "atlas.png"},
+                        {"id": "NA", "type": "bonus", "label": "Nada Figurine", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "nada.png"},          
+                        {"id": "NB", "type": "bonus", "label": "-null- Figurine", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "null.png"},
+                    ],
+                 },                 
                  {
                     "label": "Starship Shields",
                     "key": "shield",
@@ -130,6 +157,8 @@ modules = {
                         {"id": "CD", "type": "core", "label": "Cargo Scan Deflector", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "cargo.png"},
                         {"id": "ES", "type": "core", "label": "Economy Scanner", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "economy.png"},
                         {"id": "CS", "type": "core", "label": "Conflict Scanner", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "conflict.png"},
+                        {"id": "AJ", "type": "core", "label": "Aqua-Jets", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "aquajets.png"},
+                        {"id": "TP", "type": "core", "label": "Teleport Receiver", "bonus": 0.0, "adjacency": False, "sc_eligible": False, "image": "teleport.png"},
                     ],
                  },
             ]
@@ -214,7 +243,7 @@ solves = {
                 (1, 2): "ID",
                 (2, 2): "EW",
             },
-            "score": 3.78
+            "score": 4.78
         },
         "launch": {
             "map": {
@@ -250,7 +279,24 @@ solves = {
                 (1, 1): "Xb",
                 (2, 1): "None",
             },
-            "score": 1.84
+            "score": 3.98
+        },
+        "trails": {
+            "map": {
+                (0, 0): "RT",
+                (1, 0): "ET",
+                (2, 0): "ST",
+                (3, 0): "TT",
+                (0, 1): "SB",
+                (1, 1): "AB",
+                (2, 1): "PB",
+                (3, 1): "None",
+                (0, 2): "GT",
+                (1, 2): "CT",
+                (2, 2): "SP",
+                (3, 2): "None",
+            },
+            "score": 0.46
         },
     },
 }

@@ -23,11 +23,11 @@ def generate_debug_data(num_samples, grid_width, grid_height, max_supercharged, 
 
     for i in range(num_samples):
         grid = Grid(grid_width, grid_height)
-        num_supercharged = 4  # Always have 4 supercharged slots
+        num_supercharged = 0  # Always have 4 supercharged slots
 
         # Determine the number of inactive cells (25% of total grid cells)
         total_cells = grid_width * grid_height
-        num_inactive_cells = int(total_cells * 0.10)
+        num_inactive_cells = int(total_cells * 0.01)
 
         # Randomly select 25% of the grid to be inactive
         inactive_positions = random.sample(
@@ -68,6 +68,6 @@ grid_width = 8
 grid_height = 8
 max_supercharged = 4
 ship = "Exotic"
-tech_filter = "cyclotron"
+tech_filter = "trails"
 
 debug_data = generate_debug_data(num_samples, grid_width, grid_height, max_supercharged, ship, tech_filter)
