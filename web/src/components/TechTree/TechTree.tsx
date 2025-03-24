@@ -1,9 +1,9 @@
 import { Separator } from "@radix-ui/themes";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-import React, { Suspense, useEffect, useMemo, useState } from "react";
-import { useFetchTechTreeSuspense } from "../hooks/useTechTree";
-import OptimizationButton from "./OptimizationButton";
-import Spinner from "./Spinner";
+import React, { Suspense, useMemo, useState } from "react";
+import { useFetchTechTreeSuspense } from "../../hooks/useTechTree";
+import OptimizationButton from "../OptimizationButton";
+import Spinner from "../Spinner";
 
 export interface TechTree {
   [key: string]: { label: string; key: string }[];
@@ -30,11 +30,11 @@ const TechTreeSection: React.FC<{
   handleOptimize: (tech: string) => Promise<void>;
   solving: boolean;
 }> = ({ type, technologies, handleOptimize, solving }) => (
-  <div className="mb-4 sidebar__section">
-    <h2 className="text-2xl sidebar__title" style={{ color: "var(--gray-12)" }}>
+  <div className="mb-4 tech-tree-section">
+    <h2 className="text-2xl tech-tree-section__title" >
       {type.toUpperCase()}
     </h2>
-    <Separator orientation="horizontal" size="4" className="mb-4 sidebar__separator" />
+    <Separator orientation="horizontal" size="4" className="mb-4 tech-tree-section__separator" />
     {technologies.map((tech) => (
       <OptimizationButton key={tech.key} label={tech.label} tech={tech.key} handleOptimize={handleOptimize} solving={solving} />
     ))}
@@ -70,10 +70,6 @@ const TechTreeContent: React.FC<TechTreeComponentProps> = React.memo(({ handleOp
 const TechTreeComponent: React.FC<TechTreeComponentProps> = (props) => {
   const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
-    setError(null); // Reset error when component mounts or props change
-  }, [props]);
-
   return (
     <Suspense
       fallback={
@@ -81,12 +77,12 @@ const TechTreeComponent: React.FC<TechTreeComponentProps> = (props) => {
       }
     >
       {error ? (
-        <div className="flex flex-col items-center justify-center h-full">
-          <ExclamationTriangleIcon className="w-16 h-16" style={{ color: "#C44A34" }} />
-          <h2 className="pt-4 text-2xl text-center" style={{ color: "#e6c133" }}>
+        <div className="flex flex-col items-center justify-center h-full tech-tree-error">
+          <ExclamationTriangleIcon className="w-16 h-16 tech-tree-error__icon" />
+          <h2 className="pt-4 text-2xl text-center tech-tree-error__title">
             -kzzkt- Error! -kzzkt-
           </h2>
-          <p className="text-center sidebar__error" style={{ color: "var(--gray-12)" }}>
+          <p className="text-center tech-tree-error__message">
             Problem connecting to the server!<br />
             {error.message}
           </p>
@@ -98,7 +94,9 @@ const TechTreeComponent: React.FC<TechTreeComponentProps> = (props) => {
       )}
     </Suspense>
   );
-};interface ErrorBoundaryProps {
+};
+
+interface ErrorBoundaryProps {
   onError: (error: Error) => void;
   children: React.ReactNode;
 }

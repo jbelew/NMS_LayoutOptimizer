@@ -2,7 +2,7 @@
 import { Box, Flex, Heading, ScrollArea } from "@radix-ui/themes";
 import React, { useEffect, useState } from "react";
 import GridTable from "./components/GridTable";
-import TechTreeComponent from "./components/TechTree"; // Import TechTreeComponent
+import TechTreeComponent from "./components/TechTree/TechTree"; // Import TechTreeComponent
 import { useGridStore } from "./store/useGridStore";
 import { useOptimize } from "./hooks/useOptimize"; // Import useOptimize
 

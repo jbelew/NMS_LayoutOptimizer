@@ -1,16 +1,18 @@
 // src/hooks/useOptimize.tsx
 import { useState, useCallback } from "react";
 import { useGridStore, Grid, ApiResponse } from "../store/useGridStore";
+import { useClientUUID } from "./useClientUUID";
 
 export const useOptimize = () => {
   const { setGrid, setResult, grid } = useGridStore();
   const [solving, setSolving] = useState<boolean>(false);
+  const clientUUID = useClientUUID();
 
   const handleOptimize = useCallback(
     async (tech: string) => {
-      setSolving(true); // Set solving to true here
+      if (!clientUUID) return;
+      setSolving(true);
       try {
-        // Create a new grid without modifying state immediately
         const updatedGrid: Grid = {
           ...grid,
           cells: grid.cells.map((row) =>
@@ -45,21 +47,24 @@ export const useOptimize = () => {
           }),
         });
 
-        if (!response.ok) throw new Error("Failed to fetch data");
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || "Failed to fetch data");
+        }
 
         const data: ApiResponse = await response.json();
-        setResult(data, tech); // Pass tech to setResult
+        setResult(data, tech);
         setGrid(data.grid);
         console.log("Response from API:", data.grid);
       } catch (error) {
         console.error("Error during optimization:", error);
         setResult(null, tech);
       } finally {
-        console.log("useOptimize: finally block called"); // Add this log
-        setSolving(false); // Set solving to false here, in the finally block
+        console.log("useOptimize: finally block called");
+        setSolving(false);
       }
     },
-    [grid, setGrid, setResult]
+    [grid, setGrid, setResult, clientUUID]
   );
 
   return { solving, handleOptimize };
