@@ -2,25 +2,40 @@
 import { ResetIcon } from "@radix-ui/react-icons";
 import { Button } from "@radix-ui/themes";
 import React from "react";
-import { Grid, ApiResponse } from "../store/useGridStore";
+import { ApiResponse, Grid } from "../store/useGridStore";
 import GridCell from "./GridCell/GridCell";
-import GridRowActions from "./RowControlButtons";
+import GridRowActions from "./GridRowActions";
 import ShakingWrapper from "./GridShake/GridShake";
+import Spinner from "./Spinner";
 import { useEffect, useState, useRef } from "react";
-import { useOptimize } from "../hooks/useOptimize";
+import { useSSE } from "../hooks/useSSE"; // Import useSSE
 
 interface GridTableProps {
   grid: Grid;
   resetGrid: () => void;
   toggleCellState: (rowIndex: number, columnIndex: number, event: React.MouseEvent) => void;
+  result: ApiResponse | null;
   activateRow: (rowIndex: number) => void;
   deActivateRow: (rowIndex: number) => void;
-  solving: boolean;
-  result: ApiResponse | null;
+  solving: boolean; // Receive solving as a prop
 }
 
-const GridTable: React.FC<GridTableProps> = ({ grid, toggleCellState, activateRow, deActivateRow, resetGrid, solving, result }) => {
+/**
+ * A table component that displays a grid of cells, where each cell can be in
+ * one of three states: normal, active, or supercharged. The component also
+ * renders a set of buttons to activate or deactivate entire rows at once.
+ *
+ * @param {Grid} grid - The grid to display
+ * @param {function} toggleCellState - A function to toggle the state of a cell
+ * @param {function} activateRow - A function to activate an entire row
+ * @param {function} deActivateRow - A function to deactivate an entire row
+ * @param {ApiResponse | null} result - The result of an optimization calculation,
+ *   or null if no calculation has been done.
+ * @param {function} resetGrid - A function to reset the grid
+ */
+const GridTable: React.FC<GridTableProps> = ({ grid, toggleCellState, activateRow, deActivateRow, resetGrid, solving }) => {
   const [shaking, setShaking] = React.useState(false);
+  const [currentMessage, setCurrentMessage] = useState<string | null>(null);
 
   const gridRef = useRef<HTMLDivElement>(null);
   const [columnWidth, setColumnWidth] = useState("40px");
@@ -45,11 +60,29 @@ const GridTable: React.FC<GridTableProps> = ({ grid, toggleCellState, activateRo
     return () => window.removeEventListener("resize", updateColumnWidth);
   }, []);
 
+  // Whether there are any modules in the grid
   const hasModulesInGrid = grid.cells.flat().some((cell) => cell.module !== null);
+
+  // Use the useSSE hook
+  const { messageQueue } = useSSE();
+
+  // Log SSE messages to the console
+  useEffect(() => {
+    if (messageQueue.length > 0) {
+      console.log("GridTable: SSE Message:", messageQueue[0]); // Log the message here
+    }
+  }, [messageQueue]);
+
+  useEffect(() => {
+    if (solving && messageQueue.length > 0) {
+      setCurrentMessage(messageQueue[0]);
+    }
+  }, [solving, messageQueue]);
 
   return (
     <>
       <ShakingWrapper shaking={shaking}>
+        <Spinner solving={solving} message={currentMessage || ""} />
         <div ref={gridRef} className={`gridContainer ${solving ? "opacity-50" : ""}`}>
           {grid.cells.map((row, rowIndex) => (
             <React.Fragment key={rowIndex}>
@@ -87,7 +120,7 @@ const GridTable: React.FC<GridTableProps> = ({ grid, toggleCellState, activateRo
       </ShakingWrapper>
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 pt-4 pr-9">
-          <ul className="pl-4 font-thin list-disc" >
+          <ul className="pl-4 font-thin list-disc" style={{ color: "var(--gray-12)" }}>
             <li>
               <strong>Click</strong> a cell to toggle its <em>Supercharged</em> state. No more than 4.
             </li>

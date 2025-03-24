@@ -1,34 +1,31 @@
 // src/hooks/useSSE.tsx
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { SSE_URL } from "../constants";
-import { useClientUUID } from "./useClientUUID";
-
-export interface SSEMessage {
-  status: "info" | "success" | "error";
-  message: string;
-  clientUUID: string;
-}
 
 interface SSEHookResult {
-  clearMessages: () => void;
+  messageQueue: string[];
+  addMessage: (message: string) => void;
 }
 
-export const useSSE = (setMessagesReceived: (value: boolean) => void, setMessageQueue: (value: SSEMessage[]) => void): SSEHookResult => {
-  const eventSourceRef = useRef<EventSource | null>(null);
-  const clientUUID = useClientUUID();
+/**
+ * Hook to use Server-Sent Events (SSE) to receive messages from a server.
+ * The hook will create an EventSource object and listen for messages.
+ * The messages are stored in a state variable and can be accessed as a queue.
+ * The hook also provides a function to add a new message to the queue.
+ *
+ * @returns {SSEHookResult} An object with two properties: messageQueue and addMessage.
+ *   messageQueue is an array of strings, where each string is a message received from the server.
+ *   addMessage is a function that takes a string as an argument and adds it to the messageQueue.
+ */
+export const useSSE = (): SSEHookResult => {
+  const [messageQueue, setMessageQueue] = useState<string[]>([]);
 
   useEffect(() => {
-    console.log("useSSE: useEffect called");
-    eventSourceRef.current = new EventSource(SSE_URL);
-    const eventSource = eventSourceRef.current;
+    console.log("useSSE: Creating EventSource");
+    const eventSource = new EventSource(SSE_URL);
+    console.log("useSSE: EventSource created:", eventSource);
 
-    if (!eventSource) {
-      console.error("useSSE: EventSource is null");
-      return;
-    }
-
-    console.log("useSSE: Adding Event Listeners");
-
+    // Setup event handlers
     eventSource.onopen = () => {
       console.log("useSSE: EventSource opened");
     };
@@ -36,47 +33,28 @@ export const useSSE = (setMessagesReceived: (value: boolean) => void, setMessage
     eventSource.onmessage = (event) => {
       try {
         console.log("useSSE: Message received:", event.data);
-        const newMessage: SSEMessage = JSON.parse(event.data);
-
-        if (newMessage.clientUUID === clientUUID) {
-          console.log("useSSE: Message matches clientUUID:", newMessage);
-          setMessageQueue((prevMessages) => [...prevMessages, newMessage]);
-          setMessagesReceived(true);
-        } else {
-          console.log("useSSE: Message does not match clientUUID:", newMessage);
-        }
+        const newMessage = JSON.parse(event.data);
+        addMessage(newMessage.message);
       } catch (error) {
         console.error("useSSE: Error parsing SSE message:", error);
-        setMessageQueue((prevMessages) => [
-          ...prevMessages,
-          { status: "error", message: "Error parsing server message.", clientUUID: "" },
-        ]);
       }
     };
 
     eventSource.onerror = (error) => {
       console.error("useSSE: EventSource failed:", error);
-      clearMessages();
-      setMessageQueue((prevMessages) => [
-        ...prevMessages,
-        { status: "error", message: "Connection to server failed.", clientUUID: "" },
-      ]);
       eventSource.close();
     };
 
+    // Cleanup when component is unmounted
     return () => {
-      if (eventSourceRef.current) {
-        console.log("useSSE: Closing EventSource");
-        eventSourceRef.current.close();
-        eventSourceRef.current = null;
-      }
+      console.log("useSSE: Closing EventSource");
+      eventSource.close();
     };
-  }, [clientUUID, setMessagesReceived, setMessageQueue]);
+  }, []); // Empty dependency array - run only once
 
-  const clearMessages = () => {
-    console.log("useSSE: clearMessages called");
-    setMessageQueue([]);
+  const addMessage = (message: string) => {
+    setMessageQueue((prevQueue) => [...prevQueue, message]);
   };
 
-  return { clearMessages };
+  return { messageQueue, addMessage };
 };

@@ -18,10 +18,5 @@ export default defineConfig({
       }
     },
     cssMinify: 'lightningcss'
-  },
-  server: {
-    hmr: {
-      overlay: true,  // Show error overlay in browser
-    },
-  },
+  }
 });

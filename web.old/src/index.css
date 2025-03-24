@@ -1,0 +1,111 @@
+@font-face {
+  font-family: "GeosansLight";
+  src: url("/src/assets/fonts/GeosansLight.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: auto;
+}
+
+@font-face {
+  font-family: "SourceSans";
+  src: url("/src/assets/fonts/SourceSans3-VariableFont_wght.ttf") format("truetype");
+  font-display: swap;
+}
+
+/* Import Radix styles first */
+@import "@radix-ui/themes/styles.css";
+
+/* Use @tailwind to import Tailwind layers */
+@import "tailwindcss/theme.css" layer(theme);
+/* THEN import Tailwind's preflight */
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Apply custom font styles using Tailwind's @layer directive */
+@layer base {
+  h1,
+  h2 {
+    font-family: "GeosansLight", sans-serif;
+  }
+}
+
+.radix-themes {
+  --default-font-family: "SourceSans", sans-serif;
+}
+
+/* Background styles */
+body {
+  /* Combine background properties */
+  background: url("/src/assets/img/nms_background.webp") center/cover fixed;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Background overlay */
+body::before {
+  content: "";
+  position: fixed; /* Covers the entire screen */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+
+
+.dark,
+.dark-theme {
+  --blue-1: #0c161e;
+  --blue-2: #0f1a24;
+  --blue-3: #092a40;
+  --blue-4: #003558;
+  --blue-5: #00426a;
+  --blue-6: #0d507b;
+  --blue-7: #1b6191;
+  --blue-8: #2176af;
+  --blue-9: #36a1ea;
+  --blue-10: #2595dd;
+  --blue-11: #6dbdfb;
+  --blue-12: #c5e5ff;
+
+  --blue-a1: #00df0005;
+  --blue-a2: #00f50009;
+  --blue-a3: #00d8fc1f;
+  --blue-a4: #00aaff3b;
+  --blue-a5: #00abff50;
+  --blue-a6: #06b1ff64;
+  --blue-a7: #25b2ff7e;
+  --blue-a8: #29b0ffa1;
+  --blue-a9: #39b0fee7;
+  --blue-a10: #28acfed8;
+  --blue-a11: #6fc0fefb;
+  --blue-a12: #c5e5ff;
+
+  --blue-contrast: #fff;
+  --blue-surface: #0d222380;
+  --blue-indicator: #36a1ea;
+  --blue-track: #36a1ea;
+}
+
+
+.dark,
+.dark-theme,
+:is(.dark, .dark-theme) :where(.radix-themes:not(.light, .light-theme)) {
+  --color-background: #121226;
+}
+
+/* Vaiablies for our grid CLAMP calculations */
+:root {
+  --grid-cell-size: clamp(36px, 7.2vw, 64px);
+  --grid-gap: clamp(2px, 1vw, 8px);
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(10, var(--grid-cell-size)) auto;
+  grid-template-rows: repeat(6, var(--grid-cell-size));
+  gap: var(--grid-gap);
+}
+
