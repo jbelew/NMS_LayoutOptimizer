@@ -1,10 +1,12 @@
 // src/hooks/useOptimize.tsx
 import { useState, useCallback } from "react";
 import { useGridStore, Grid, ApiResponse } from "../store/useGridStore";
+import { useSSE } from "./useSSE"; // Import useSSE
 
 export const useOptimize = () => {
   const { setGrid, setResult, grid } = useGridStore();
   const [solving, setSolving] = useState<boolean>(false);
+  const { clientId } = useSSE(); // Get clientId from useSSE
 
   const handleOptimize = useCallback(
     async (tech: string) => {
@@ -39,6 +41,7 @@ export const useOptimize = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
+            clientId: clientId, // Include clientId in the request body
             ship: "Exotic",
             tech,
             grid: updatedGrid,
@@ -59,7 +62,7 @@ export const useOptimize = () => {
         setSolving(false); // Set solving to false here, in the finally block
       }
     },
-    [grid, setGrid, setResult]
+    [grid, setGrid, setResult, clientId] // Add clientId to the dependency array
   );
 
   return { solving, handleOptimize };

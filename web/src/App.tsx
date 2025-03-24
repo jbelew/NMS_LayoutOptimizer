@@ -1,9 +1,25 @@
 // src/App.tsx
 import { Box, Flex, Heading } from "@radix-ui/themes";
-import React from "react";
+import React, { useEffect } from "react";
 import GridContainer from "./components/GridContainer/GridContainer"; // Import GridContainer
+import { useSSE } from "./hooks/useSSE";
 
 const App: React.FC = () => {
+  const { registerMessageHandler } = useSSE();
+
+  useEffect(() => {
+    const messageHandler = (message: string) => {
+      console.log("App: Message received:", message);
+    };
+    registerMessageHandler(messageHandler);
+
+    // Cleanup: remove the handler when the component unmounts
+    return () => {
+      // In a more complex scenario, you might need to remove the handler from the array.
+      // For this simple example, it's sufficient to just not call it anymore.
+    };
+  }, [registerMessageHandler]);
+
   return (
     // The main container of the app
     <Flex className="items-start justify-center optimizer lg:pt-16 lg:items-top lg:p-4">

@@ -6,9 +6,8 @@ import { ApiResponse, Grid } from "../store/useGridStore";
 import GridCell from "./GridCell/GridCell";
 import GridRowActions from "./GridRowActions";
 import ShakingWrapper from "./GridShake/GridShake";
-import Spinner from "./Spinner";
+import MessageSpinner from "./MessageSpinner/MessageSpinner";
 import { useEffect, useState, useRef } from "react";
-import { useSSE } from "../hooks/useSSE"; // Import useSSE
 
 interface GridTableProps {
   grid: Grid;
@@ -35,7 +34,6 @@ interface GridTableProps {
  */
 const GridTable: React.FC<GridTableProps> = ({ grid, toggleCellState, activateRow, deActivateRow, resetGrid, solving }) => {
   const [shaking, setShaking] = React.useState(false);
-  const [currentMessage, setCurrentMessage] = useState<string | null>(null);
 
   const gridRef = useRef<HTMLDivElement>(null);
   const [columnWidth, setColumnWidth] = useState("40px");
@@ -63,26 +61,11 @@ const GridTable: React.FC<GridTableProps> = ({ grid, toggleCellState, activateRo
   // Whether there are any modules in the grid
   const hasModulesInGrid = grid.cells.flat().some((cell) => cell.module !== null);
 
-  // Use the useSSE hook
-  const { messageQueue } = useSSE();
-
-  // Log SSE messages to the console
-  useEffect(() => {
-    if (messageQueue.length > 0) {
-      console.log("GridTable: SSE Message:", messageQueue[0]); // Log the message here
-    }
-  }, [messageQueue]);
-
-  useEffect(() => {
-    if (solving && messageQueue.length > 0) {
-      setCurrentMessage(messageQueue[0]);
-    }
-  }, [solving, messageQueue]);
 
   return (
     <>
       <ShakingWrapper shaking={shaking}>
-        <Spinner solving={solving} message={currentMessage || ""} />
+        <MessageSpinner solving={solving} initialMessage={"Calling optimization API..."} />
         <div ref={gridRef} className={`gridContainer ${solving ? "opacity-50" : ""}`}>
           {grid.cells.map((row, rowIndex) => (
             <React.Fragment key={rowIndex}>
@@ -141,5 +124,4 @@ const GridTable: React.FC<GridTableProps> = ({ grid, toggleCellState, activateRo
       </div>
     </>
   );
-};
-export default GridTable;
+};export default GridTable;
