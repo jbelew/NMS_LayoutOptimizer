@@ -1,3 +1,7 @@
-Almost completed code for a No Man's Sky Starship layout optimization service. Built with React, Zustand, Tailwind, Vite and Radix UI with a Python based solving service.
+# NMS Layout Optimizer (Archived)
 
-![Screenshot](https://github.com/jbelew/NMS_LayoutOptimizer/blob/master/screenshot.png?raw=true)
+This repository has been archived. For continued development and updates, please visit the new repository:
+
+[**NMS Optimizer Web**](https://github.com/jbelew/nms_optimizer-web)
+
+Thank you for your interest and support!
